@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container-md mt-10">
+<div class="container-fluid mw-100">
     <div class="card">
         <div class="card-body">
             <h1>Para Penyewa</h1>
