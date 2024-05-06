@@ -9,8 +9,6 @@ class AssetPhoto extends Model
 {
     protected $table = "asset_photos";
 
-    public $timestamps = false;
-
     protected $fillable = [
         'asset_id',
         'photo_path',

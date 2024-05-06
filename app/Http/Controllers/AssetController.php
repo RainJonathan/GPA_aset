@@ -104,8 +104,13 @@ class AssetController extends Controller
             $asset->photos()->delete();
         
             foreach ($request->file('photos') as $photo) {
-                $path = $photo->store('', 'public');
-                
+                $timestamp = now()->format('YmdHis');
+                $identifier = uniqid();
+                $extension = $photo->getClientOriginalExtension();
+                $filename = "{$asset->id}_img_{$timestamp}_{$identifier}.{$extension}";
+        
+                $path = $photo->storeAs('', $filename, 'public');
+        
                 $assetPhoto = new AssetPhoto();
                 $assetPhoto->asset_id = $asset->id;
                 $assetPhoto->photo_path = $path;
