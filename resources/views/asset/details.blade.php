@@ -60,7 +60,7 @@
                 </tr>
                 <tr>
                   <th>Status</th>
-                  <td>{{ $asset->status == 0 ? 'Tidak Aktif' : 'Aktif'}}</td>
+                  <td>{{ $asset->tuanRumah ? $asset->tuanRumah->aktif === 0 ? 'Tidak Aktif' : 'Aktif' : '-' }}</td>
                 </tr>
                 <tr>
                   <th>Pengeluaran</th>
