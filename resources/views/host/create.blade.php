@@ -32,6 +32,11 @@
                     onkeyup="formatInput(this)">
             </div>
             <div class="form-group">
+                <label for="harga_sewa">Harga Sewa:</label>
+                <input type="text" class="form-control" id="harga_sewa" name="harga_sewa" value="{{ old('upah_jasa') }}"
+                    onkeyup="formatInput(this)">
+            </div>
+            <div class="form-group">
                 <label for="bank_pembayaran">Bank Pembayaran:</label>
                 <select class="form-control" id="bank_pembayaran" name="bank_pembayaran">
                     <option value="" disabled selected>Please choose</option>
@@ -43,23 +48,23 @@
             </div>
             <div class="form-group">
                 <label for="harga_bca" id="label_harga_bca">Harga Sewa BCA (SGLS):</label>
-                <input type="text" class="form-control" id="harga_bca" name="harga_bca" value="{{ old('harga_bca') }}"
+                <input type="text" class="form-control" id="harga_bca" name="harga_bca_sgls" value="{{ old('harga_bca') }}"
                     onkeyup="formatInput(this)">
             </div>
             <div class="form-group">
                 <label for="tanggal_bca" id="label_tanggal_bca">Tanggal Pembayaran BCA (SGLS):</label>
-                <input type="date" class="form-control" id="tanggal_bca" name="tanggal_bca"
+                <input type="date" class="form-control" id="tanggal_bca" name="tanggal_bca_sgls"
                     value="{{ old('tanggal_bca') }}">
             </div>
 
             <div class="form-group">
                 <label for="harga_bri" id="label_harga_bri">Harga Sewa BCA (LEO):</label>
-                <input type="text" class="form-control" id="harga_bri" name="harga_bri" value="{{ old('harga_bri') }}"
+                <input type="text" class="form-control" id="harga_bri" name="harga_bca_leo" value="{{ old('harga_bri') }}"
                     onkeyup="formatInput(this)">
             </div>
             <div class="form-group">
                 <label for="tanggal_bri" id="label_tanggal_bri">Tanggal Pembayaran BCA (LEO):</label>
-                <input type="date" class="form-control" id="tanggal_bri" name="tanggal_bri"
+                <input type="date" class="form-control" id="tanggal_bri" name="tanggal_bca_leo"
                     value="{{ old('tanggal_bri') }}">
             </div>
 
