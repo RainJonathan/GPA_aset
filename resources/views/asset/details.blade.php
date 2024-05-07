@@ -123,10 +123,10 @@
                     <td>{{ $previousOwner->no_ktp }}</td>
                     <td>{{ $previousOwner->no_tlp }}</td>
                     <td>{{ $previousOwner->upah_jasa }}</td>
-                    <td>{{ $previousOwner->harga_sewa }}</td>
+                    <td>Rp {{ number_format($previousOwner->harga_sewa, 0, ',', '.') }}</td>
                     <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $previousOwner->tgl_awal)->format('d-m-Y') }}</td>
                     <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $previousOwner->tgl_akhir)->format('d-m-Y') }}</td>     
-                    <td>{{ $previousOwner->upah_jasa + $previousOwner->harga_sewa }}</td>
+                    <td>Rp {{ number_format($previousOwner->upah_jasa + $previousOwner->harga_sewa, 0, ',', '.') }}</td>
                     <td>{{ $previousOwner->saldo_piutang == 0 ? 'Tidak Lunas' : 'Lunas' }}</td>
                   </tr>
                   @endforeach
