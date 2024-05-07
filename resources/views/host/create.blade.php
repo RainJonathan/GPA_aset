@@ -47,47 +47,47 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="jumlah_bca_sgls" id="label_harga_bca">Harga Sewa BCA (SGLS):</label>
-                <input type="text" class="form-control" id="jumlah_bca_sgls" name="harga_bca_sgls" value="{{ old('jumlah_bca_sgls') }}"
+                <label for="harga_bca" id="label_harga_bca">Harga Sewa BCA (SGLS):</label>
+                <input type="text" class="form-control" id="harga_bca" name="harga_bca_sgls" value="{{ old('harga_bca') }}"
                     onkeyup="formatInput(this)">
             </div>
             <div class="form-group">
-                <label for="tgl_bca_sgls" id="label_tanggal_bca">Tanggal Pembayaran BCA (SGLS):</label>
-                <input type="date" class="form-control" id="tgl_bca_sgls" name="tanggal_bca_sgls"
-                    value="{{ old('tgl_bca_sgls') }}">
+                <label for="tanggal_bca" id="label_tanggal_bca">Tanggal Pembayaran BCA (SGLS):</label>
+                <input type="date" class="form-control" id="tanggal_bca" name="tanggal_bca_sgls"
+                    value="{{ old('tanggal_bca') }}">
             </div>
 
             <div class="form-group">
-                <label for="jumlah_bca_leo" id="label_harga_bri">Harga Sewa BCA (LEO):</label>
+                <label for="harga_bri" id="label_harga_bri">Harga Sewa BCA (LEO):</label>
                 <input type="text" class="form-control" id="harga_bri" name="harga_bca_leo" value="{{ old('harga_bri') }}"
                     onkeyup="formatInput(this)">
             </div>
             <div class="form-group">
-                <label for="tgl_bca_leo" id="label_tanggal_bri">Tanggal Pembayaran BCA (LEO):</label>
-                <input type="date" class="form-control" id="tgl_bca_leo" name="tanggal_bca_leo"
-                    value="{{ old('tgl_bca_leo') }}">
+                <label for="tanggal_bri" id="label_tanggal_bri">Tanggal Pembayaran BCA (LEO):</label>
+                <input type="date" class="form-control" id="tanggal_bri" name="tanggal_bca_leo"
+                    value="{{ old('tanggal_bri') }}">
             </div>
 
             <div class="form-group">
-                <label for="jumlah_mandiri" id="label_harga_mandiri">Harga Sewa Mandiri:</label>
-                <input type="text" class="form-control" id="jumlah_mandiri" name="jumlah_mandiri"
-                    value="{{ old('jumlah_mandiri') }}" onkeyup="formatInput(this)">
+                <label for="harga_mandiri" id="label_harga_mandiri">Harga Sewa Mandiri:</label>
+                <input type="text" class="form-control" id="harga_mandiri" name="harga_mandiri"
+                    value="{{ old('harga_mandiri') }}" onkeyup="formatInput(this)">
             </div>
             <div class="form-group">
-                <label for="tgl_mandiri" id="label_tanggal_mandiri">Tanggal Pembayaran Mandiri:</label>
-                <input type="date" class="form-control" id="tgl_mandiri" name="tgl_mandiri"
-                    value="{{ old('tgl_mandiri') }}">
+                <label for="tanggal_mandiri" id="label_tanggal_mandiri">Tanggal Pembayaran Mandiri:</label>
+                <input type="date" class="form-control" id="tanggal_mandiri" name="tanggal_mandiri"
+                    value="{{ old('tanggal_mandiri') }}">
             </div>
 
             <div class="form-group">
-                <label for="jumlah_tunai" id="label_harga_tunai">Harga Sewa Tunai:</label>
-                <input type="text" class="form-control" id="jumlah_tunai" name="jumlah_tunai"
-                    value="{{ old('jumlah_tunai') }}" onkeyup="formatInput(this)">
+                <label for="harga_tunai" id="label_harga_tunai">Harga Sewa Tunai:</label>
+                <input type="text" class="form-control" id="harga_tunai" name="harga_tunai"
+                    value="{{ old('harga_tunai') }}" onkeyup="formatInput(this)">
             </div>
             <div class="form-group">
-                <label for="tgl_tunai" id="label_tanggal_tunai">Tanggal Pembayaran Tunai:</label>
-                <input type="date" class="form-control" id="tgl_tunai" name="tgl_tunai"
-                    value="{{ old('tgl_mandiri') }}">
+                <label for="tanggal_tunai" id="label_tanggal_tunai">Tanggal Pembayaran Tunai:</label>
+                <input type="date" class="form-control" id="tanggal_tunai" name="tanggal_tunai"
+                    value="{{ old('tanggal_mandiri') }}">
             </div>
 
             <div class="form-group">
@@ -106,14 +106,10 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="keterangan">Keterangan Penghuni:</label>
-                <input type="text" class="form-control" id="keterangan" name="keterangan" value="{{ old('keterangan') }}">
-            </div>
-            <div class="form-group">
-                <label for="aktif">Status Aktif:</label>
-                <select class="form-control" id="aktif" name="aktif">
-                    <option value="0" {{ old('aktif') == '0' ? 'selected' : '' }}>Tidak Aktif</option>
-                    <option value="1" {{ old('aktif') == '1' ? 'selected' : '' }}>Aktif</option>
+                <label for="status_aktif">Status Aktif:</label>
+                <select class="form-control" id="status_aktif" name="status_aktif">
+                    <option value="0" {{ old('status_aktif') == '0' ? 'selected' : '' }}>Tidak Aktif</option>
+                    <option value="1" {{ old('status_aktif') == '1' ? 'selected' : '' }}>Aktif</option>
                 </select>
             </div>
             <div class="btn-group">
@@ -137,26 +133,26 @@
             var bankSelect = document.getElementById("bank_pembayaran");
 
             var labelBca = document.getElementById("label_harga_bca");
-            var hargaBca = document.getElementById("jumlah_bca_sgls");
+            var hargaBca = document.getElementById("harga_bca");
             var labelTanggalBca = document.getElementById("label_tanggal_bca");
-            var tanggalBca = document.getElementById("tgl_bca_sgls");
+            var tanggalBca = document.getElementById("tanggal_bca");
 
             var labelBri = document.getElementById("label_harga_bri");
             var hargaBri = document.getElementById("harga_bri");
             var labelTanggalBri = document.getElementById("label_tanggal_bri");
-            var tanggalBri = document.getElementById("tgl_bca_leo");
+            var tanggalBri = document.getElementById("tanggal_bri");
 
             var labelMandiri = document.getElementById("label_harga_mandiri");
-            var hargaMandiri = document.getElementById("jumlah_mandiri");
+            var hargaMandiri = document.getElementById("harga_mandiri");
             var labelTanggalMandiri = document.getElementById("label_tanggal_mandiri");
-            var tanggalMandiri = document.getElementById("tgl_mandiri");
+            var tanggalMandiri = document.getElementById("tanggal_mandiri");
 
             var labelTunai = document.getElementById("label_harga_tunai");
-            var hargaTunai = document.getElementById("jumlah_tunai");
+            var hargaTunai = document.getElementById("harga_tunai");
             var labelTanggalTunai = document.getElementById("label_tanggal_tunai");
-            var tanggalTunai = document.getElementById("tgl_tunai");
+            var tanggalTunai = document.getElementById("tanggal_tunai");
 
-            // Initially hide the jumlah_bca_sgls input
+            // Initially hide the harga_bca input
             labelBca.style.display = "none";
             hargaBca.style.display = "none";
             labelTanggalBca.style.display = "none";
@@ -178,7 +174,7 @@
             tanggalTunai.style.display = "none";
 
             bankSelect.addEventListener("change", function() {
-                // If BRI is selected (value = 1), show the jumlah_bca_sgls input; otherwise, hide it
+                // If BRI is selected (value = 1), show the harga_bca input; otherwise, hide it
                 if (bankSelect.value === "0") {
                     labelBca.style.display = "block";
                     hargaBca.style.display = "block";

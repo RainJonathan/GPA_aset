@@ -72,7 +72,7 @@
     </form>
 </div>
 
-<script>
+{{-- <script>
     $(document).ready(function() {
     $('.form-group input[type="text"]').on('input', function() {
       const value = $(this).val().replace(/\D/g, '');
@@ -83,5 +83,5 @@
       $('#' + hiddenInputId).val(value);
     });
   });
-</script> 
+</script>  --}}
 @endsection
