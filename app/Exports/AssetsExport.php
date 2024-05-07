@@ -5,7 +5,6 @@ use App\Models\Asset;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
-use Maatwebsite\Excel\Concerns\WithMapping;
 
 class AssetsExport implements FromCollection, WithHeadings ,ShouldAutoSize
 {
@@ -20,8 +19,9 @@ class AssetsExport implements FromCollection, WithHeadings ,ShouldAutoSize
                 'Alamat Aset' => $asset->alamat,
                 'Jenis Aset' => $asset->jenis_aset,
                 'Wilayah' => $asset->wilayah,
-                'Pendapatan' => 'Rp ' . number_format($asset->tuanRumah ? $asset->tuanRumah->harga_sewa : 0, 2),
-                'Pengeluaran' => 'Rp ' . number_format($asset->pengeluaran, 2),
+                'Pendapatan' => 'Rp ' . str_replace(',', ',-', number_format($asset->tuanRumah ? $asset->tuanRumah->harga_sewa : 0, 0, ',', '.')),
+                'Pengeluaran' => 'Rp ' . str_replace(',', ',-', number_format($asset->pengeluaran, 0, ',', '.')),
+
             ];
         });
     }
@@ -30,8 +30,8 @@ class AssetsExport implements FromCollection, WithHeadings ,ShouldAutoSize
     public function headings(): array
     {
         return [
-            'Kode Aset',
             'Nama Aset',
+            'Kode Aset',
             'Alamat Aset',
             'Jenis Aset',
             'Wilayah',

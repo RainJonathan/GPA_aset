@@ -25,6 +25,7 @@ class Asset extends Model
         'alamat',
         'lantai',
         'no_rumah',
+        'pengeluaran',
         'fasilitas',
         'status',
         'created_at',

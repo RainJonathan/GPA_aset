@@ -27,6 +27,14 @@
             <input type="text" class="form-control" id="alamat" name="alamat" value="{{ old('alamat')}}">
         </div>
         <div class="form-group">
+            <label for="lantai">Lantai:</label>
+            <input type="text" class="form-control" id="lantai" name="lantai" value="{{ old('lantai')}}">
+        </div>
+        <div class="form-group">
+            <label for="no_rumah">No Rumah:</label>
+            <input type="text" class="form-control" id="no_rumah" name="no_rumah" value="{{ old('no_rumah')}}">
+        </div>
+        <div class="form-group">
             <label for="wilayah">Wilayah:</label>
             <input type="text" class="form-control" id="wilayah" name="wilayah" value="{{ old('wilayah')}}">
         </div>

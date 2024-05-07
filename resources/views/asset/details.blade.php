@@ -64,7 +64,7 @@
                 </tr>
                 <tr>
                   <th>Pengeluaran</th>
-                  <td>{{ $asset->pengeluaran ? $asset->pengeluaran : '0'}}</td>
+                  <td>Rp. {{ number_format($asset->pengeluaran, 0, ',', '.') }}</td>
                 </tr>
               </table>
             </div>
@@ -90,7 +90,7 @@
                 <td>{{ $asset->tuanRumah ? $asset->tuanRumah->nama_penyewa : '-' }}</td>
                 <td>{{ $asset->tuanRumah ? $asset->tuanRumah->no_ktp : '-' }}</td>
                 <td>{{ $asset->tuanRumah ? $asset->tuanRumah->no_tlp : '-' }}</td>
-                <td>{{ $asset->tuanRumah ? 'Rp. ' . number_format($asset->tuanRumah->harga_sewa, 2, '.', ',') : '-' }}</td>
+                <td>{{ $asset->tuanRumah ? 'Rp. ' . number_format($asset->tuanRumah->harga_sewa, 2, ',', '.') : '-' }}</td>
               </tr>
             </tbody>
           </table>
@@ -110,8 +110,8 @@
                     <th>No. Telepon</th>
                     <th>Upah Jasa</th>
                     <th>Harga Sewa</th>
-                    <th>Bank Pembayaran</th>
-                    <th>Jumlah Pembayaran Aset</th>
+                    <th>Tanggal Masuk</th>
+                    <th>Tanggal Keluar</th>
                     <th>Total Pendapatan Sewa</th>
                     <th>Status Pembayaran</th>
                   </tr>
@@ -124,8 +124,8 @@
                     <td>{{ $previousOwner->no_tlp }}</td>
                     <td>{{ $previousOwner->upah_jasa }}</td>
                     <td>{{ $previousOwner->harga_sewa }}</td>
-                    <td>{{ $previousOwner->bank_pembayaran }}</td>
-                    <td>{{ $previousOwner->jumlah_pembayaran }}</td>
+                    <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $previousOwner->tgl_awal)->format('d-m-Y') }}</td>
+                    <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $previousOwner->tgl_akhir)->format('d-m-Y') }}</td>     
                     <td>{{ $previousOwner->upah_jasa + $previousOwner->harga_sewa }}</td>
                     <td>{{ $previousOwner->saldo_piutang == 0 ? 'Tidak Lunas' : 'Lunas' }}</td>
                   </tr>

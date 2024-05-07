@@ -51,7 +51,7 @@ class HostController extends Controller
         $assets->host_id = $host->id;
         $assets->save();
 
-        return redirect()->route('asset.index')
+        return redirect()->route('asset.details', $asset)
                          ->with('success', 'Host created successfully.');
     }
 

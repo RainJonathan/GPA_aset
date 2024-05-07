@@ -30,6 +30,14 @@
             <label for="alamat">Alamat:</label>
             <input type="text" class="form-control" id="alamat" name="alamat" value="{{ $asset->alamat }}" required>
         </div>
+        <div class="form-group">
+            <label for="no_rumah">No Rumah:</label>
+            <input type="text" class="form-control" id="no_rumah" name="no_rumah" value="{{ $asset->no_rumah }}">
+        </div>
+        <div class="form-group">
+            <label for="lantai">Lantai:</label>
+            <input type="text" class="form-control" id="lantai" name="lantai" value="{{ $asset->lantai }}">
+        </div>
         
         @if($asset->photos->count() > 0)
             <div class="form-group">

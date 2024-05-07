@@ -56,6 +56,14 @@
                       <td>{{ $asset->alamat }}</td>
                     </tr>
                     <tr>
+                      <th>No Rumah</th>
+                      <td>{{ $asset->no_rumah}}</td>
+                    </tr>
+                    <tr>
+                      <th>Lantai Rumah</th>
+                      <td>{{ $asset->lantai}}</td>
+                    </tr>
+                    <tr>
                       <th>Jenis Aset</th>
                       <td>{{ $asset->jenis_aset }}</td>
                     </tr>
