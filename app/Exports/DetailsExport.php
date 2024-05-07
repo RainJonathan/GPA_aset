@@ -24,7 +24,7 @@ class DetailsExport implements FromCollection, WithHeadings, ShouldAutoSize
                 'No.KTP' => $asset->tuanRumah ? $asset->tuanRumah->no_ktp: '-',
                 'No.Hp' => $asset->tuanRumah ? $asset->tuanRumah->no_tlp : '-',
                 // 'Bank Pembayaran' => $asset->tuanRumah ? $asset->tuanRumah->bank_pembayaran :'-',
-                'Status Aktif' => $asset->tuanRumah ? ($asset->tuanRumah->aktif ? 'Aktif' : 'Tidak Aktif') : '-',
+                'Status Aktif' => $asset->tuanRumah ? ($asset->tuanRumah->aktif === 0 ? 'Tidak Aktif' : 'Aktif') : '-',
             ];
         });
     }
