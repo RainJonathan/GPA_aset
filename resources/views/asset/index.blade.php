@@ -5,19 +5,29 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <div class="card">
+                    <div class="card card-info">
                         <div class="card-header">
-                            <h1>Manajemen Asset</h1>
-                            <a href="{{ route('asset.create') }}" class="btn btn-success mb-3">Tambah Asset</a>
-                            <a href="{{ route('asset.exportDetails') }}" class="btn btn-primary mb-3">Export ke Excel</a>
-                            @if ($assets->isEmpty())
-                                <div class="alert alert-info">
-                                    Tidak Ada Asset
-                                </div>
-                            @else
+                            <div class="card-title">
+                                <h3>Manajemen Asset</h3>
+                            </div>
                         </div>
+                        
                         <div class="card-body">
-                            
+                            <div>
+                                <a href="{{ route('asset.create') }}" class="btn btn-success mb-3">
+                                    <i class="fas fa-plus"></i>
+                                    <span>Tambah Asset</span>
+                                </a>
+                                <a href="{{ route('asset.exportDetails') }}" class="btn btn-primary mb-3">
+                                    <i class="fas fa-file-export"></i>
+                                    <span>Export ke Excel</span>
+                                </a>
+                                @if ($assets->isEmpty())
+                                    <div class="alert alert-info">
+                                        Tidak Ada Asset
+                                    </div>
+                                @else
+                            </div>
                                 <table class="table" id="asset-table">
                                     <thead class="thead-fixed">
                                         <tr>
@@ -55,7 +65,6 @@
                                     </tbody>
                                 </table>
                             @endif
-        
                         </div>
                     </div>
                 </div>

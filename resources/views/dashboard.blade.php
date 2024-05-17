@@ -37,41 +37,43 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-lg-12">
+
         <!-- Graph bar -->
-        <div class="card">
-          <div class="card-tools">
-            <button type="button" class="btn btn-tool" data-card-widget="collapse">
-              <i class="fas fa-minus"></i>
-            </button>
-          </div>
+        <div class="card card-info">
           <div class="card-header">
-            <h2 class="float-left">Pendapatan per Asset</h2>
-            <div class="float-right">
-              <a href="{{ route('asset.earning') }}" class="btn btn-primary">Pendapatan Aset</a>
+            <h3 class="card-title">Pendapatan Per Asset</h3>
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-tool" data-card-widget="remove">
+                <i class="fas fa-times"></i>
+              </button>
             </div>
           </div>
-          <div class="card-body" style="overflow-x: auto; white-space: nowrap;">
-            <div class="position-relative mb-4 border">
+          <div class="card-body">
+            <div class="chart">
               <canvas id="sales-chart" height="500"></canvas>
+            </div>
+            <div class="float-left">
+              <a href="{{ route('asset.earning') }}" class="btn btn-primary">Export Pendapatan</a>
             </div>
             <div class="d-flex flex-row justify-content-end">
               <span class="mr-2">
-                <i class="fas fa-square text-primary"> Harga Sewa </i>
+                <i class="fas fa-square text-primary"> Pendapatan Aset </i>
               </span>
               <span class="mr-2">
-                <i class="fas fa-square text-gray"> Pengeluaran Asset </i>
+                <i class="fas fa-square text-gray"> Pengeluaran Aset </i>
               </span>
             </div>
           </div>
         </div>
-    </div>
-      <!-- .end Graph -->
-
+        
       <!-- Asset Details -->
       <div class="col-lg-12">
-        <div class="card">
+        <div class="card card-info">
           <div class="card-header">
-            <h2 class="float-left">Asset Keseluruhan</h2>
+            <h3 class="card-title">Asset Keseluruhan</h3>
           </div>
           <div class="card-body">
               <table class="table" id="asset-table">

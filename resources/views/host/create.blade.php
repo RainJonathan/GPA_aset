@@ -1,135 +1,143 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container mt-5">
-        <h1>Tambah Penyewa</h1>
-        <form action="{{ route('host.store', $asset) }}" method="POST">
-            @csrf
-            <div class="form-group">
-                <label for="nama_penyewa">Nama Penyewa:</label>
-                <input type="text" class="form-control" id="nama_penyewa" name="nama_penyewa"
-                    value="{{ old('nama_penyewa') }}">
-            </div>
-            <div class="form-group">
-                <label for="no_ktp">No KTP:</label>
-                <input type="text" class="form-control" id="no_ktp" name="no_ktp" value="{{ old('no_ktp') }}">
-            </div>
-            <div class="form-group">
-                <label for="no_tlp">Nomor Telepon:</label>
-                <input type="text" class="form-control" id="no_tlp" name="no_tlp" value="{{ old('no_tlp') }}">
-            </div>
-            <div class="form-group">
-                <label for="tgl_awal">Tanggal Awal Masuk:</label>
-                <input type="date" class="form-control" id="tgl_awal" name="tgl_awal" value="{{ old('tgl_awal') }}">
-            </div>
-            <div class="form-group">
-                <label for="tgl_akhir">Tanggal Akhir:</label>
-                <input type="date" class="form-control" id="tgl_akhir" name="tgl_akhir" value="{{ old('tgl_akhir') }}">
-            </div>
-            <div class="form-group">
-                <label for="upah_jasa">Upah Jasa:</label>
-                <input type="text" class="form-control" id="upah_jasa" name="upah_jasa" value="{{ old('upah_jasa') }}"
-                    onkeyup="formatInput(this)">
-            </div>
-            <div class="form-group">
-                <label for="harga_sewa">Harga Sewa:</label>
-                <input type="text" class="form-control" id="harga_sewa" name="harga_sewa" value="{{ old('upah_jasa') }}"
-                    onkeyup="formatInput(this)">
-            </div>
-            <div class="form-group">
-                <label for="bank_pembayaran">Bank Pembayaran:</label>
-                <select class="form-control" id="bank_pembayaran" name="bank_pembayaran">
-                    <option value="" disabled selected>Please choose</option>
-                    <option value="0" {{ old('status_pengontrak') == '0' ? 'selected' : '' }}>BCA</option>
-                    <option value="1" {{ old('status_pengontrak') == '1' ? 'selected' : '' }}>BRI</option>
-                    <option value="2" {{ old('status_pengontrak') == '2' ? 'selected' : '' }}>Mandiri</option>
-                    <option value="4" {{ old('status_pengontrak') == '4' ? 'selected' : '' }}>Tunai</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="harga_bca" id="label_harga_bca">Harga Sewa BCA (SGLS):</label>
-                <input type="text" class="form-control" id="harga_bca" name="harga_bca_sgls" value="{{ old('harga_bca') }}"
-                    onkeyup="formatInput(this)">
-            </div>
-            <div class="form-group">
-                <label for="tanggal_bca" id="label_tanggal_bca">Tanggal Pembayaran BCA (SGLS):</label>
-                <input type="date" class="form-control" id="tanggal_bca" name="tanggal_bca_sgls"
-                    value="{{ old('tanggal_bca') }}">
-            </div>
 
-            <div class="form-group">
-                <label for="harga_bri" id="label_harga_bri">Harga Sewa BCA (LEO):</label>
-                <input type="text" class="form-control" id="harga_bri" name="harga_bca_leo" value="{{ old('harga_bri') }}"
-                    onkeyup="formatInput(this)">
+<section class="content">
+    <div class="container-fluid">
+        <div class="card card-info">
+            <div class="card-header">
+                <h3 class="card-title"> Tambah Penyewa </h3>
             </div>
-            <div class="form-group">
-                <label for="tanggal_bri" id="label_tanggal_bri">Tanggal Pembayaran BCA (LEO):</label>
-                <input type="date" class="form-control" id="tanggal_bri" name="tanggal_bca_leo"
-                    value="{{ old('tanggal_bri') }}">
-            </div>
+            <div class="card-body">
+                {{-- <form action="{{ route('host.store', $asset) }}" method="POST"> --}}
 
-            <div class="form-group">
-                <label for="harga_mandiri" id="label_harga_mandiri">Harga Sewa Mandiri:</label>
-                <input type="text" class="form-control" id="harga_mandiri" name="harga_mandiri"
-                    value="{{ old('harga_mandiri') }}" onkeyup="formatInput(this)">
+                <form action="{{ route('host.store') }}" method="POST">
+                    @csrf
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="nama_penyewa">Nama Penyewa:</label>
+                                <input type="text" class="form-control" id="nama_penyewa" name="nama_penyewa"
+                                    value="{{ old('nama_penyewa') }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="no_ktp">No KTP:</label>
+                                <input type="text" class="form-control" id="no_ktp" name="no_ktp" value="{{ old('no_ktp') }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="no_tlp">Nomor Telepon:</label>
+                                <input type="text" class="form-control" id="no_tlp" name="no_tlp" value="{{ old('no_tlp') }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="tgl_awal">Tanggal Awal Masuk:</label>
+                                <input type="date" class="form-control" id="tgl_awal" name="tgl_awal" value="{{ old('tgl_awal') }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="tgl_akhir">Tanggal Akhir:</label>
+                                <input type="date" class="form-control" id="tgl_akhir" name="tgl_akhir" value="{{ old('tgl_akhir') }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="upah_jasa">Upah Jasa:</label>
+                                <input type="text" class="form-control" id="upah_jasa" name="upah_jasa" value="{{ old('upah_jasa') }}"
+                                    onkeyup="formatInput(this)">
+                            </div>
+                            <div class="form-group">
+                                <label for="harga_sewa">Harga Sewa:</label>
+                                <input type="text" class="form-control" id="harga_sewa" name="harga_sewa" value="{{ old('upah_jasa') }}"
+                                    onkeyup="formatInput(this)">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="bank_pembayaran">Bank Pembayaran:</label>
+                                <select class="form-control" id="bank_pembayaran" name="bank_pembayaran">
+                                    <option value="" disabled selected>Please choose</option>
+                                    <option value="0" {{ old('status_pengontrak') == '0' ? 'selected' : '' }}>BCA</option>
+                                    <option value="1" {{ old('status_pengontrak') == '1' ? 'selected' : '' }}>BRI</option>
+                                    <option value="2" {{ old('status_pengontrak') == '2' ? 'selected' : '' }}>Mandiri</option>
+                                    <option value="4" {{ old('status_pengontrak') == '4' ? 'selected' : '' }}>Tunai</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="harga_bca" id="label_harga_bca">Harga Sewa BCA (SGLS):</label>
+                                <input type="text" class="form-control" id="harga_bca" name="harga_bca_sgls" value="{{ old('harga_bca') }}"
+                                    onkeyup="formatInput(this)">
+                            </div>
+                            <div class="form-group">
+                                <label for="tanggal_bca" id="label_tanggal_bca">Tanggal Pembayaran BCA (SGLS):</label>
+                                <input type="date" class="form-control" id="tanggal_bca" name="tanggal_bca_sgls"
+                                    value="{{ old('tanggal_bca') }}">
+                            </div>
+                
+                            <div class="form-group">
+                                <label for="harga_bri" id="label_harga_bri">Harga Sewa BCA (LEO):</label>
+                                <input type="text" class="form-control" id="harga_bri" name="harga_bca_leo" value="{{ old('harga_bri') }}"
+                                    onkeyup="formatInput(this)">
+                            </div>
+                            <div class="form-group">
+                                <label for="tanggal_bri" id="label_tanggal_bri">Tanggal Pembayaran BCA (LEO):</label>
+                                <input type="date" class="form-control" id="tanggal_bri" name="tanggal_bca_leo"
+                                    value="{{ old('tanggal_bri') }}">
+                            </div>
+                
+                            <div class="form-group">
+                                <label for="harga_mandiri" id="label_harga_mandiri">Harga Sewa Mandiri:</label>
+                                <input type="text" class="form-control" id="harga_mandiri" name="harga_mandiri"
+                                    value="{{ old('harga_mandiri') }}" onkeyup="formatInput(this)">
+                            </div>
+                            <div class="form-group">
+                                <label for="tanggal_mandiri" id="label_tanggal_mandiri">Tanggal Pembayaran Mandiri:</label>
+                                <input type="date" class="form-control" id="tanggal_mandiri" name="tanggal_mandiri"
+                                    value="{{ old('tanggal_mandiri') }}">
+                            </div>
+                
+                            <div class="form-group">
+                                <label for="harga_tunai" id="label_harga_tunai">Harga Sewa Tunai:</label>
+                                <input type="text" class="form-control" id="harga_tunai" name="harga_tunai"
+                                    value="{{ old('harga_tunai') }}" onkeyup="formatInput(this)">
+                            </div>
+                            <div class="form-group">
+                                <label for="tanggal_tunai" id="label_tanggal_tunai">Tanggal Pembayaran Tunai:</label>
+                                <input type="date" class="form-control" id="tanggal_tunai" name="tanggal_tunai"
+                                    value="{{ old('tanggal_mandiri') }}">
+                            </div>
+                
+                            <div class="form-group">
+                                <label for="saldo_piutang">Status Saldo Piutang:</label>
+                                <select class="form-control" id="saldo_piutang" name="saldo_piutang">
+                                    <option value="0" {{ old('saldo_piutang') == '0' ? 'selected' : '' }}>Tidak Lunas</option>
+                                    <option value="1" {{ old('saldo_piutang') == '1' ? 'selected' : '' }}>Lunas</option>
+                                </select>
+                            </div>
+                
+                            <div class="form-group">
+                                <label for="status_pengontrak">Status Pengontrak:</label>
+                                <select class="form-control" id="status_pengontrak" name="status_pengontrak">
+                                    <option value="0" {{ old('status_pengontrak') == '0' ? 'selected' : '' }}>Perorangan</option>
+                                    <option value="1" {{ old('status_pengontrak') == '1' ? 'selected' : '' }}>Complimet</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="status_aktif">Status Aktif:</label>
+                                <select class="form-control" id="status_aktif" name="status_aktif">
+                                    <option value="0" {{ old('status_aktif') == '0' ? 'selected' : '' }}>Tidak Aktif</option>
+                                    <option value="1" {{ old('status_aktif') == '1' ? 'selected' : '' }}>Aktif</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="btn-group">
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <button type="button" class="btn btn-secondary ml-2" onclick="window.history.back()">Batal</button>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label for="tanggal_mandiri" id="label_tanggal_mandiri">Tanggal Pembayaran Mandiri:</label>
-                <input type="date" class="form-control" id="tanggal_mandiri" name="tanggal_mandiri"
-                    value="{{ old('tanggal_mandiri') }}">
-            </div>
-
-            <div class="form-group">
-                <label for="harga_tunai" id="label_harga_tunai">Harga Sewa Tunai:</label>
-                <input type="text" class="form-control" id="harga_tunai" name="harga_tunai"
-                    value="{{ old('harga_tunai') }}" onkeyup="formatInput(this)">
-            </div>
-            <div class="form-group">
-                <label for="tanggal_tunai" id="label_tanggal_tunai">Tanggal Pembayaran Tunai:</label>
-                <input type="date" class="form-control" id="tanggal_tunai" name="tanggal_tunai"
-                    value="{{ old('tanggal_mandiri') }}">
-            </div>
-
-            <div class="form-group">
-                <label for="saldo_piutang">Status Saldo Piutang:</label>
-                <select class="form-control" id="saldo_piutang" name="saldo_piutang">
-                    <option value="0" {{ old('saldo_piutang') == '0' ? 'selected' : '' }}>Tidak Lunas</option>
-                    <option value="1" {{ old('saldo_piutang') == '1' ? 'selected' : '' }}>Lunas</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="status_pengontrak">Status Pengontrak:</label>
-                <select class="form-control" id="status_pengontrak" name="status_pengontrak">
-                    <option value="0" {{ old('status_pengontrak') == '0' ? 'selected' : '' }}>Perorangan</option>
-                    <option value="1" {{ old('status_pengontrak') == '1' ? 'selected' : '' }}>Complimet</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="status_aktif">Status Aktif:</label>
-                <select class="form-control" id="status_aktif" name="status_aktif">
-                    <option value="0" {{ old('status_aktif') == '0' ? 'selected' : '' }}>Tidak Aktif</option>
-                    <option value="1" {{ old('status_aktif') == '1' ? 'selected' : '' }}>Aktif</option>
-                </select>
-            </div>
-            <div class="btn-group">
-                <button type="submit" class="btn btn-primary">Simpan</button>
-                <button type="button" class="btn btn-secondary ml-2" onclick="window.history.back()">Batal</button>
-            </div>
-        </form>
+        </div>
     </div>
+</section>
 
-    <script>
-        // function formatInput(input) {
-        //     let value = input.value.replace(/\D/g, '');
-        //     value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-        //     input.value = value;
-        // }
-        // document.getElementById('myForm').addEventListener('submit', function(event) {
-        //     document.getElementById('upah_jasa').value = document.getElementById('upah_jasa').getAttribute('data-value');
-        //     document.getElementById('harga_sewa').value = document.getElementById('harga_sewa').getAttribute('data-value');
-        // });
-        document.addEventListener("DOMContentLoaded", function() {
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
             var bankSelect = document.getElementById("bank_pembayaran");
 
             var labelBca = document.getElementById("label_harga_bca");
@@ -277,5 +285,7 @@
                 }
             });
         });
-    </script>
+
+</script>
+
 @endsection

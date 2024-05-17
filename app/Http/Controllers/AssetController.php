@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Asset;
 use App\Models\Host;
+use App\Models\Wilayah;
 use App\Models\AssetPhoto;
 use App\Models\AssetOwnershipHistory;
 
@@ -25,14 +26,15 @@ class AssetController extends Controller
     {
         $hostId = $request->input('hostId');
         $hosts = Host::all();
-        return view('asset.create', compact('hosts', 'hostId'));
+        $wilayahs = Wilayah::all();
+        return view('asset.create', compact('hosts', 'hostId', 'wilayahs'));
     }
 
     public function store(Request $request)
     {
         $validatedData = $request->validate([
             'host_id' => 'nullable',
-            'wilayah' => 'required',
+            'wilayah_id' => 'exists:wilayahs,id',
             'nama_aset' => 'required',
             'jenis_aset' => 'required',
             'kode_aset' => 'required',
@@ -70,14 +72,15 @@ class AssetController extends Controller
     public function edit(Asset $asset)
     {
         $hosts = Host::all();
-        return view('asset.edit', compact('asset', 'hosts'));
+        $wilayahs = Wilayah::all();
+        return view('asset.edit', compact('asset', 'hosts', 'wilayahs'));
     }
 
     public function update(Request $request, Asset $asset)
     {
         $validatedData = $request->validate([
             'host_id' => '',
-            'wilayah' => 'required',
+            'wilayah_id' => 'exists:wilayahs,id',
             'nama_aset' => 'required',
             'jenis_aset' => 'required',
             'kode_aset' => 'required',
@@ -130,6 +133,7 @@ class AssetController extends Controller
     }
     public function details(Asset $asset)
     {
+        $asset->load('assetWilayah');
         return view('asset.details', compact('asset'));
     }
 

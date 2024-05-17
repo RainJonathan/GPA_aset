@@ -15,14 +15,13 @@ class HostController extends Controller
         return view('host.index', compact('hosts'));
     }
 
-    public function create($asset)
+    public function create()
     {
-        return view('host.create', compact('asset'));
+        return view('host.create');
     }
 
-    public function store(Request $request, $asset)
-    {
-        $validatedData = $request->validate([
+    public function store(Request $request, Host $host){
+        $validateData = $request->validate([
             'nama_penyewa' => 'required',
             'no_ktp' => 'required',
             'no_tlp' => 'required',
@@ -44,14 +43,9 @@ class HostController extends Controller
             'keterangan'=> '',
             'bulan'=> '',
             'status_aktif'=> '',
-            
         ]);
-        $host = Host::create($validatedData);
-        $assets = Asset::where('id', $asset)->first();
-        $assets->host_id = $host->id;
-        $assets->save();
-
-        return redirect()->route('asset.details', $asset)
+        $host = Host::create($validateData);
+        return redirect()->route('host.index')
                          ->with('success', 'Host created successfully.');
     }
 
@@ -79,12 +73,11 @@ class HostController extends Controller
             'harga_bca_leo'=> 'nullable',
             'tanggal_bca_sgls'  => 'nullable',
             'harga_bca_sgls'=> 'nullable',
-            'total' => 'nullable',
             'saldo_piutang' => 'nullable',
             'status_pengontrak' => '',
             'keterangan'=> '',
             'bulan'=> '',
-            'aktif'=> '',
+            'status_aktif'=> '',
         ]);
 
         $host->update($validatedData);

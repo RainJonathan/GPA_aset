@@ -69,7 +69,7 @@
                     </tr>
                     <tr>
                       <th>Wilayah Aset</th>
-                      <td>{{ $asset->wilayah }}</td>
+                      <td>{{ $asset->assetWilayah ? $asset->assetWilayah->nama_wilayah : 'N/A' }}</td>
                     </tr>
                     <tr>
                       <th>Status</th>
@@ -102,11 +102,11 @@
                       </tr>
                   </tbody>
               </table>
-              @if (!$asset->tuanRumah)
+              {{-- @if (!$asset->tuanRumah)
                 <div class="mt-4">
                   <a href="{{ route('host.create', $asset->id) }}" class="btn btn-primary">Tambah Penyewa</a>
                 </div>
-              @endif
+              @endif --}}
               {{-- <button class="btn btn-secondary mt-2" id="edit-tenant-btn">Edit Tenant Info</button> --}}
               @if($asset->host_id)
                   <form action="{{ route('host.edit', $asset->tuanRumah->id) }}" method="GET">

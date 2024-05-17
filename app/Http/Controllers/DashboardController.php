@@ -11,7 +11,7 @@ class DashboardController extends Controller
     {
         $assets = Asset::all();
 
-        $dataAset = Asset::pluck('nama_aset');
+        $dataAset = Asset::pluck('kode_aset');
         $assetsWithHost = Asset::has('tuanRumah')->count();
         $assetsWithoutHost = Asset::doesntHave('tuanRumah')->count();
         $hargaSewaWithHost = $assets->map(function($asset) {

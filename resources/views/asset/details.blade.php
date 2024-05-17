@@ -56,7 +56,7 @@
                 </tr>
                 <tr>
                   <th>Wilayah Aset</th>
-                  <td>{{ $asset->wilayah }}</td>
+                  <td>{{ $asset->assetWilayah ? $asset->assetWilayah->nama_wilayah : 'N/A' }}</td>
                 </tr>
                 <tr>
                   <th>Status</th>

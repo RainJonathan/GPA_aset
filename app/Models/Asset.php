@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 use App\Models\Host;
+use App\Models\Tiket;
 use App\Models\AssetPhoto;
 
 class Asset extends Model
@@ -14,20 +15,18 @@ class Asset extends Model
 
     protected $table = "rekap_aset";
 
-    public $timestamps = false;
-
     protected $fillable = [
         'host_id',
-        'wilayah',
+        'wilayah_id',
         'nama_aset',
         'jenis_aset',
         'kode_aset',
         'alamat',
         'lantai',
         'no_rumah',
-        'pengeluaran',
         'fasilitas',
-        'status',
+        'deskripsi_aset',
+        'pengeluaran',
         'created_at',
         'updated_at'
     ] ;
@@ -38,6 +37,15 @@ class Asset extends Model
     public function photos()
     {
         return $this->hasMany(AssetPhoto::class, 'asset_id');
+    }
+
+    public function assetWilayah(){
+        return $this->belongsTo(Wilayah::class, 'wilayah_id');
+    }
+
+    public function tickets()
+    {
+        return $this->hasMany(Tiket::class, 'id_aset');
     }
     public function previousOwners()
     {

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('rekap_aset', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('host_id')->nullable();
-            $table->string('wilayah');
+            $table->bigInteger('wilayah_id');
             $table->text('deskripsi_aset')->nullable();
             $table->string('nama_aset');
             $table->string('jenis_aset');
@@ -23,9 +23,7 @@ return new class extends Migration
             $table->integer('lantai')->nullable();
             $table->integer('no_rumah')->nullable();
             $table->string('fasilitas')->nullable();
-            $table->string('status')->nullable();
             $table->decimal('pengeluaran',10,0)->nullable();
-            $table->unsignedBigInteger('id_transaksi')->nullable();
             $table->timestamps();
         });
     }
