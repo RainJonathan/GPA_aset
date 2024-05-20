@@ -39,7 +39,7 @@
                                     @if($tiket->photo->isNotEmpty())
                                         @foreach($tiket->photo as $photo)
                                             @if ($photo->after_photo != null)
-                                             <img src="{{ asset('after_photos/' . $photo->after_photo) }}" alt="After Photo" style="margin-right: 10px;">
+                                                <img src="{{ asset('after_photos/' . $photo->after_photo) }}" alt="After Photo" style="margin-right: 10px;">
                                             @endif
                                         @endforeach
                                     @endif
