@@ -65,3 +65,6 @@ Route::put('/overseer/{overseer}', [OverseerController::class, 'update'])->name(
 Route::delete('/overseer/{overseer}', [OverseerController::class, 'destroy'])->name('overseer.destroy');
 Route::get('/overseer/{overseer}', [OverseerController::class, 'details'])->name('overseer.details');
 Route::get('/overseer/{overseer}/edited', [OverseerController::class, 'edited'])->name('overseer.edited');
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
