@@ -56,6 +56,6 @@ class Asset extends Model
             'id',
             'id',
             'previous_owner_id'
-        )->orderBy('ownership_changed_at', 'desc'); 
+        )->orderBy('ownership_changed_at', 'desc');
     }
 }

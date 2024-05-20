@@ -11,8 +11,11 @@ class DetailsExport implements FromCollection, WithHeadings, ShouldAutoSize
 {
     public function collection()
     {
-        $assets = Asset::all();
-
+        if(Auth()->user()->role == 1){
+            $assets = Asset::all();
+        }else{
+            $assets = Asset::where('wilayah_id',Auth()->user()->wilayah_id)->get();
+        }
         return $assets->map(function ($asset) {
             return [
                 'Kode Aset' => $asset->kode_aset,

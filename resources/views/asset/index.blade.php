@@ -11,7 +11,7 @@
                                 <h3>Manajemen Asset</h3>
                             </div>
                         </div>
-                        
+
                         <div class="card-body">
                             <div>
                                 <a href="{{ route('asset.create') }}" class="btn btn-success mb-3">
@@ -44,7 +44,7 @@
                                         @foreach ($assets as $asset)
                                             <tr>
                                                 <td>{{ $asset->id }}</td>
-                                                <td>{{ $asset->wilayah }}</td>
+                                                <td>{{ $asset->assetWilayah->nama_wilayah}}</td>
                                                 <td>{{ $asset->nama_aset }}</td>
                                                 <td>{{ $asset->jenis_aset }}</td>
                                                 <td>{{ $asset->kode_aset }}</td>
@@ -69,7 +69,7 @@
                     </div>
                 </div>
             </div>
-            
+
         </div>
 
     </section>

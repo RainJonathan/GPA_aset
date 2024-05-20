@@ -16,12 +16,14 @@
                 </p>
             </a>
             <ul class="nav nav-treeview">
-                <li class="nav-item">
-                    <a href="{{ route('wilayah.index') }}" class="nav-link @if(request()->routeIs('wilayah.*')) active @endif">
-                        <i class="nav-icon fas fa-map-marked-alt"></i>
-                        <p>Wilayah</p>
-                    </a>
-                </li>
+                @if (Auth()->user()->role == 1)
+                    <li class="nav-item">
+                        <a href="{{ route('wilayah.index') }}" class="nav-link @if(request()->routeIs('wilayah.*')) active @endif">
+                            <i class="nav-icon fas fa-map-marked-alt"></i>
+                            <p>Wilayah</p>
+                        </a>
+                    </li>
+                @endif
                 <li class="nav-item">
                     <a href="{{ route('host.index') }}" class="nav-link @if(request()->routeIs('host.*')) active @endif">
                         <i class="nav-icon fas fa-users"></i>
@@ -36,7 +38,7 @@
                 </li>
             </ul>
         </li>
-        
+
 
         <li class="nav-item @if(request()->routeIs('tiket.index')) menu-open @endif">
             <a href="#" class="nav-link">
