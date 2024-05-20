@@ -6,21 +6,40 @@ use App\Models\Asset;
 use App\Models\Tiket;
 use App\Models\Overseer;
 use App\Models\TiketImage;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class TiketController extends Controller
 {
     public function index()
     {
-        $tickets = Tiket::all();
+        $user = Auth::user();
+
+        if ($user->role == 1) {
+            // If the user has a role of 1, get all tickets
+            $tickets = Tiket::all();
+        } else {
+            // Otherwise, get tickets associated with assets where wilayah_id matches the user's wilayah_id
+            $tickets = Tiket::whereHas('asset', function($query) use ($user) {
+                $query->where('wilayah_id', $user->wilayah_id);
+            })->get();
+        }
         return view('tiket.index', compact('tickets'));
+
     }
 
     public function create()
     {
-        $assets = Asset::all();
-        $overseers = Overseer::all();
+        if(Auth()->user()->role == 1){
+            $assets = Asset::all();
+            $overseers = User::all();
+        }else{
+            $assets = Asset::where('wilayah_id',Auth()->user()->wilayah_id)->get();
+            $overseers = User::where('wilayah_id',Auth()->user()->wilayah_id)->get();
+        }
+
         return view('tiket.create', compact('assets', 'overseers'));
     }
 
@@ -32,7 +51,7 @@ class TiketController extends Controller
             'penyelesaian' => 'nullable',
             'biaya_perbaikan' => 'nullable',
             'status' => 'required',
-            'issue_by' => 'required|exists:is_user,id',
+            'user_id' => 'required|exists:users,id',
             'before_photo' => 'required|array',
             'before_photo.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
@@ -45,9 +64,9 @@ class TiketController extends Controller
                 $identifier = uniqid();
                 $extension = $photo->getClientOriginalExtension();
                 $filename = "{$tiket->id}_img_{$timestamp}_{$identifier}.{$extension}";
-        
+
                 $path = $photo->storeAs('', $filename, 'before_photo');
-        
+
                 $tiketPhoto = new TiketImage();
                 $tiketPhoto->tiket_id = $tiket->id;
                 $tiketPhoto->before_photo = $path;
@@ -64,8 +83,13 @@ class TiketController extends Controller
 
     public function edit(Tiket $tiket)
     {
-        $assets = Asset::all();
-        $overseers = Overseer::all();
+        if(Auth()->user()->role == 1){
+            $assets = Asset::all();
+            $overseers = User::all();
+        }else{
+            $assets = Asset::where('wilayah_id',Auth()->user()->wilayah_id)->get();
+            $overseers = User::where('wilayah_id',Auth()->user()->wilayah_id)->get();
+        }
         return view('tiket.edit', compact('tiket', 'assets', 'overseers'));
     }
 
@@ -77,7 +101,7 @@ class TiketController extends Controller
             'penyelesaian' => 'nullable',
             'biaya_perbaikan' => 'nullable',
             'status' => 'required',
-            'issue_by' => 'required|exists:is_user,id',
+            'user_id' => 'required|exists:users,id',
             'before_photo' => 'nullable|array',
             'before_photo.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'after_photo' => 'nullable|array',
@@ -89,36 +113,36 @@ class TiketController extends Controller
         if ($request->hasFile('before_photo')) {
             // Delete existing before photos
             $tiket->photo()->whereNotNull('before_photo')->delete();
-    
+
             // Save new before photos
             foreach ($request->file('before_photo') as $photo) {
                 $timestamp = now()->format('YmdHis');
                 $identifier = uniqid();
                 $extension = $photo->getClientOriginalExtension();
                 $filename = "{$tiket->id}_img_{$timestamp}_{$identifier}.{$extension}";
-        
+
                 $path = $photo->storeAs('', $filename, 'before_photo');
-        
+
                 $tiketPhoto = new TiketImage();
                 $tiketPhoto->tiket_id = $tiket->id;
                 $tiketPhoto->before_photo = $path;
                 $tiketPhoto->save();
             }
         }
-    
+
         if ($request->hasFile('after_photo')) {
             // Delete existing after photos
             $tiket->photo()->whereNotNull('after_photo')->delete();
-    
+
             // Save new after photos
             foreach ($request->file('after_photo') as $photo) {
                 $timestamp = now()->format('YmdHis');
                 $identifier = uniqid();
                 $extension = $photo->getClientOriginalExtension();
                 $filename = "{$tiket->id}_img_{$timestamp}_{$identifier}.{$extension}";
-        
+
                 $path = $photo->storeAs('', $filename, 'after_photo');
-        
+
                 $tiketPhoto = new TiketImage();
                 $tiketPhoto->tiket_id = $tiket->id;
                 $tiketPhoto->after_photo = $path;

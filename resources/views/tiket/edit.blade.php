@@ -29,7 +29,7 @@
                                 <label for="keterangan">Keterangan Perbaikan:</label>
                                 <input type="text" class="form-control" id="keterangan" name="keterangan" value="{{ $tiket->keterangan }}" placeholder="Apa yang perlu diperbaiki">
                             </div>
-                
+
                             <div class="form-group">
                                 <label for="status">Status Perbaikan:</label>
                                 <select class="form-control" id="status" name="status" required>
@@ -49,11 +49,11 @@
                                 <input type="number" class="form-control" id="biaya_perbaikan" name="biaya_perbaikan" value="{{ $tiket->biaya_perbaikan }}" placeholder="Berapa biaya perbaikannya?">
                             </div>
                             <div class="form-group">
-                                <label for="issue_by">Pelapor:</label>
-                                <select class="form-control" id="issue_by" name="issue_by">
+                                <label for="user_id">Pelapor:</label>
+                                <select class="form-control" id="user_id" name="user_id">
                                     <option value="">Select Pelapor</option>
                                     @foreach($overseers as $overseer)
-                                        <option value="{{ $overseer->id }}" {{ $tiket->issue_by == $overseer->id ? 'selected' : '' }}>{{ $overseer->nama_user }}</option>
+                                        <option value="{{ $overseer->id }}" {{ $tiket->user_id == $overseer->id ? 'selected' : '' }}>{{ $overseer->name }}</option>
                                     @endforeach
                                 </select>
                             </div>

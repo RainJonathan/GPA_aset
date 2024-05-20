@@ -18,7 +18,7 @@
                                 <i class="fas fa-plus"></i>
                                 <span>Tambah Penanggung Jawab</span>
                             </a>
-                            @if ($overseers->isEmpty())
+                            @if ($users->isEmpty())
                                     <div class="alert alert-info">
                                         Belum ada Penanggung Jawab
                                     </div>
@@ -28,29 +28,27 @@
                             <thead class="thead-fixed">
                                 <tr>
                                     <th>#</th>
-                                    <th>Username</th>
-                                    <th>NIK</th>
-                                    <th>Nama Penanggung Jawab</th>
+                                    <th>name</th>
+                                    <th>email</th>
                                     <th>Wilayah Tanggung Jawab</th>
                                     <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($overseers as $overseer)
+                                @foreach ($users as $user)
                                     <tr>
-                                        <td>{{ $overseer->id }}</td>
-                                        <td>{{ $overseer->username }}</td>
-                                        <td>{{ $overseer->nik }}</td>
-                                        <td>{{ $overseer->nama_user }}</td>
-                                        <td>{{ $overseer->wilayahKekuasaan->nama_wilayah }}</td>
-                                        <td>{{ $overseer->status }}</td>
+                                        <td>{{ $user->id }}</td>
+                                        <td>{{ $user->name }}</td>
+                                        <td>{{ $user->email }}</td>
+                                        <td>{{ $user->wilayahKekuasaan->nama_wilayah }}</td>
+                                        <td>{{ $user->status }}</td>
                                         <td>
-                                            <a href="{{ route('overseer.edit', $overseer->id) }}" class="btn btn-secondary btn-sm">Edit
+                                            <a href="{{ route('overseer.edit', $user->id) }}" class="btn btn-secondary btn-sm">Edit
                                             </a>
-                                            <a href="{{route('overseer.details', $overseer->id)}}" class="btn btn-primary btn-sm">Details
+                                            <a href="{{route('overseer.details', $user->id)}}" class="btn btn-primary btn-sm">Details
                                             </a>
-                                            <form action="{{ route('tiket.destroy', $overseer->id) }}" method="POST"
+                                            <form action="{{ route('overseer.destroy', $user->id) }}" method="POST"
                                                 style="display: inline-block;">
                                                 @csrf
                                                 @method('DELETE')

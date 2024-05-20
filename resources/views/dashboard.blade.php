@@ -68,7 +68,7 @@
             </div>
           </div>
         </div>
-        
+
       <!-- Asset Details -->
       <div class="col-lg-12">
         <div class="card card-info">

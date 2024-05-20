@@ -17,7 +17,7 @@
                         <table class="table">
                             <tr>
                                 <th>Nama Aset</th>
-                                <td>{{ $tiket->asset->name }}</td>
+                                <td>{{ $tiket->asset->nama_aset }}</td>
                             </tr>
                             <tr>
                                 <th>Keterangan</th>
@@ -36,9 +36,11 @@
                             <tr>
                                 <th>After Photos</th>
                                 <td>
-                                    @if($tiket->after_photo)
-                                        @foreach(json_decode($tiket->after_photo) as $photo)
-                                            <img src="{{ asset('after_photos/' . $tiket->photo->first()->after_photo) }}" alt="After Photo" style="max-width: 100px; margin-right: 10px;">
+                                    @if($tiket->photo->isNotEmpty())
+                                        @foreach($tiket->photo as $photo)
+                                            @if ($photo->after_photo != null)
+                                             <img src="{{ asset('after_photos/' . $photo->after_photo) }}" alt="After Photo" style="margin-right: 10px;">
+                                            @endif
                                         @endforeach
                                     @endif
                                 </td>
@@ -57,7 +59,7 @@
                             </tr>
                             <tr>
                                 <th>Issue By</th>
-                                <td>{{ $tiket->issue_by }}</td>
+                                <td>{{ $tiket->penanggungJawab->name }}</td>
                             </tr>
                         </table>
                     </div>

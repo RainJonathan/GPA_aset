@@ -17,7 +17,7 @@ class Tiket extends Model
         'penyelesaian',
         'biaya_perbaikan',
         'status',
-        'issue_by'
+        'user_id',
     ];
 
     public function asset()
@@ -30,6 +30,6 @@ class Tiket extends Model
     }
 
     public function penanggungJawab(){
-        return $this->hasMany(Overseer::class, 'issued_by');
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

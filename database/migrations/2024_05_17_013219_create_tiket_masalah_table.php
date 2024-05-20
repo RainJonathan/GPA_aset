@@ -18,7 +18,7 @@ return new class extends Migration
             $table->text('penyelesaian')->nullable();
             $table->integer('biaya_perbaikan')->nullable();
             $table->string('status');
-            $table->unsignedBigInteger('issue_by');
+            $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });
     }

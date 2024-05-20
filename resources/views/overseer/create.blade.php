@@ -14,27 +14,27 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="username">Username:</label>
-                                <input type="text" class="form-control" id="username" name="username" value="{{old('username')}}">
+                                <label for="email">Email:</label>
+                                <input type="text" class="form-control" id="email" name="email" value="{{old('email')}}">
                             </div>
                             <div class="form-group">
                                 <label for="nik">NIK:</label>
                                 <input type="text" class="form-control" id="nik" name="nik" value="{{old('nik')}}">
                             </div>
                             <div class="form-group">
-                                <label for="nama_user">Nama Penanggung Jawab:</label>
-                                <input type="text" class="form-control" id="nama_user" name="nama_user" value="{{old('nama_user')}}">
+                                <label for="name">Nama Penanggung Jawab:</label>
+                                <input type="text" class="form-control" id="name" name="name" value="{{old('name')}}">
                             </div>
                             <div class="form-group">
                                 <label for="password">Password:</label>
                                 <input type="text" class="form-control" id="password" name="password" value="{{old('password')}}">
                             </div>
                             <div class="form-group">
-                                <label for="id_wilayah">Wilayah Asset:</label>
-                                <select class="form-control" id="id_wilayah" name="id_wilayah">
+                                <label for="wilayah_id">Wilayah Asset:</label>
+                                <select class="form-control" id="wilayah_id" name="wilayah_id">
                                     <option value="">Select Wilayah</option>
                                     @foreach($wilayahs as $wilayah)
-                                        <option value="{{ $wilayah->id }}" {{ old('id_wilayah') == $wilayah->id ? 'selected' : '' }}>{{ $wilayah->nama_wilayah }}</option>
+                                        <option value="{{ $wilayah->id }}" {{ old('wilayah_id') == $wilayah->id ? 'selected' : '' }}>{{ $wilayah->nama_wilayah }}</option>
                                     @endforeach
                                 </select>
                             </div>

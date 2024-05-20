@@ -4,42 +4,50 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Wilayah;
-use App\Models\Overseer;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class OverseerController extends Controller
 {
     public function index(){
-        $overseers = Overseer::all();
-        return view('overseer.index', compact('overseers'));
+        $users = User::all();
+        return view('overseer.index', compact('users'));
     }
 
     public function create(){
         $wilayahs = Wilayah::all();
         return view('overseer.create', compact('wilayahs'));
     }
-    
+
     public function store(Request $request){
         $request->validate([
-            'username' => 'required',
+            'email' => 'required',
             'nik' => 'required',
-            'nama_user' => 'required',
+            'name' => 'required',
             'password' => 'required',
-            'id_wilayah' => 'exists:wilayahs,id',
+            'wilayah_id' => 'exists:wilayahs,id',
             'status' => 'required',
         ]);
-
-        Overseer::create($request->all());
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => 2,
+            'wilayah_id' => $request->wilayah_id,
+            'nik' => $request->nik,
+            'status' => $request->status
+        ]);
 
         return redirect()->route('overseer.index')
                          ->with('success', 'Penanggung Jawab created successfully.');
     }
 
-    public function edit(Overseer $overseer){
+    public function edit(User $user){
         $wilayahs = Wilayah::all();
-        return view('overseer.edit', compact('overseer', 'wilayahs'));
+        return view('overseer.edit', compact('user', 'wilayahs'));
     }
 
-    public function update(Request $request, Overseer $overseer){
+    public function update(Request $request, User $user){
         $request->validate([
             'username' => 'required',
             'nik' => 'required',
@@ -49,14 +57,22 @@ class OverseerController extends Controller
             'status' => 'required'
         ]);
 
-        $overseer->update($request->all());
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => 2,
+            'wilayah_id' => $request->wilayah_id,
+            'nik' => $request->nik,
+            'status' => $request->status
+        ]);
 
         return redirect()->route('overseer.index')
-                         ->with('success', 'Penanggung Jawab created successfully.');
+                         ->with('success', 'Penanggung Jawab updated successfully.');
     }
 
-    public function destroy(Overseer $overseers){
-        $overseers->delete();
+    public function destroy(User $users){
+        $users->delete();
 
         return redirect()->route('overseer.index')
             ->with('success', 'PenanggungJawab deleted successfully');    }

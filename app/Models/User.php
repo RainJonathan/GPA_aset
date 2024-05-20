@@ -20,6 +20,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'wilayah_id',
+        'role',
+        'nik',
+        'status'
     ];
 
     /**
@@ -43,5 +47,13 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function wilayahKekuasaan(){
+        return $this->belongsTo(Wilayah::class, 'wilayah_id');
+    }
+
+    public function AssetPenaJawab(){
+        return $this->belongsTo(Tiket::class, 'issue_by');
     }
 }

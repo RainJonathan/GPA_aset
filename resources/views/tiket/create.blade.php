@@ -39,11 +39,11 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="issue_by">Pelapor:</label>
-                                <select class="form-control" id="issue_by" name="issue_by">
+                                <label for="user_id">Pelapor:</label>
+                                <select class="form-control" id="user_id" name="user_id">
                                     <option value="">Select Pelapor</option>
                                     @foreach($overseers as $overseer)
-                                        <option value="{{ $overseer->id }}">{{ $overseer->nama_user }}</option>
+                                        <option value="{{ $overseer->id }}">{{ $overseer->name }}</option>
                                     @endforeach
                                 </select>
                             </div>

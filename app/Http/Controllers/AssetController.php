@@ -18,7 +18,11 @@ class AssetController extends Controller
 {
     public function index()
     {
-        $assets = Asset::all();
+        if(Auth()->user()->role == 1){
+            $assets = Asset::all();
+        }else{
+            $assets = Asset::where('wilayah_id',Auth()->user()->wilayah_id)->get();
+        }
         return view('asset.index', compact('assets'));
     }
 
@@ -56,9 +60,9 @@ class AssetController extends Controller
                 $identifier = uniqid();
                 $extension = $photo->getClientOriginalExtension();
                 $filename = "{$asset->id}_img_{$timestamp}_{$identifier}.{$extension}";
-        
+
                 $path = $photo->storeAs('', $filename, 'public');
-        
+
                 $assetPhoto = new AssetPhoto();
                 $assetPhoto->asset_id = $asset->id;
                 $assetPhoto->photo_path = $path;
@@ -93,7 +97,7 @@ class AssetController extends Controller
             'deskripsi_aset' => 'nullable|string',
             'pengeluaran' => 'nullable',
         ]);
-        
+
         if ($asset->host_id !== null) {
             AssetOwnershipHistory::create([
                 'asset_id' => $asset->id,
@@ -105,15 +109,15 @@ class AssetController extends Controller
         $asset->update($validatedData);
         if ($request->hasFile('photos')) {
             $asset->photos()->delete();
-        
+
             foreach ($request->file('photos') as $photo) {
                 $timestamp = now()->format('YmdHis');
                 $identifier = uniqid();
                 $extension = $photo->getClientOriginalExtension();
                 $filename = "{$asset->id}_img_{$timestamp}_{$identifier}.{$extension}";
-        
+
                 $path = $photo->storeAs('', $filename, 'public');
-        
+
                 $assetPhoto = new AssetPhoto();
                 $assetPhoto->asset_id = $asset->id;
                 $assetPhoto->photo_path = $path;
