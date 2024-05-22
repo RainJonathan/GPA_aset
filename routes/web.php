@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HostController;
@@ -33,7 +34,7 @@ Route::middleware('auth')->group(function () {
     //routes aset
     Route::get('/assets', [AssetController::class, 'index'])->name('asset.index');
     Route::get('/assets/create', [AssetController::class, 'create'])->name('asset.create');
-    Route::get('/assets/earning', [AssetController::class,'earning'])->name('asset.earning');
+    Route::get('/assets/earning', [AssetController::class, 'earning'])->name('asset.earning');
     Route::get('/assets/export', [AssetController::class, 'export'])->name('asset.export');
     Route::get('/asset/export-details', [AssetController::class, 'exportDetails'])->name('asset.exportDetails');
     Route::post('/assets', [AssetController::class, 'store'])->name('asset.store');
@@ -76,7 +77,18 @@ Route::middleware('auth')->group(function () {
     Route::delete('/overseer/{user}', [OverseerController::class, 'destroy'])->name('overseer.destroy');
     Route::get('/overseer/{user}', [OverseerController::class, 'details'])->name('overseer.details');
     Route::get('/overseer/{user}/edited', [OverseerController::class, 'edited'])->name('overseer.edited');
+
+    //Route Pengeluaran
+    Route::get('/pengeluaran', [PengeluaranController::class, 'index'])->name('pengeluaran.index');
+    Route::get('/pengeluaran/create', [PengeluaranController::class, 'create'])->name('pengeluaran.create');
+    Route::post('/pengeluaran', [PengeluaranController::class, 'store'])->name('pengeluaran.store');
+    Route::get('/pengeluaran/{pengeluaran}', [PengeluaranController::class, 'show'])->name('pengeluaran.show');
+    Route::get('/pengeluaran/{pengeluaran}/edit', [PengeluaranController::class, 'edit'])->name('pengeluaran.edit');
+    Route::put('/pengeluaran/{pengeluaran}', [PengeluaranController::class, 'update'])->name('pengeluaran.update');
+    Route::delete('/pengeluaran/{pengeluaran}', [PengeluaranController::class, 'destroy'])->name('pengeluaran.destroy');
+    Route::get('/pengeluaran/{pengeluaran}', [PengeluaranController::class, 'details'])->name('pengeluaran.details');
+    Route::get('/pengeluaran/{pengeluaran}/edited', [PengeluaranController::class, 'edited'])->name('pengeluaran.edited');
 });
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
