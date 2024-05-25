@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HostController;
@@ -8,7 +9,6 @@ use App\Http\Controllers\WilayahController;
 use App\Http\Controllers\TiketController;
 use App\Http\Controllers\OverseerController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\PengeluaranController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
@@ -31,7 +31,7 @@ Route::middleware('auth')->group(function () {
     //routes aset
     Route::get('/assets', [AssetController::class, 'index'])->name('asset.index');
     Route::get('/assets/create', [AssetController::class, 'create'])->name('asset.create');
-    Route::get('/assets/earning', [AssetController::class,'earning'])->name('asset.earning');
+    Route::get('/assets/earning', [AssetController::class, 'earning'])->name('asset.earning');
     Route::get('/assets/export', [AssetController::class, 'export'])->name('asset.export');
     Route::get('/asset/export-details', [AssetController::class, 'exportDetails'])->name('asset.exportDetails');
     Route::post('/assets', [AssetController::class, 'store'])->name('asset.store');
@@ -87,4 +87,4 @@ Route::middleware('auth')->group(function () {
 });
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

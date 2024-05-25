@@ -32,7 +32,7 @@
                                 <label for="pengeluaran">Jumlah Pengeluaran:</label>
                                 <input type="text" class="form-control" id="pengeluaran" name="pengeluaran" value="{{ old('pengeluaran')}}" placeholder="Berapa Jumlah Pengeluaran">
                             </div>
-                            
+
                             <div class="form-group">
                                 <label for="updated_by">Pelapor:</label>
                                 <select class="form-control" id="updated_by" name="updated_by">
