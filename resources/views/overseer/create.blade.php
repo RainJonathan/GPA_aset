@@ -26,6 +26,10 @@
                                 <input type="text" class="form-control" id="name" name="name" value="{{old('name')}}">
                             </div>
                             <div class="form-group">
+                                <label for="username">Username:</label>
+                                <input type="text" class="form-control" id="username" username="name" value="{{old('name')}}">
+                            </div>
+                            <div class="form-group">
                                 <label for="password">Password:</label>
                                 <input type="text" class="form-control" id="password" name="password" value="{{old('password')}}">
                             </div>

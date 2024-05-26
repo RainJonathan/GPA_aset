@@ -28,6 +28,10 @@
                             <input type="text" class="form-control" id="name" name="name" value="{{ $user->name }}" required>
                         </div>
                         <div class="form-group">
+                            <label for="username">Username Baru?:</label>
+                            <input type="text" class="form-control" id="username" username="name" value="{{old('name')}}">
+                        </div>
+                        <div class="form-group">
                             <label for="password">Password Baru?:</label>
                             <input type="text" class="form-control" id="password" name="password" value="" required>
                         </div>

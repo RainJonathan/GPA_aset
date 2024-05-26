@@ -32,6 +32,7 @@
                                     <th>email</th>
                                     <th>Wilayah Tanggung Jawab</th>
                                     <th>Status</th>
+                                    <th>Username</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -43,6 +44,7 @@
                                         <td>{{ $user->email }}</td>
                                         <td>{{ $user->wilayahKekuasaan->nama_wilayah }}</td>
                                         <td>{{ $user->status }}</td>
+                                        <td>{{ $user->username }}</td>
                                         <td>
                                             <a href="{{ route('overseer.edit', $user->id) }}" class="btn btn-secondary btn-sm">Edit
                                             </a>

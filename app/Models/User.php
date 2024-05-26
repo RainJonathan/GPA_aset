@@ -23,7 +23,8 @@ class User extends Authenticatable
         'wilayah_id',
         'role',
         'nik',
-        'status'
+        'status',
+        'username'
     ];
 
     /**
