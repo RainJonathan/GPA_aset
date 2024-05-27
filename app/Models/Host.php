@@ -31,6 +31,7 @@ class Host extends Model
         'harga_bca_sgls',
         'saldo_piutang',
         'status_pengontrak',
+        'denda',
         'keterangan',
         'bulan',
         'status_aktif',

@@ -110,6 +110,11 @@
                                 <input type="date" class="form-control" id="tanggal_tunai" name="tanggal_tunai"
                                     value="{{ old('tanggal_mandiri') }}">
                             </div>
+
+                            <div class="form-group" id="denda-container" style="display: none;">
+                                <label for="denda">Denda Keterlambatan:</label>
+                                <input type="text" class="form-control" id="denda" name="denda" value="{{ old('denda') }}">
+                            </div>                            
                 
                             <div class="form-group">
                                 <label for="saldo_piutang">Status Saldo Piutang:</label>
@@ -293,7 +298,51 @@
                     tanggalMandiri.style.display = "none";
                 }
             });
+
+            function isDenda(date1, date2) {
+            var timeDiff = date2.getTime() - date1.getTime();
+            var dayDiff = timeDiff / (1000 * 3600 * 24);
+            return dayDiff > 4;
+        }
+        function checkDenda() {
+            var startDate = new Date(tglAwal.value);
+            var showDenda = false;
+
+            if (tanggalBca.value) {
+                var bcaDate = new Date(tanggalBca.value);
+                showDenda = showDenda || isDenda(startDate, bcaDate);
+            }
+
+            if (tanggalBri.value) {
+                var briDate = new Date(tanggalBri.value);
+                showDenda = showDenda || isDenda(startDate, briDate);
+            }
+
+            if (tanggalMandiri.value) {
+                var mandiriDate = new Date(tanggalMandiri.value);
+                showDenda = showDenda || isDenda(startDate, mandiriDate);
+            }
+
+            if (tanggalTunai.value) {
+                var tunaiDate = new Date(tanggalTunai.value);
+                showDenda = showDenda || isDenda(startDate, tunaiDate);
+            }
+
+            if (showDenda) {
+                dendaContainer.style.display = "block";
+            } else {
+                dendaContainer.style.display = "none";
+            }
+        }
+
+        // Add event listeners to payment date fields
+        [tglAwal, tanggalBca, tanggalBri, tanggalMandiri, tanggalTunai].forEach(function(element) {
+            element.addEventListener("change", checkDenda);
         });
+
+
+        });
+
 
 </script>
 

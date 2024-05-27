@@ -29,6 +29,7 @@ return new class extends Migration
             $table->decimal('harga_mandiri',10,0)->nullable();
             $table->string('tanggal_tunai')->nullable();
             $table->decimal('harga_tunai',10,0)->nullable();
+            $table->decimal('denda');
             $table->smallInteger('saldo_piutang');
             $table->smallInteger('status_pengontrak');
             $table->smallInteger('status_aktif')->default('1');
