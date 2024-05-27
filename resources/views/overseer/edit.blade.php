@@ -17,7 +17,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="email">Email Baru?:</label>
-                            <input type="text" class="form-control" id="username" name="username" value="{{ $user->email }}" required>
+                            <input type="text" class="form-control" id="email" name="email" value="{{ $user->email }}" required>
                         </div>
                         <div class="form-group">
                             <label for="nik">NIK Baru?:</label>
@@ -28,8 +28,8 @@
                             <input type="text" class="form-control" id="name" name="name" value="{{ $user->name }}" required>
                         </div>
                         <div class="form-group">
-                            <label for="username">Username Baru?:</label>
-                            <input type="text" class="form-control" id="username" username="name" value="{{old('name')}}">
+                            <label for="username">Username Baru?</label>
+                            <input type="text" class="form-control" id="username" name="username" value="{{$user->username}}" required>
                         </div>
                         <div class="form-group">
                             <label for="password">Password Baru?:</label>

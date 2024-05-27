@@ -7,11 +7,9 @@
             <div class="col-12">
                 <div class="card card-info">
                     <div class="card-header">
-                        <div class="card-title">
-                            <h3>Laman Perbaikan</h3>
-                        </div>
+                        <h3 class="card-title"> Halaman Perbaikan Aset</h3>
                     </div>
-
+                    
                     <div class="card-body">
                         <div>
                             <a href="{{ route('tiket.create') }}" class="btn btn-success mb-3">
@@ -64,8 +62,7 @@
                                 @endforeach
                             </tbody>
                         </table>
-                    @endif
-                        </div>
+                        @endif
                     </div>
                 </div>
             </div>

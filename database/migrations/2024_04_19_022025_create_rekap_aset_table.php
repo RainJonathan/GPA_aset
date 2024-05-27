@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('nama_aset');
             $table->string('jenis_aset');
             $table->string('kode_aset');
+            $table->string('status_penyewaan');
             $table->string('alamat');
             $table->integer('lantai')->nullable();
             $table->integer('no_rumah')->nullable();

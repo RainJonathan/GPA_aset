@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 use App\Models\Host;
 use App\Models\Tiket;
+use App\Models\Pengeluaran;
 use App\Models\AssetPhoto;
 
 class Asset extends Model
@@ -21,6 +22,7 @@ class Asset extends Model
         'nama_aset',
         'jenis_aset',
         'kode_aset',
+        'status_penyewaan',
         'alamat',
         'lantai',
         'no_rumah',
@@ -46,6 +48,10 @@ class Asset extends Model
     public function tickets()
     {
         return $this->hasMany(Tiket::class, 'id_aset');
+    }
+
+    public function pengeluaran(){
+        return $this->hasMany(Pengeluaran::class, 'id_aset');
     }
     public function previousOwners()
     {

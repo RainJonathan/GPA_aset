@@ -69,8 +69,13 @@
                                 <input type="text" class="form-control" id="kode_aset" name="kode_aset" value="{{ old('kode_aset')}}">
                             </div>
                             <div class="form-group">
-                                <label for="pengeluaran">Pengeluaran Aset:</label>
-                                <input type="number" class="form-control" id="pengeluaran" name="pengeluaran" value="{{ old('pengeluaran')}}">
+                                <label for="status_penyewaan">Status Sewa:</label>
+                                <select class="form-control" id="status_penyewaan" name="status_penyewaan" required>
+                                    <option value="">Pilih Status</option>
+                                    <option value="1" {{ old('status_penyewaan') == '1' ? 'selected' : '' }}>Mingguan</option>
+                                    <option value="2" {{ old('status_penyewaan') == '2' ? 'selected' : '' }}>Bulanan</option>
+                                    <option value="3" {{ old('status_penyewaan') == '3' ? 'selected' : '' }}>Tahunan</option>
+                                </select>
                             </div>
                         </div>
                     <div>

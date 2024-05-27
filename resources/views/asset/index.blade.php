@@ -41,9 +41,9 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($assets as $asset)
+                                        @foreach ($assets as $index=>$asset)
                                             <tr>
-                                                <td>{{ $asset->id }}</td>
+                                                <td>{{ $index+1}}</td>
                                                 <td>{{ $asset->assetWilayah->nama_wilayah}}</td>
                                                 <td>{{ $asset->nama_aset }}</td>
                                                 <td>{{ $asset->jenis_aset }}</td>

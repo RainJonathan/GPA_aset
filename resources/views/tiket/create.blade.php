@@ -18,7 +18,7 @@
                                     <option value="">Pilih Aset</option>
                                     @foreach($assets as $asset)
                                         <option value="{{ $asset->id }}" {{ old('id_aset') == $asset->id ? 'selected' : '' }}>
-                                            {{ $asset->nama_aset }} - {{ $asset->kode_aset }}
+                                            {{ $asset->kode_aset }} - {{$asset->alamat}}
                                         </option>
                                     @endforeach
                                 </select>

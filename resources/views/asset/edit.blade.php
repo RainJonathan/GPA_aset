@@ -54,6 +54,15 @@
                                     <input type="text" class="form-control" id="kode_aset" name="kode_aset" value="{{ $asset->kode_aset }}" required>
                                 </div>
                                 <div class="form-group">
+                                    <label for="status_penyewaan">Status Sewa:</label>
+                                    <select class="form-control" id="status_penyewaan" name="status_penyewaan" required>
+                                        <option value="">Pilih Status</option>
+                                        <option value="1" {{ $asset->status_penyewaan == '1' ? 'selected' : '' }}>Mingguan</option>
+                                        <option value="2" {{ $asset->status_penyewaan == '2' ? 'selected' : '' }}>Bulanan</option>
+                                        <option value="3" {{ $asset->status_penyewaan == '3' ? 'selected' : '' }}>Tahunan</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
                                     <label for="no_rumah">No Rumah:</label>
                                     <input type="text" class="form-control" id="no_rumah" name="no_rumah" value="{{ $asset->no_rumah }}">
                                 </div>

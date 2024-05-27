@@ -24,12 +24,14 @@ class OverseerController extends Controller
             'email' => 'required',
             'nik' => 'required',
             'name' => 'required',
+            'username' => 'required',
             'password' => 'required',
             'wilayah_id' => 'exists:wilayahs,id',
             'status' => 'required',
         ]);
         User::create([
             'name' => $request->name,
+            'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => 2,
@@ -49,9 +51,10 @@ class OverseerController extends Controller
 
     public function update(Request $request, User $user){
         $request->validate([
+            'email' => 'required',
             'username' => 'required',
             'nik' => 'required',
-            'nama_user' => 'required',
+            'name' => 'required',
             'password' => 'required',
             'id_wilayah' => 'exists:wilayahs,id',
             'status' => 'required'
@@ -59,6 +62,7 @@ class OverseerController extends Controller
 
         $user->update([
             'name' => $request->name,
+            'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => 2,

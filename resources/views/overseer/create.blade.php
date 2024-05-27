@@ -27,7 +27,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="username">Username:</label>
-                                <input type="text" class="form-control" id="username" username="name" value="{{old('name')}}">
+                                <input type="text" class="form-control" id="username" name="username" value="{{old('username')}}">
                             </div>
                             <div class="form-group">
                                 <label for="password">Password:</label>

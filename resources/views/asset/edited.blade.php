@@ -72,6 +72,20 @@
                       <td>{{ $asset->assetWilayah ? $asset->assetWilayah->nama_wilayah : 'N/A' }}</td>
                     </tr>
                     <tr>
+                      <th>Status Sewa</th>
+                      <td>
+                          @if ($asset->status_penyewaan == 1)
+                              Mingguan
+                          @elseif ($asset->status_penyewaan == 2)
+                              Bulanan
+                          @elseif ($asset->status_penyewaan == 3)
+                              Tahunan
+                          @else
+                              Tidak diketahui
+                          @endif
+                      </td>
+                    </tr>
+                    <tr>
                       <th>Status</th>
                       <td>{{ $asset->tuanRumah ? $asset->tuanRumah->aktif === 0 ? 'Tidak Aktif' : 'Aktif' : '-' }}</td>
                     </tr>

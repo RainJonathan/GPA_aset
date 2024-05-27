@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Asset;
 use App\Models\Tiket;
-use App\Models\Overseer;
 use App\Models\TiketImage;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -18,10 +17,8 @@ class TiketController extends Controller
         $user = Auth::user();
 
         if ($user->role == 1) {
-            // If the user has a role of 1, get all tickets
             $tickets = Tiket::all();
         } else {
-            // Otherwise, get tickets associated with assets where wilayah_id matches the user's wilayah_id
             $tickets = Tiket::whereHas('asset', function($query) use ($user) {
                 $query->where('wilayah_id', $user->wilayah_id);
             })->get();
@@ -111,10 +108,8 @@ class TiketController extends Controller
         $tiket->update($validatedData);
 
         if ($request->hasFile('before_photo')) {
-            // Delete existing before photos
             $tiket->photo()->whereNotNull('before_photo')->delete();
 
-            // Save new before photos
             foreach ($request->file('before_photo') as $photo) {
                 $timestamp = now()->format('YmdHis');
                 $identifier = uniqid();
@@ -131,10 +126,8 @@ class TiketController extends Controller
         }
 
         if ($request->hasFile('after_photo')) {
-            // Delete existing after photos
             $tiket->photo()->whereNotNull('after_photo')->delete();
 
-            // Save new after photos
             foreach ($request->file('after_photo') as $photo) {
                 $timestamp = now()->format('YmdHis');
                 $identifier = uniqid();

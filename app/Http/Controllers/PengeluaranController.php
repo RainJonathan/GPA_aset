@@ -3,21 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Models\Asset;
-use App\Models\Overseer;
 use App\Models\Pengeluaran;
 use App\Models\User;
 use Illuminate\Http\Request;
 
 class PengeluaranController extends Controller
 {
-    //
     public function index()
     {
-        $pengeluarans = Pengeluaran::all();
+        if(Auth()->user()->role == 1){
+            $pengeluarans = Pengeluaran::all();
+        }else{
+            $pengeluarans = Pengeluaran::whereHas('asset', function ($query) {
+                $query->where('wilayah_id', Auth()->user()->wilayah_id);
+            })->get();
+        }
         return view('pengeluaran.index', compact('pengeluarans'));
     }
 
-    public function create(){
+    public function create()
+    {
         if(Auth()->user()->role == 1){
             $assets = Asset::all();
             $overseers = User::all();
@@ -29,7 +34,8 @@ class PengeluaranController extends Controller
     }
 
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $request->validate([
             'id_aset' => 'exists:rekap_aset,id',
             'pengeluaran' => 'required',
@@ -49,13 +55,8 @@ class PengeluaranController extends Controller
 
     public function edit(Pengeluaran $pengeluaran)
     {
-        if(Auth()->user()->role == 1){
-            $assets = Asset::all();
-            $overseers = User::all();
-        }else{
-            $assets = Asset::where('wilayah_id',Auth()->user()->wilayah_id)->get();
-            $overseers = User::where('wilayah_id',Auth()->user()->wilayah_id)->get();
-        }
+        $assets = Asset::all();
+        $overseers = User::all();
         return view('pengeluaran.edit', compact('pengeluaran', 'assets', 'overseers'));
     }
 
@@ -82,3 +83,5 @@ class PengeluaranController extends Controller
             ->with('success', 'Pengajuan deleted successfully');
     }
 }
+
+

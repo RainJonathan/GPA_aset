@@ -9,9 +9,10 @@ class Overseer extends Model
 {
     use HasFactory;
 
-    protected $table = "is_user";
+    protected $table = "users";
 
     protected $fillable = [
+        'email',
         'username',
         'nik',
         'nama_user',

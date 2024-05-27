@@ -43,7 +43,7 @@
         </li>
 
 
-        <li class="nav-item @if (request()->routeIs('tiket.index')) menu-open @endif">
+        <li class="nav-item @if (request()->routeIs('tiket.*') || request()->routeIs('pengeluaran.*')) menu-open @endif">
             <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-receipt"></i>
                 <p>Transaksi
@@ -59,7 +59,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('pengeluaran.index')}}" class="nav-link">
+                    <a href="{{ route('pengeluaran.index') }}" 
+                    class="nav-link @if (request()->routeIs('pengeluaran.*')) active @endif">
                         <i class="fas fa-money-bill-wave nav-icon"></i>
                         <p>Pengeluaran</p>
                     </a>

@@ -56,7 +56,7 @@
               <canvas id="sales-chart" height="500"></canvas>
             </div>
             <div class="float-left">
-              <a href="{{ route('asset.earning') }}" class="btn btn-primary">Export Pendapatan</a>
+              <a href="{{ route('asset.earning') }}" class="btn btn-primary">Detail Pendapatan</a>
             </div>
             <div class="d-flex flex-row justify-content-end">
               <span class="mr-2">
@@ -77,7 +77,7 @@
           </div>
           <div class="card-body">
               <table class="table" id="asset-table">
-                <thead class="thead-fixed">
+                <thead style="background-color: #F5F5F5">
                   <tr>
                     <th>#</th>
                     <th>Nama Aset</th>
@@ -88,9 +88,9 @@
                   </tr>
                 </thead>
                 <tbody>
-                  @foreach ($assets as $asset)
+                  @foreach ($assets as $index => $asset)
                   <tr class="asset-row" data-set-id="{{ $asset->id}}">
-                    <td>{{$asset->id}}</td>
+                    <td>{{$index+1}}</td>
                     <td>{{$asset->nama_aset}}</td>
                     <td>{{$asset->kode_aset}}</td>
                     <td>{{$asset->jenis_aset}}</td>
@@ -223,17 +223,5 @@ var barChartCanvas = $('#barChart').get(0).getContext('2d')
     })
 </script>
 
-<style>
-  .table-responsive {
-    max-height: 500px;
-    overflow-y: auto;
-}
-.thead-fixed {
-    position: sticky;
-    top: -10px;
-    background-color: #F5F5F5;
-  }
-
-</style>
 
 @endsection

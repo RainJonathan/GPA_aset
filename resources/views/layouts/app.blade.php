@@ -47,7 +47,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <img src="{{ asset('dist/img/avatar5.png') }}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Super Admin</a>
+          <a href="#" class="d-block">{{Auth()->user()->name}}</a>
         </div>
       </div>
 
@@ -76,8 +76,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->
     <div class="p-3">
-      <h5>Title</h5>
-      <p>Belum Ada Apa-apa</p>
+      <form method="POST" action="{{ route('logout') }}" class="d-inline">
+        @csrf
+        <button type="submit" class="nav-link btn btn-link" style="padding: 0; margin: 0; height: auto; color: inherit;">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+      </form>
     </div>
   </aside>
   <!-- /.control-sidebar -->

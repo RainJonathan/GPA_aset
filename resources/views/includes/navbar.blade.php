@@ -52,13 +52,15 @@
         </a>
       </li>
       <li class="nav-item">
-        <form method="POST" action="{{ route('logout') }}" class="d-inline">
+        <a class="nav-link" href="#" role="button">
+          <form method="POST" action="{{ route('logout') }}" class="d-inline">
             @csrf
             <button type="submit" class="nav-link btn btn-link" style="padding: 0; margin: 0; height: auto; color: inherit;">
-                <i class="fas fa-sign-out-alt"></i> Logout
+                <i class="fas fa-sign-out-alt"></i>
             </button>
-        </form>
-    </li>
+          </form>
+        </a>
+      </li>
     </ul>
   </nav>
   <!-- /.navbar -->

@@ -42,6 +42,7 @@ class AssetController extends Controller
             'nama_aset' => 'required',
             'jenis_aset' => 'required',
             'kode_aset' => 'required',
+            'status_penyewaan' => 'nullable',
             'alamat' => 'required',
             'lantai'=> 'nullable',
             'no_rumah' => 'nullable',
@@ -88,6 +89,7 @@ class AssetController extends Controller
             'nama_aset' => 'required',
             'jenis_aset' => 'required',
             'kode_aset' => 'required',
+            'status_penyewaan' => 'nullable',
             'alamat' => 'required',
             'lantai'=> 'nullable',
             'no_rumah' => 'nullable',
@@ -148,7 +150,11 @@ class AssetController extends Controller
     }
 
     public function earning(){
-        $assets = Asset::all();
+        if(Auth()->user()->role == 1){
+            $assets = Asset::all();
+        }else{
+            $assets = Asset::where('wilayah_id',Auth()->user()->wilayah_id)->get();
+        }
         return view('asset.earning', compact('assets'));
     }
 

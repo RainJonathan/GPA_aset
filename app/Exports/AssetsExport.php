@@ -22,7 +22,7 @@ class AssetsExport implements FromCollection, WithHeadings ,ShouldAutoSize
                 'Kode Aset' => $asset->kode_aset,
                 'Alamat Aset' => $asset->alamat,
                 'Jenis Aset' => $asset->jenis_aset,
-                'Wilayah' => $asset->wilayah,
+                'Wilayah' => $asset->assetWilayah->nama_wilayah,
                 'Pendapatan' => 'Rp ' . str_replace(',', ',-', number_format($asset->tuanRumah ? $asset->tuanRumah->harga_sewa : 0, 0, ',', '.')),
                 'Pengeluaran' => 'Rp ' . str_replace(',', ',-', number_format($asset->pengeluaran, 0, ',', '.')),
 
