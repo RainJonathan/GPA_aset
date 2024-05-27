@@ -28,8 +28,14 @@ class AssetController extends Controller
 
     public function create(Request $request)
     {
+        if(Auth()->user()->role == 1){
+            $assets = Asset::all();
+            $hosts = Host::all();
+        }else{
+            $assets = Asset::where('wilayah_id',Auth()->user()->wilayah_id)->get();
+            $hosts = Host::where('wilayah_id',Auth()->user()->wilayah_id)->get();
+        }
         $hostId = $request->input('hostId');
-        $hosts = Host::all();
         $wilayahs = Wilayah::all();
         return view('asset.create', compact('hosts', 'hostId', 'wilayahs'));
     }
@@ -76,7 +82,13 @@ class AssetController extends Controller
 
     public function edit(Asset $asset)
     {
-        $hosts = Host::all();
+        if(Auth()->user()->role == 1){
+            $assets = Asset::all();
+            $hosts = Host::all();
+        }else{
+            $assets = Asset::where('wilayah_id',Auth()->user()->wilayah_id)->get();
+            $hosts = Host::where('wilayah_id',Auth()->user()->wilayah_id)->get();
+        }
         $wilayahs = Wilayah::all();
         return view('asset.edit', compact('asset', 'hosts', 'wilayahs'));
     }

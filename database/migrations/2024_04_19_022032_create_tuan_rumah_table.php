@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nama_penyewa');
             $table->string('no_ktp');
             $table->string('no_tlp');
+            $table->bigInteger('wilayah_id');
             $table->date('tgl_awal');
             $table->date('tgl_akhir');
             $table->decimal('upah_jasa',10,0);

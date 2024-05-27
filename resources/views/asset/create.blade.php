@@ -17,7 +17,7 @@
                                 <select class="form-control" id="host_id" name="host_id">
                                     <option value="">No Host</option>
                                     @foreach ($hosts as $host)
-                                    <option value="{{ $host->id }}">{{ $host->nama_penyewa }}</option>
+                                    <option value="{{ $host->id }}" {{ old('host_id') == $host->id ? 'selected' : '' }}> {{ $host->nama_penyewa }} </option> 
                                     @endforeach
                                 </select>
                             </div>

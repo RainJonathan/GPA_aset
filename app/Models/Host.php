@@ -15,6 +15,7 @@ class Host extends Model
         'nama_penyewa',
         'no_ktp',
         'no_tlp',
+        'wilayah_id',
         'tgl_awal',
         'tgl_akhir',
         'upah_jasa',
@@ -38,5 +39,8 @@ class Host extends Model
     public function rekapAsets()
     {
         return $this->hasMany(Asset::class, 'id_transaksi', 'id');
+    }
+    public function wilayahPenyewa(){
+        return $this->belongsTo(Wilayah::class, 'wilayah_id');
     }
 }

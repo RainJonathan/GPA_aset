@@ -23,6 +23,15 @@
                                 <input type="text" class="form-control" id="no_ktp" name="no_ktp" value="{{ $host->no_ktp }}">
                             </div>
                             <div class="form-group">
+                                <label for="wilayah_id">Wilayah Penyewa:</label>
+                                <select class="form-control" id="wilayah_id" name="wilayah_id">
+                                    <option value="">Select Wilayah</option>
+                                    @foreach($wilayahs as $wilayah)
+                                        <option value="{{ $wilayah->id }}" {{ (old('wilayah_id') ?? $host->wilayah_id) == $wilayah->id ? 'selected' : '' }}>{{ $wilayah->nama_wilayah }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
                                 <label for="no_tlp">Nomor Telepon:</label>
                                 <input type="text" class="form-control" id="no_tlp" name="no_tlp" value="{{ $host->no_tlp }}">
                             </div>

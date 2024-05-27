@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Host;
 use App\Models\Asset;
+use App\Models\Wilayah;
 use App\Models\AssetOwnershipHistory;
 use Illuminate\Http\Request;
 
@@ -11,13 +12,18 @@ class HostController extends Controller
 {
     public function index()
     {
-        $hosts = Host::all();
+        if(Auth()->user()->role == 1){
+            $hosts = Host::all();
+        }else{
+            $hosts = Host::where('wilayah_id',Auth()->user()->wilayah_id)->get();
+        }
         return view('host.index', compact('hosts'));
     }
 
     public function create()
     {
-        return view('host.create');
+        $wilayahs = Wilayah::all();
+        return view('host.create', compact('wilayahs'));
     }
 
     public function store(Request $request, Host $host){
@@ -25,6 +31,7 @@ class HostController extends Controller
             'nama_penyewa' => 'required',
             'no_ktp' => 'required',
             'no_tlp' => 'required',
+            'wilayah_id' => 'exists:wilayahs,id',
             'tgl_awal' => 'required',
             'tgl_akhir' => 'required',
             'upah_jasa' => 'required',
@@ -51,7 +58,8 @@ class HostController extends Controller
 
     public function edit(Host $host)
     {
-        return view('host.edit', compact('host'));
+        $wilayahs = Wilayah::all();
+        return view('host.edit', compact('host', 'wilayahs'));
     }
 
     public function update(Request $request, Host $host)
@@ -60,6 +68,7 @@ class HostController extends Controller
             'nama_penyewa' => 'required',
             'no_ktp' => 'required',
             'no_tlp' => 'required',
+            'wilayah_id' => 'exists:wilayahs,id',
             'tgl_awal' => 'required',
             'tgl_akhir' => 'required',
             'upah_jasa' => 'required',
@@ -84,16 +93,20 @@ class HostController extends Controller
 
         if ($request->has('asset_id')) {
             $assetId = $request->input('asset_id');
-            $asset = Asset::with('previousOwners')->find($assetId);
-            if ($asset) {
+            $asset = Asset::find($assetId);
+    
+            if ($asset && $asset->host_id !== $host->id) {
                 AssetOwnershipHistory::create([
                     'asset_id' => $assetId,
-                    'previous_owner_id' => $host->id,
+                    'previous_owner_id' => $asset->host_id,
+                    'ownership_changed_at' => now(),
                 ]);
+    
+                $asset->update(['host_id' => $host->id]);
             }
         }
 
-        return redirect()->route('asset.index')
+        return redirect()->route('host.index')
                          ->with('success', 'Host updated successfully');
     }
 
