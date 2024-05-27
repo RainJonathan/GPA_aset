@@ -13,7 +13,7 @@
           <div class="card-body">
             <div class="col-mt-12">
               <div class="row">
-    
+
                 <!-- Foto -->
                 <!-- Foto Besar -->
                 <div class="col-md-4">
@@ -36,7 +36,7 @@
                     @endforelse
                   </div>
                 </div>
-    
+
                 <!-- Bagian Detail -->
                 <div class="col-md-8">
                   <table class="table border">
@@ -80,7 +80,7 @@
                     </tr>
                     <tr>
                       <th>Pengeluaran</th>
-                      <td>Rp. {{ number_format($asset->pengeluaran, 0, ',', '.') }}</td>
+                      <td>Rp. {{ number_format($asset->totalPengeluaran(), 0, ',', '.') }}</td>
                     </tr>
                   </table>
                 </div>
@@ -139,7 +139,7 @@
                         <td>{{ $previousOwner->upah_jasa }}</td>
                         <td>Rp {{ number_format($previousOwner->harga_sewa, 0, ',', '.') }}</td>
                         <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $previousOwner->tgl_awal)->format('d-m-Y') }}</td>
-                        <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $previousOwner->tgl_akhir)->format('d-m-Y') }}</td>     
+                        <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $previousOwner->tgl_akhir)->format('d-m-Y') }}</td>
                         <td>Rp {{ number_format($previousOwner->upah_jasa + $previousOwner->harga_sewa, 0, ',', '.') }}</td>
                         <td>{{ $previousOwner->saldo_piutang == 0 ? 'Tidak Lunas' : 'Lunas' }}</td>
                       </tr>
@@ -168,17 +168,17 @@
     const selectedIndex = clickedPhoto.dataset.key;
     const mainPhoto = document.getElementById('mainPhoto');
     const thumbnails = document.querySelectorAll('.thumbnails img');
-  
+
     mainPhoto.src = clickedPhoto.src;
     thumbnails.forEach(thumbnail => thumbnail.classList.remove('selected'));
-  
+
     clickedPhoto.classList.add('selected');
   }
 </script>
 
 <style>
   .scrollable-box {
-    max-height: 200px; 
+    max-height: 200px;
     overflow-y: auto;
     margin-bottom: 20px
   }

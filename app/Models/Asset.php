@@ -9,6 +9,7 @@ use App\Models\Host;
 use App\Models\Tiket;
 use App\Models\Pengeluaran;
 use App\Models\AssetPhoto;
+use PhpParser\Node\Stmt\Foreach_;
 
 class Asset extends Model
 {
@@ -63,5 +64,16 @@ class Asset extends Model
             'id',
             'previous_owner_id'
         )->orderBy('ownership_changed_at', 'desc');
+    }
+
+    public function totalPengeluaran(){
+        $total = 0;
+        foreach($this->tickets() as $item){
+            $total += $item->biaya_perbaikan;
+        }
+        foreach($this->pengeluaran() as $item){
+            $total += $item->pengeluaran;
+        }
+        return $total;
     }
 }
