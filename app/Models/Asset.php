@@ -33,7 +33,7 @@ class Asset extends Model
         'pengeluaran',
         'created_at',
         'updated_at'
-    ] ;
+    ];
 
     public function tuanRumah(){
         return $this->belongsTo(Host::class, 'host_id');
@@ -55,6 +55,7 @@ class Asset extends Model
     public function pengeluaran(){
         return $this->hasMany(Pengeluaran::class, 'id_aset');
     }
+
     public function previousOwners()
     {
         return $this->hasManyThrough(
@@ -75,6 +76,8 @@ class Asset extends Model
         foreach($this->pengeluaran()->whereMonth('created_at', Carbon::now()->month())->whereYear('created_at', Carbon::now()->year()) as $item){
             $total += $item->pengeluaran;
         }
+
         return $total;
     }
 }
+
