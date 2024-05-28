@@ -49,11 +49,11 @@ class Asset extends Model
 
     public function tickets()
     {
-        return $this->hasMany(Tiket::class, 'id_aset');
+        return $this->hasMany(Tiket::class, 'id_aset','id');
     }
 
     public function pengeluaran(){
-        return $this->hasMany(Pengeluaran::class, 'id_aset');
+        return $this->hasMany(Pengeluaran::class, 'id_aset','id');
     }
 
     public function previousOwners()
@@ -70,10 +70,10 @@ class Asset extends Model
 
     public function totalPengeluaran(){
         $total = 0;
-        foreach($this->tickets()->whereMonth('created_at', Carbon::now()->month())->whereYear('created_at', Carbon::now()->year()) as $item){
+        foreach($this->tickets->whereMonth('created_at', Carbon::now()->month())->whereYear('created_at', Carbon::now()->year()) as $item){
             $total += $item->biaya_perbaikan;
         }
-        foreach($this->pengeluaran()->whereMonth('created_at', Carbon::now()->month())->whereYear('created_at', Carbon::now()->year()) as $item){
+        foreach($this->pengeluaran->whereMonth('created_at', Carbon::now()->month())->whereYear('created_at', Carbon::now()->year()) as $item){
             $total += $item->pengeluaran;
         }
 
