@@ -11,9 +11,11 @@ class AssetsExport implements FromCollection, WithHeadings ,ShouldAutoSize
     public function collection()
     {
         if(Auth()->user()->role == 1){
-            $assets = Asset::all();
+            $assets = Asset::with(['tickets', 'pengeluaran'])->get();
         }else{
-            $assets = Asset::where('wilayah_id',Auth()->user()->wilayah_id)->get();
+            $assets = Asset::where('wilayah_id', Auth()->user()->wilayah_id)
+                        ->with(['tickets', 'pengeluaran'])
+                        ->get();
         }
 
         return $assets->map(function ($asset) {
@@ -24,7 +26,7 @@ class AssetsExport implements FromCollection, WithHeadings ,ShouldAutoSize
                 'Jenis Aset' => $asset->jenis_aset,
                 'Wilayah' => $asset->assetWilayah->nama_wilayah,
                 'Pendapatan' => 'Rp ' . str_replace(',', ',-', number_format($asset->tuanRumah ? $asset->tuanRumah->harga_sewa : 0, 0, ',', '.')),
-                'Pengeluaran' => 'Rp ' . str_replace(',', ',-', number_format($asset->pengeluaran, 0, ',', '.')),
+                'Pengeluaran' => 'Rp ' . str_replace(',', ',-', number_format($asset->totalPengeluaran(), 0, ',', '.')),
 
             ];
         });

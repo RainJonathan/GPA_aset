@@ -32,7 +32,7 @@
                     <td>{{ $asset->alamat }}</td>
                     <td>{{ $asset->kode_aset}}</td>
                     <td>{{ $asset->tuanRumah ? number_format($asset->tuanRumah->harga_sewa, 2, ',', '.') : '-' }}</td>
-                    <td>{{ $asset->pengeluaran ? number_format($asset->pengeluaran, 2, ',', '.') : '-' }}</td>
+                    <td>Rp. {{ number_format($asset->totalPengeluaran(), 2, ',', '.') }}</td>
                   </tr>
               @endforeach
               </tbody>

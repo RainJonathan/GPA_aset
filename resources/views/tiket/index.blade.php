@@ -27,6 +27,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Nama Asset</th>
+                                    <th>Kode Aset</th>
                                     <th>Keterangan</th>
                                     <th>Penyelesaian</th>
                                     <th>Biaya Perbaikan</th>
@@ -39,6 +40,7 @@
                                     <tr>
                                         <td>{{ $ticket->id }}</td>
                                         <td>{{ $ticket->asset->nama_aset }}</td>
+                                        <td>{{ $ticket->asset->kode_aset}}</td>
                                         <td>{{ $ticket->keterangan }}</td>
                                         <td>{{ $ticket->penyelesaian }}</td>
                                         <td>{{ $ticket->biaya_perbaikan }}</td>

@@ -26,8 +26,9 @@ class HostController extends Controller
         return view('host.create', compact('wilayahs'));
     }
 
-    public function store(Request $request, Host $host){
-        $validateData = $request->validate([
+    public function store(Request $request, $asset)
+    {
+        $validatedData = $request->validate([
             'nama_penyewa' => 'required',
             'no_ktp' => 'required',
             'no_tlp' => 'required',
@@ -35,7 +36,6 @@ class HostController extends Controller
             'tgl_awal' => 'required',
             'tgl_akhir' => 'required',
             'upah_jasa' => 'required',
-            'harga_sewa' => 'required',
             'pendapatan_sewa'=> 'nullable',
             'tanggal_tunai'=> 'nullable',
             'harga_tunai'=>'nullable',
@@ -50,9 +50,14 @@ class HostController extends Controller
             'keterangan'=> '',
             'bulan'=> '',
             'status_aktif'=> '',
+            
         ]);
-        $host = Host::create($validateData);
-        return redirect()->route('host.index')
+        $host = Host::create($validatedData);
+        $assets = Asset::where('id', $asset)->first();
+        $assets->host_id = $host->id;
+        $assets->save();
+
+        return redirect()->route('asset.details', $asset)
                          ->with('success', 'Host created successfully.');
     }
 
@@ -72,7 +77,6 @@ class HostController extends Controller
             'tgl_awal' => 'required',
             'tgl_akhir' => 'required',
             'upah_jasa' => 'required',
-            'harga_sewa' => 'required',
             'pendapatan_sewa'=> 'nullable',
             'tanggal_tunai'=> 'nullable',
             'harga_tunai'=>'nullable',
