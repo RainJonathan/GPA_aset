@@ -21,8 +21,10 @@ Route::middleware('auth')->group(function () {
 
     //routes penyewa
     Route::get('/hosts', [HostController::class, 'index'])->name('host.index');
-    Route::get('/hosts/create', [HostController::class, 'create'])->name('host.create');
-    Route::post('/hosts', [HostController::class, 'store'])->name('host.store');
+    Route::get('/hosts/create/{asset}', [HostController::class, 'create'])->name('host.create');
+    Route::post('/hosts/{asset}', [HostController::class, 'store'])->name('host.store');
+    // Route::get('/hosts/create', [HostController::class, 'createWithoutAsset'])->name('host.createWithoutAsset');
+    // Route::get('/hosts', [HostController::class, 'storeWithoutAsset'])->name('host.storeWithoutAsset');
     Route::get('/hosts/{host}', [HostController::class, 'show'])->name('host.show');
     Route::get('/hosts/{host}/edit', [HostController::class, 'edit'])->name('host.edit');
     Route::put('/hosts/{host}', [HostController::class, 'update'])->name('host.update');

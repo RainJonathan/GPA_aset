@@ -9,9 +9,9 @@
                 <h3 class="card-title"> Tambah Penyewa </h3>
             </div>
             <div class="card-body">
-                {{-- <form action="{{ route('host.store', $asset) }}" method="POST"> --}}
+                <form action="{{ route('host.store', $asset) }}" method="POST">
 
-                <form action="{{ route('host.store') }}" method="POST">
+                {{-- <form action="{{ route('host.store') }}" method="POST"> --}}
                     @csrf
                     <div class="row">
                         <div class="col-md-6">
@@ -50,10 +50,18 @@
                                 <input type="text" class="form-control" id="upah_jasa" name="upah_jasa" value="{{ old('upah_jasa') }}"
                                     onkeyup="formatInput(this)">
                             </div>
+                            <!-- Add harga_sewa field -->
                             <div class="form-group">
                                 <label for="harga_sewa">Harga Sewa:</label>
-                                <input type="text" class="form-control" id="harga_sewa" name="harga_sewa" value="{{ old('upah_jasa') }}"
-                                    onkeyup="formatInput(this)">
+                                <input type="text" class="form-control" id="harga_sewa" name="harga_sewa" value="{{ old('harga_sewa') }}" onkeyup="formatInput(this)">
+                            </div>
+                            <div class="form-group">
+                                <label for="status_penyewaan">Status Penyewaan:</label>
+                                <select class="form-control" id="status_penyewaan" name="status_penyewaan">
+                                    <option value="Mingguan" {{ old('status_penyewaan') == 'Mingguan' ? 'selected' : '' }}>Mingguan</option>
+                                    <option value="Bulanan" {{ old('status_penyewaan') == 'Bulanan' ? 'selected' : '' }}>Bulanan</option>
+                                    <option value="Tahunan" {{ old('status_penyewaan') == 'Tahunan' ? 'selected' : '' }}>Tahunan</option>
+                                </select>
                             </div>
                         </div>
                         <div class="col-md-6">

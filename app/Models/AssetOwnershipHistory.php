@@ -8,12 +8,11 @@ class AssetOwnershipHistory extends Model
 {
     protected $table = "asset_ownership_histories";
 
-    public $timestamps = false;
-
     protected $fillable = [
         'asset_id',
         'previous_owner_id',
-        'ownership_changed_at',
+        'status_penyewaan',
+        'harga_sewa',
     ];
 
     public function asset()

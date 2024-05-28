@@ -15,10 +15,10 @@
 
                     <div class="card-body">
                         <div>
-                            <a href="{{ route('host.create') }}" class="btn btn-success mb-3">
+                            {{-- <a href="{{ route('host.create') }}" class="btn btn-success mb-3">
                                 <i class="fas fa-plus"></i>
                                 <span>Tambah Penyewa</span>
-                            </a>
+                            </a> --}}
                             @if ($hosts->isEmpty())
                                 <div class="alert alert-info">
                                     Tidak Ada Penyewa
@@ -33,8 +33,8 @@
                                     <th>No. Telepon</th>
                                     <th>Tanggal Masuk</th>
                                     <th>Tanggal Berakhir</th>
-                                    <th>Upah Jasa</th>
                                     <th>Harga Sewa</th>
+                                    {{-- <th>Harga Sewa</th> --}}
                                     <th>Status Saldo</th>
                                     <th>Status Pengontrak</th>
                                     <th>Aksi</th>
@@ -48,8 +48,8 @@
                                     <td>{{ $host->no_tlp }}</td>
                                     <td>{{ $host->tgl_awal }}</td>
                                     <td>{{ $host->tgl_akhir }}</td>
-                                    <td>{{ $host->upah_jasa }}</td>
-                                    <td>{{ $host->harga_sewa }}</td>
+                                    <td>{{ optional($host->previousOwner)->harga_sewa ?? 'N/A' }}</td>
+                                    {{-- <td>{{ $host->harga_sewa }}</td> --}}
                                     <td>{{ $host->saldo_piutang == 0 ? 'Tidak Lunas' : 'Lunas' }}</td>
                                     <td>{{ $host->status_pengontrak == 0 ? 'Perorangan' : 'Complimet' }}</td>                
                                     <td>

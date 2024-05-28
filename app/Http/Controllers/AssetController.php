@@ -151,7 +151,7 @@ class AssetController extends Controller
     }
     public function details(Asset $asset)
     {
-        $asset->load('assetWilayah');
+        $asset->load(['assetWilayah', 'tickets', 'pengeluaran']);
         return view('asset.details', compact('asset'));
     }
 
@@ -163,9 +163,11 @@ class AssetController extends Controller
 
     public function earning(){
         if(Auth()->user()->role == 1){
-            $assets = Asset::all();
+            $assets = Asset::with(['tickets', 'pengeluaran'])->get();
         }else{
-            $assets = Asset::where('wilayah_id',Auth()->user()->wilayah_id)->get();
+            $assets = Asset::where('wilayah_id', Auth()->user()->wilayah_id)
+                        ->with(['tickets', 'pengeluaran'])
+                        ->get();
         }
         return view('asset.earning', compact('assets'));
     }

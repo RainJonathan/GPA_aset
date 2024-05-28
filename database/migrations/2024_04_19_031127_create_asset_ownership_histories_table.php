@@ -14,7 +14,9 @@ class CreateAssetOwnershipHistoriesTable extends Migration
             $table->unsignedBigInteger('previous_owner_id');
             $table->foreign('asset_id')->references('id')->on('rekap_aset')->onDelete('cascade');
             $table->foreign('previous_owner_id')->references('id')->on('tuan_rumah')->onDelete('cascade');
-            $table->timestamp('ownership_changed_at')->useCurrent();
+            $table->decimal('harga_sewa',10,0);
+            $table->string('status_penyewaan');
+            $table->timestamps();
         });
     }
 

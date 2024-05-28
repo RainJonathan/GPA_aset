@@ -148,11 +148,11 @@
                   </table>
                 </div>
                 @endif
-                {{-- @if (!$asset->tuanRumah)
+                @if (!$asset->tuanRumah)
                   <div class="mt-4">
                     <a href="{{ route('host.create', $asset->id) }}" class="btn btn-primary">Tambah Penyewa</a>
                   </div>
-                @endif --}}
+                @endif
                 <a href="{{ route('dashboard') }}" class="btn btn-secondary mt-4">Back</a>
               </div>
             </div>

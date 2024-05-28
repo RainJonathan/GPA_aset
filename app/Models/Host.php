@@ -19,7 +19,6 @@ class Host extends Model
         'tgl_awal',
         'tgl_akhir',
         'upah_jasa',
-        'harga_sewa',
         'pendapatan_sewa',
         'tanggal_tunai',
         'harga_tunai',
@@ -40,6 +39,12 @@ class Host extends Model
     {
         return $this->hasMany(Asset::class, 'id_transaksi', 'id');
     }
+
+    public function previousOwner()
+    {
+        return $this->hasOne(AssetOwnershipHistory::class, 'previous_owner_id');
+    }
+
     public function wilayahPenyewa(){
         return $this->belongsTo(Wilayah::class, 'wilayah_id');
     }

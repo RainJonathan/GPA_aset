@@ -5,11 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-use App\Models\Host;
-use App\Models\Tiket;
-use App\Models\Pengeluaran;
-use App\Models\AssetPhoto;
-use PhpParser\Node\Stmt\Foreach_;
+use illuminate\Support\Facades\Log;
 
 class Asset extends Model
 {
@@ -32,7 +28,7 @@ class Asset extends Model
         'pengeluaran',
         'created_at',
         'updated_at'
-    ] ;
+    ];
 
     public function tuanRumah(){
         return $this->belongsTo(Host::class, 'host_id');
@@ -54,6 +50,7 @@ class Asset extends Model
     public function pengeluaran(){
         return $this->hasMany(Pengeluaran::class, 'id_aset');
     }
+
     public function previousOwners()
     {
         return $this->hasManyThrough(
@@ -63,17 +60,27 @@ class Asset extends Model
             'id',
             'id',
             'previous_owner_id'
-        )->orderBy('ownership_changed_at', 'desc');
+        )->orderBy('asset_id', 'desc');
     }
 
     public function totalPengeluaran(){
         $total = 0;
-        foreach($this->tickets() as $item){
-            $total += $item->biaya_perbaikan;
+    
+        if ($this->relationLoaded('tickets') && $this->tickets !== null) {
+            foreach($this->tickets as $item){
+                $total += $item->biaya_perbaikan;
+            }
+        } else {
+            Log::info('Tickets not loaded or null');
         }
-        foreach($this->pengeluaran() as $item){
-            $total += $item->pengeluaran;
+    
+        if ($this->relationLoaded('pengeluaran') && $this->pengeluaran !== null) {
+            foreach($this->pengeluaran as $item){
+                $total += $item->pengeluaran;
+            }
+        } else {
+            Log::info('Pengeluaran not loaded or null');
         }
         return $total;
-    }
+    }    
 }

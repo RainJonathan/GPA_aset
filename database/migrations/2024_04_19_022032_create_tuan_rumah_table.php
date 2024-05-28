@@ -19,8 +19,7 @@ return new class extends Migration
             $table->bigInteger('wilayah_id');
             $table->date('tgl_awal');
             $table->date('tgl_akhir');
-            $table->decimal('upah_jasa',10,0);
-            $table->decimal('harga_sewa',10,0);
+            $table->decimal('upah_jasa',10,0)->nullable();
             $table->string('tanggal_bca_sgls')->nullable();
             $table->decimal('harga_bca_sgls',10,0)->nullable();
             $table->string('tanggal_bca_leo')->nullable();
