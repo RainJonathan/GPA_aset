@@ -9,6 +9,7 @@ use App\Models\Host;
 use App\Models\Tiket;
 use App\Models\Pengeluaran;
 use App\Models\AssetPhoto;
+use Carbon\Carbon;
 use PhpParser\Node\Stmt\Foreach_;
 
 class Asset extends Model
@@ -68,10 +69,10 @@ class Asset extends Model
 
     public function totalPengeluaran(){
         $total = 0;
-        foreach($this->tickets() as $item){
+        foreach($this->tickets()->whereMonth('created_at', Carbon::now()->month())->whereYear('created_at', Carbon::now()->year()) as $item){
             $total += $item->biaya_perbaikan;
         }
-        foreach($this->pengeluaran() as $item){
+        foreach($this->pengeluaran()->whereMonth('created_at', Carbon::now()->month())->whereYear('created_at', Carbon::now()->year()) as $item){
             $total += $item->pengeluaran;
         }
         return $total;
