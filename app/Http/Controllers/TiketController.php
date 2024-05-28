@@ -106,7 +106,7 @@ class TiketController extends Controller
         ]);
 
         $tiket->update($validatedData);
-
+        $tiketPhoto = new TiketImage();
         if ($request->hasFile('before_photo')) {
             $tiket->photo()->whereNotNull('before_photo')->delete();
 
@@ -118,10 +118,8 @@ class TiketController extends Controller
 
                 $path = $photo->storeAs('', $filename, 'before_photo');
 
-                $tiketPhoto = new TiketImage();
                 $tiketPhoto->tiket_id = $tiket->id;
                 $tiketPhoto->before_photo = $path;
-                $tiketPhoto->save();
             }
         }
 
@@ -136,12 +134,12 @@ class TiketController extends Controller
 
                 $path = $photo->storeAs('', $filename, 'after_photo');
 
-                $tiketPhoto = new TiketImage();
                 $tiketPhoto->tiket_id = $tiket->id;
                 $tiketPhoto->after_photo = $path;
-                $tiketPhoto->save();
+
             }
         }
+        $tiketPhoto->save();
 
         return redirect()->route('tiket.index')->with('success', 'Pengajuan updated successfully.');
     }
