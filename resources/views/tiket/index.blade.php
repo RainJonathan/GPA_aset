@@ -26,12 +26,12 @@
                             <thead class="thead-fixed">
                                 <tr>
                                     <th>#</th>
-                                    <th>Nama Asset</th>
+                                    <th>Nama Aset</th>
+                                    <th>Kode Aset</th>
                                     <th>Keterangan</th>
                                     <th>Penyelesaian</th>
                                     <th>Biaya Perbaikan</th>
                                     <th>Status Perbaikan</th>
-                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -39,12 +39,12 @@
                                     <tr>
                                         <td>{{ $ticket->id }}</td>
                                         <td>{{ $ticket->asset->nama_aset }}</td>
+                                        <td>{{ $ticket->asset->kode_aset}}</td>
                                         <td>{{ $ticket->keterangan }}</td>
                                         <td>{{ $ticket->penyelesaian }}</td>
                                         <td>{{ $ticket->biaya_perbaikan }}</td>
                                         <td>{{ $ticket->status }}</td>
                                         <td>{{ $ticket->issue_by }}</td>
-
                                         <td>
                                             <a href="{{ route('tiket.edit', $ticket->id) }}" class="btn btn-secondary btn-sm">Update
                                             </a>

@@ -28,6 +28,7 @@
                                     <tr>
                                         <th>#</th>
                                         <th> Nama Aset </th>
+                                        <th>Kode Aset</th>
                                         <th> Jumlah Pengeluaran </th>
                                         <th> Keterangan </th>
                                         <th> Dilaporkan oleh </th>
@@ -39,6 +40,7 @@
                                         <tr>
                                             <td>{{ $pengeluaran->id }}</td>
                                             <td>{{ $pengeluaran->asset->nama_aset }}</td>
+                                            <td>{{$pengeluaran->asset->kode_aset}}</td>
                                             <td>{{ $pengeluaran->pengeluaran }}</td>
                                             <td>{{ $pengeluaran->keterangan }}</td>
                                             <td>{{ $pengeluaran->penanggungJawab->name }}</td>
@@ -46,8 +48,6 @@
                                                 <a href="{{ route('pengeluaran.edit', $pengeluaran->id) }}"
                                                     class="btn btn-secondary btn-sm">Update
                                                 </a>
-                                                {{-- <a href="{{route('pengeluaran.details', $pengeluaran->id)}}" class="btn btn-primary btn-sm">Details
-                                        </a> --}}
                                                 <form action="{{ route('pengeluaran.destroy', $pengeluaran->id) }}"
                                                     method="POST" style="display: inline-block;">
                                                     @csrf
