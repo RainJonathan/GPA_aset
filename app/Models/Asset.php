@@ -35,7 +35,8 @@ class Asset extends Model
         'updated_at'
     ];
 
-    public function tuanRumah(){
+    public function tuanRumah()
+    {
         return $this->belongsTo(Host::class, 'host_id');
     }
     public function photos()
@@ -43,19 +44,29 @@ class Asset extends Model
         return $this->hasMany(AssetPhoto::class, 'asset_id');
     }
 
-    public function assetWilayah(){
+    public function assetWilayah()
+    {
         return $this->belongsTo(Wilayah::class, 'wilayah_id');
     }
 
     public function tickets()
     {
-        return $this->hasMany(Tiket::class, 'id_aset','id');
+        return $this->hasMany(Tiket::class, 'id_aset', 'id');
     }
 
-    public function pengeluaran(){
-        return $this->hasMany(Pengeluaran::class, 'id_aset','id');
+    public function pengeluaran()
+    {
+        return $this->hasMany(Pengeluaran::class, 'id_aset', 'id');
+    }
+    public function ticketsfor()
+    {
+        return $this->hasMany(Tiket::class, 'id_aset', 'id')->whereMonth('created_at', Carbon::now()->months)->whereYear('created_at', Carbon::now()->year);
     }
 
+    public function pengeluaranfor()
+    {
+        return $this->hasMany(Pengeluaran::class, 'id_aset', 'id')->whereMonth('created_at', Carbon::now()->months)->whereYear('created_at', Carbon::now()->year);
+    }
     public function previousOwners()
     {
         return $this->hasManyThrough(
@@ -65,15 +76,16 @@ class Asset extends Model
             'id',
             'id',
             'previous_owner_id'
-        )->orderBy('ownership_changed_at', 'desc');
+        )->orderBy('asset_id', 'desc');
     }
 
-    public function totalPengeluaran(){
+    public function totalPengeluaran()
+    {
         $total = 0;
-        foreach($this->tickets->whereMonth('created_at', Carbon::now()->month())->whereYear('created_at', Carbon::now()->year()) as $item){
+        foreach ($this->ticketsfor as $item) {
             $total += $item->biaya_perbaikan;
         }
-        foreach($this->pengeluaran->whereMonth('created_at', Carbon::now()->month())->whereYear('created_at', Carbon::now()->year()) as $item){
+        foreach ($this->pengeluaranfor as $item) {
             $total += $item->pengeluaran;
         }
 
