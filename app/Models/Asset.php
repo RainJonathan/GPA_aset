@@ -60,12 +60,12 @@ class Asset extends Model
     }
     public function ticketsfor()
     {
-        return $this->hasMany(Tiket::class, 'id_aset', 'id')->whereMonth('created_at', Carbon::now()->months)->whereYear('created_at', Carbon::now()->year);
+        return $this->hasMany(Tiket::class, 'id_aset', 'id')->whereMonth('created_at', Carbon::now()->month)->whereYear('created_at', Carbon::now()->year);
     }
 
     public function pengeluaranfor()
     {
-        return $this->hasMany(Pengeluaran::class, 'id_aset', 'id')->whereMonth('created_at', Carbon::now()->months)->whereYear('created_at', Carbon::now()->year);
+        return $this->hasMany(Pengeluaran::class, 'id_aset', 'id')->whereMonth('created_at', Carbon::now()->month)->whereYear('created_at', Carbon::now()->year);
     }
     public function previousOwners()
     {
@@ -77,6 +77,11 @@ class Asset extends Model
             'id',
             'previous_owner_id'
         )->orderBy('asset_id', 'desc');
+    }
+
+    public function hostlatest()
+    {
+        return $this->belongsTo(AssetOwnershipHistory::class, 'id', 'asset_id')->latest('id');
     }
 
     public function totalPengeluaran()
