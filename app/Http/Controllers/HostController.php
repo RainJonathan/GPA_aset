@@ -16,8 +16,8 @@ class HostController extends Controller
             $hosts = Host::with('previousOwner')->get();
         } else {
             $hosts = Host::with('previousOwner')
-                        ->where('wilayah_id', Auth()->user()->wilayah_id)
-                        ->get();
+                ->where('wilayah_id', Auth()->user()->wilayah_id)
+                ->get();
         }
 
         return view('host.index', compact('hosts'));
@@ -27,10 +27,11 @@ class HostController extends Controller
     public function create($asset)
     {
         $wilayahs = Wilayah::all();
-        return view('host.create', compact('asset', 'wilayahs'));
+        $assets = Asset::find($asset);
+        return view('host.create', compact('asset', 'wilayahs', 'assets'));
     }
 
-    
+
     public function store(Request $request, $asset)
     {
         $validatedData = $request->validate([
@@ -38,26 +39,26 @@ class HostController extends Controller
             'no_ktp' => 'required',
             'no_tlp' => 'required',
             'wilayah_id' => 'exists:wilayahs,id',
-            'harga_sewa' => 'required', 
-            'status_penyewaan' => 'required', 
+            'harga_sewa' => 'required',
+            'status_penyewaan' => 'required',
             'tgl_awal' => 'required',
             'tgl_akhir' => 'required',
             'upah_jasa' => 'required',
-            'pendapatan_sewa'=> 'nullable',
-            'tanggal_tunai'=> 'nullable',
-            'harga_tunai'=>'nullable',
-            'tanggal_mandiri'=> 'nullable',
-            'harga_mandiri'=> 'nullable',
-            'tanggal_bca_leo'=> 'nullable',
-            'harga_bca_leo'=> 'nullable',
-            'tanggal_bca_sgls'  => 'nullable',
-            'harga_bca_sgls'=> 'nullable',
+            'pendapatan_sewa' => 'nullable',
+            'tanggal_tunai' => 'nullable',
+            'harga_tunai' => 'nullable',
+            'tanggal_mandiri' => 'nullable',
+            'harga_mandiri' => 'nullable',
+            'tanggal_bca_leo' => 'nullable',
+            'harga_bca_leo' => 'nullable',
+            'tanggal_bca_sgls' => 'nullable',
+            'harga_bca_sgls' => 'nullable',
             'saldo_piutang' => 'nullable',
             'status_pengontrak' => '',
-            'keterangan'=> '',
-            'bulan'=> '',
-            'status_aktif'=> '',
-            
+            'keterangan' => '',
+            'bulan' => '',
+            'status_aktif' => '',
+
         ]);
         $host = Host::create($validatedData);
         $assets = Asset::where('id', $asset)->first();
@@ -72,7 +73,7 @@ class HostController extends Controller
         ]);
 
         return redirect()->route('asset.details', $asset)
-                         ->with('success', 'Host created successfully.');
+            ->with('success', 'Host created successfully.');
     }
 
     public function edit(Host $host)
@@ -91,58 +92,59 @@ class HostController extends Controller
             'tgl_awal' => 'required',
             'tgl_akhir' => 'required',
             'upah_jasa' => 'required',
-            'harga_sewa' => 'required', 
-            'status_penyewaan' => 'required', 
-            'pendapatan_sewa'=> 'nullable',
-            'tanggal_tunai'=> 'nullable',
-            'harga_tunai'=>'nullable',
-            'tanggal_mandiri'=> 'nullable',
-            'harga_mandiri'=> 'nullable',
-            'tanggal_bca_leo'=> 'nullable',
-            'harga_bca_leo'=> 'nullable',
-            'tanggal_bca_sgls'  => 'nullable',
-            'harga_bca_sgls'=> 'nullable',
+            'harga_sewa' => 'required',
+            'status_penyewaan' => 'required',
+            'pendapatan_sewa' => 'nullable',
+            'tanggal_tunai' => 'nullable',
+            'harga_tunai' => 'nullable',
+            'tanggal_mandiri' => 'nullable',
+            'harga_mandiri' => 'nullable',
+            'tanggal_bca_leo' => 'nullable',
+            'harga_bca_leo' => 'nullable',
+            'tanggal_bca_sgls' => 'nullable',
+            'harga_bca_sgls' => 'nullable',
             'saldo_piutang' => 'nullable',
             'status_pengontrak' => '',
-            'keterangan'=> '',
-            'bulan'=> '',
-            'status_aktif'=> '',
+            'keterangan' => '',
+            'bulan' => '',
+            'status_aktif' => '',
         ]);
 
         $host->update($validatedData);
 
-    $assetId = $request->input('asset_id');
-    $asset = Asset::find($assetId);
+        $assetId = $request->input('asset_id');
+        $asset = Asset::find($assetId);
 
-    if ($asset && $asset->host_id !== $host->id) {
-        $existingHistory = $asset->ownershipHistory->first();
+        if ($asset && $asset->host_id !== $host->id) {
+            $existingHistory = $asset->ownershipHistory->first();
 
-        if ($existingHistory) {
-            $existingHistory->update([
-                'harga_sewa' => $request->input('harga_sewa'),
-                'status_penyewaan' => $request->input('status_penyewaan'),
-            ]);
-        } else {
-            AssetOwnershipHistory::create([
-                'asset_id' => $assetId,
-                'previous_owner_id' => $asset->host_id,
-                'harga_sewa' => $request->input('harga_sewa'),
-                'status_penyewaan' => $request->input('status_penyewaan'),
-            ]);
+            if ($existingHistory) {
+                $existingHistory->update([
+                    'harga_sewa' => $request->input('harga_sewa'),
+                    'status_penyewaan' => $request->input('status_penyewaan'),
+                ]);
+            } else {
+                AssetOwnershipHistory::create([
+                    'asset_id' => $assetId,
+                    'previous_owner_id' => $asset->host_id,
+                    'harga_sewa' => $request->input('harga_sewa'),
+                    'status_penyewaan' => $request->input('status_penyewaan'),
+                ]);
+            }
+
+            $asset->update(['host_id' => $host->id]);
         }
-
-        $asset->update(['host_id' => $host->id]);
-    }
 
 
         return redirect()->route('host.index')
-                         ->with('success', 'Host updated successfully');
+            ->with('success', 'Host updated successfully');
     }
 
-    public function destroy(Host $host){
+    public function destroy(Host $host)
+    {
         $host->delete();
 
         return redirect()->route('host.index')
-        ->with('success','Asset Deleted Succesfully');
+            ->with('success', 'Asset Deleted Succesfully');
     }
 }
