@@ -40,14 +40,11 @@
                                                 <td>{{ $wilayah->nama_wilayah }}</td>
                                                 <td>{{ $wilayah->kode_pos }}</td>
                                                 <td>
-                                                    <a href="{{ route('wilayah.edit', $wilayah->id) }}"
-                                                        class="btn btn-secondary btn-sm">Edit</a>
-                                                    <form action="{{ route('wilayah.destroy', $wilayah->id) }}" method="POST"
-                                                        style="display: inline-block;">
+                                                    <a href="{{ route('wilayah.edit', $wilayah->id) }}" class="btn btn-secondary btn-sm">Edit</a>
+                                                    <form action="{{ route('wilayah.destroy', $wilayah->id) }}" method="POST" style="display: inline-block;">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger btn-sm"
-                                                            onclick="return confirm('Are you sure you want to delete?')">Hapus</button>
+                                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete?')">Hapus</button>
                                                     </form>
                                                 </td>
                                             </tr>        

@@ -4,35 +4,44 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Asset;
+use App\Models\Host;
 use Illuminate\Support\Facades\DB;
 class DashboardController extends Controller
 {
     public function index()
     {
-        if(Auth()->user()->role == 1){
+        if (Auth()->user()->role == 1) {
             $assets = Asset::all();
             $dataAset = Asset::pluck('kode_aset');
-            $assetsWithHost = Asset::has('tuanRumah')->count();
-            $assetsWithoutHost = Asset::doesntHave('tuanRumah')->count();
+            $assetsWithHost = Host::whereNotNull('asset_id')->distinct('asset_id')->count('asset_id');
+            $assetsWithoutHost = Asset::count() - $assetsWithHost;
             $hargaSewaWithHost = $assets->map(function($asset) {
-                return $asset->tuanRumah ? $asset->tuanRumah->harga_sewa : 0;
+                $latestHistory = $asset->hostAssetHistories->first();
+                return $latestHistory ? $latestHistory->harga_sewa : 0;
             });
 
-            $pengeluaran = $assets->pluck('pengeluaran')->toArray();
-        }else{
-            $assets = Asset::where('wilayah_id',Auth()->user()->wilayah_id)->get();
-            $dataAset = Asset::where('wilayah_id',Auth()->user()->wilayah_id)->pluck('kode_aset');
-            $assetsWithHost = Asset::where('wilayah_id',Auth()->user()->wilayah_id)->has('tuanRumah')->count();
-            $assetsWithoutHost = Asset::where('wilayah_id',Auth()->user()->wilayah_id)->doesntHave('tuanRumah')->count();
-            $hargaSewaWithHost = $assets->where('wilayah_id',Auth()->user()->wilayah_id)->map(function($asset) {
-                return $asset->tuanRumah ? $asset->tuanRumah->harga_sewa : 0;
+            $pengeluaran = $assets->map(function($asset) {
+                return $asset->totalPengeluaran();
+            });
+        } else {
+            $assets = Asset::where('wilayah_id', Auth()->user()->wilayah_id)->get();
+            $dataAset = $assets->pluck('kode_aset');
+            $assetsWithHost = Host::where('wilayah_id', Auth()->user()->wilayah_id)
+                ->whereNotNull('asset_id')
+                ->distinct('asset_id')
+                ->count('asset_id');
+            $assetsWithoutHost = $assets->count() - $assetsWithHost;
+            $hargaSewaWithHost = $assets->map(function($asset) {
+                $latestHistory = $asset->hostAssetHistories->first();
+                return $latestHistory ? $latestHistory->harga_sewa : 0;
             });
 
-            $pengeluaran = $assets->where('wilayah_id',Auth()->user()->wilayah_id)->pluck('pengeluaran')->toArray();
+            $pengeluaran = $assets->map(function($asset) {
+                return $asset->totalPengeluaran();
+            });
         }
 
-
-
-        return view("dashboard", compact('assets', 'assetsWithHost', 'assetsWithoutHost', 'dataAset', 'hargaSewaWithHost', 'pengeluaran'));
+        return view('dashboard', compact('assets','dataAset', 'assetsWithHost', 'assetsWithoutHost', 'hargaSewaWithHost', 'pengeluaran'));
     }
+
 }

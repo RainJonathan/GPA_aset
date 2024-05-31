@@ -6,7 +6,7 @@ use App\Models\Asset;
 use App\Models\Host;
 use App\Models\Wilayah;
 use App\Models\AssetPhoto;
-use App\Models\AssetOwnershipHistory;
+use App\Models\HostAssetHistory;
 
 use App\Exports\AssetsExport;
 use App\Exports\DetailsExport;
@@ -43,7 +43,6 @@ class AssetController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'host_id' => 'nullable',
             'wilayah_id' => 'exists:wilayahs,id',
             'nama_aset' => 'required',
             'jenis_aset' => 'required',
@@ -61,6 +60,19 @@ class AssetController extends Controller
 
         $asset = Asset::create($validatedData);
 
+        //Untuk History
+        if ($request->filled('host_id')) {
+            HostAssetHistory::create([
+                'host_id' => $request->host_id,
+                'asset_id' => $asset->id,
+                'start_date' => now(),
+                'end_date' => null,
+                'harga_sewa' => $request->harga_sewa,
+                'status_penyewaan' => $request->status_penyewaan,
+            ]);
+        }
+
+        //Untuk Photo
         if ($request->hasFile('photos')) {
             foreach ($request->file('photos') as $photo) {
                 $timestamp = now()->format('YmdHis');
@@ -112,15 +124,21 @@ class AssetController extends Controller
             'pengeluaran' => 'nullable',
         ]);
 
-        if ($asset->host_id !== null) {
-            AssetOwnershipHistory::create([
+        $asset->update($validatedData);
+
+        //Untuk History
+        if ($request->filled('host_id')) {
+            HostAssetHistory::create([
+                'host_id' => $request->host_id,
                 'asset_id' => $asset->id,
-                'previous_owner_id' => $asset->host_id,
-                'ownership_changed_at' => now(),
+                'start_date' => $asset->updated_at, // assuming this is the update date
+                'end_date' => null,
+                'harga_sewa' => $request->harga_sewa,
+                'status_penyewaan' => $request->status_penyewaan,
             ]);
         }
 
-        $asset->update($validatedData);
+        //Untuk Foto
         if ($request->hasFile('photos')) {
             $asset->photos()->delete();
 
@@ -151,7 +169,7 @@ class AssetController extends Controller
     }
     public function details(Asset $asset)
     {
-        $asset->load(['assetWilayah', 'tickets', 'pengeluaran']);
+        $asset->load(['assetWilayah', 'tickets', 'pengeluaran','tuanRumah']);
         return view('asset.details', compact('asset'));
     }
 
@@ -161,13 +179,18 @@ class AssetController extends Controller
         return view('asset.edited', compact('asset', 'hosts'));
     }
 
-    public function earning(){
+    public function earning()
+    {
         if(Auth()->user()->role == 1){
-            $assets = Asset::with(['tickets', 'pengeluaran'])->get();
-        }else{
+            $assets = Asset::with(['tickets', 'pengeluaran', 'hostAssetHistories' => function($query) {
+                $query->latest();
+            }])->get();
+        } else {
             $assets = Asset::where('wilayah_id', Auth()->user()->wilayah_id)
-                        ->with(['tickets', 'pengeluaran'])
-                        ->get();
+                ->with(['tickets', 'pengeluaran', 'hostAssetHistories' => function($query) {
+                    $query->latest();
+                }])
+                ->get();
         }
         return view('asset.earning', compact('assets'));
     }

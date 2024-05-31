@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('rekap_aset', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('host_id')->nullable();
             $table->bigInteger('wilayah_id');
             $table->text('deskripsi_aset')->nullable();
             $table->string('nama_aset');

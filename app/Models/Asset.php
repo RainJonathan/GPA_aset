@@ -19,7 +19,6 @@ class Asset extends Model
     protected $table = "rekap_aset";
 
     protected $fillable = [
-        'host_id',
         'wilayah_id',
         'nama_aset',
         'jenis_aset',
@@ -36,53 +35,80 @@ class Asset extends Model
     ];
 
     public function tuanRumah(){
-        return $this->belongsTo(Host::class, 'host_id');
+        return $this->belongsTo(Host::class, 'asset_id');
     }
     public function photos()
     {
         return $this->hasMany(AssetPhoto::class, 'asset_id');
     }
 
-    public function assetWilayah(){
+    public function assetWilayah()
+    {
         return $this->belongsTo(Wilayah::class, 'wilayah_id');
     }
 
     public function tickets()
     {
-        return $this->hasMany(Tiket::class, 'id_aset');
+        return $this->hasMany(Tiket::class, 'id_aset', 'id');
     }
-
-    public function pengeluaran(){
-        return $this->hasMany(Pengeluaran::class, 'id_aset');
-    }
-
-    public function previousOwners()
+    public function ticketsfor()
     {
-        return $this->hasManyThrough(
-            Host::class,
-            AssetOwnershipHistory::class,
-            'asset_id',
-            'id',
-            'id',
-            'previous_owner_id'
-        )->orderBy('asset_id', 'desc');
+        return $this->hasMany(Tiket::class, 'id_aset', 'id')->whereMonth('created_at', Carbon::now()->month)->whereYear('created_at', Carbon::now()->year);
+    }
+
+    public function pengeluaran()
+    {
+        return $this->hasMany(Pengeluaran::class, 'id_aset', 'id');
+    }
+    public function pengeluaranfor()
+    {
+        return $this->hasMany(Pengeluaran::class, 'id_aset', 'id')->whereMonth('created_at', Carbon::now()->month)->whereYear('created_at', Carbon::now()->year);
     }
 
     public function totalPengeluaran()
     {
-        $currentMonth = Carbon::now()->month;
-        $currentYear = Carbon::now()->year;
-
-        $total = $this->tickets()
-            ->whereMonth('created_at', $currentMonth)
-            ->whereYear('created_at', $currentYear)
-            ->sum('biaya_perbaikan');
-
-        $total += $this->pengeluaran()
-            ->whereMonth('created_at', $currentMonth)
-            ->whereYear('created_at', $currentYear)
-            ->sum('pengeluaran');
+        $total = 0;
+        foreach ($this->ticketsfor as $item) {
+            $total += $item->biaya_perbaikan;
+        }
+        foreach ($this->pengeluaranfor as $item) {
+            $total += $item->pengeluaran;
+        }
 
         return $total;
     }
+    public function hostAssetHistories()
+    {
+        return $this->hasMany(HostAssetHistory::class, 'asset_id');
+    }
 }
+
+    // public function latestPreviousOwner()
+    // {
+    //     return $this->hasOneThrough(
+    //         Host::class,
+    //         AssetOwnershipHistory::class,
+    //         'asset_id',
+    //         'id',
+    //         'id',
+    //         'previous_owner_id'
+    //     )->orderBy('asset_ownership_histories.created_at', 'desc');
+    // }
+
+    // public function previousOwners()
+    // {
+    //     return $this->hasManyThrough(
+    //         Host::class,
+    //         AssetOwnershipHistory::class,
+    //         'asset_id', // Foreign key on AssetOwnershipHistory table
+    //         'id',       // Foreign key on Host table
+    //         'id',       // Local key on Asset table
+    //         'previous_owner_id' // Local key on AssetOwnershipHistory table
+    //     )->with('assetOwnershipHistories')
+    //     ->orderBy('asset_ownership_histories.created_at', 'desc');
+    // }
+
+    // public function hostlatest()
+    // {
+    //     return $this->belongsTo(AssetOwnershipHistory::class, 'id', 'asset_id')->latest('id');
+    // }

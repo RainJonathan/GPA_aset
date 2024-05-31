@@ -15,7 +15,7 @@
                     <div class="row">
                         <!--Kiri -->
                         <div class="col-md-6">
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label for="host_id">Penyewa:</label>
                                     <select class="form-control" id="host_id" name="host_id">
                                         <option value="">No Host</option>
@@ -23,7 +23,7 @@
                                         <option value="{{ $host->id }}" {{ $host->host_id == $host->id ? 'selected' : '' }}> {{ $host->nama_penyewa }} </option> 
                                         @endforeach
                                     </select>
-                                </div>
+                                </div> --}}
                                 
                                 <div class="form-group">
                                     <label for="nama_aset">Nama Aset:</label>
@@ -69,10 +69,6 @@
                                 <div class="form-group">
                                     <label for="lantai">Lantai:</label>
                                     <input type="text" class="form-control" id="lantai" name="lantai" value="{{ $asset->lantai }}">
-                                </div>
-                                <div class="form-group">
-                                    <label for="pengeluaran">Pengeluaran:</label>
-                                    <input type="number" class="form-control" id="pengeluaran" name="pengeluaran" value="{{ $asset->pengeluaran }}">
                                 </div>
                         </div>
 

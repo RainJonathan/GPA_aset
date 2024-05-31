@@ -46,16 +46,12 @@
                                         <td>{{ $user->status }}</td>
                                         <td>{{ $user->username }}</td>
                                         <td>
-                                            <a href="{{ route('overseer.edit', $user->id) }}" class="btn btn-secondary btn-sm">Edit
-                                            </a>
-                                            <a href="{{route('overseer.details', $user->id)}}" class="btn btn-primary btn-sm">Details
-                                            </a>
+                                            <a href="{{ route('overseer.edit', $user->id) }}" class="btn btn-secondary btn-sm">Edit</a>
                                             <form action="{{ route('overseer.destroy', $user->id) }}" method="POST"
                                                 style="display: inline-block;">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm"
-                                                    onclick="return confirm('Are you sure you want to delete?')">Hapus</button>
+                                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete?')">Hapus</button>
                                             </form>
                                         </td>
                                     </tr>

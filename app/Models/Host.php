@@ -12,6 +12,7 @@ class Host extends Model
     protected $table = "tuan_rumah";
 
     protected $fillable = [
+        'asset_id',
         'nama_penyewa',
         'no_ktp',
         'no_tlp',
@@ -31,18 +32,20 @@ class Host extends Model
         'saldo_piutang',
         'status_pengontrak',
         'keterangan',
-        'bulan',
         'status_aktif',
     ];
 
     public function rekapAsets()
     {
-        return $this->hasMany(Asset::class, 'id_transaksi', 'id');
+        return $this->hasMany(Asset::class, 'id');
     }
-
-    public function previousOwner()
+    public function hostAssetHistories()
     {
-        return $this->hasOne(AssetOwnershipHistory::class, 'previous_owner_id');
+        return $this->hasMany(HostAssetHistory::class, 'host_id');
+    }
+    public function latestActiveHostAssetHistory()
+    {
+        return $this->hasOne(HostAssetHistory::class)->whereNotNull('asset_id')->latest();
     }
 
     public function wilayahPenyewa(){

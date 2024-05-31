@@ -12,7 +12,7 @@
                     @csrf
                     <div class="row">
                         <div class="col-md-6">
-                            <div class="form-group">
+                            {{-- <div class="form-group">
                                 <label for="host_id">Nama Penyewa:</label>
                                 <select class="form-control" id="host_id" name="host_id">
                                     <option value="">No Host</option>
@@ -20,7 +20,7 @@
                                     <option value="{{ $host->id }}" {{ old('host_id') == $host->id ? 'selected' : '' }}> {{ $host->nama_penyewa }} </option> 
                                     @endforeach
                                 </select>
-                            </div>
+                            </div> --}}
                             <div class="form-group">
                                 <label for="nama_aset">Nama Aset:</label>
                                 <input type="text" class="form-control" id="nama_aset" name="nama_aset" value="{{ old('nama_aset')}}">
