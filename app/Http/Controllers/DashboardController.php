@@ -18,7 +18,7 @@ class DashboardController extends Controller
             $assetsWithHost = Host::whereNotNull('asset_id')->distinct('asset_id')->count('asset_id');
             $assetsWithoutHost = Asset::count() - $assetsWithHost;
             $hargaSewaWithHost = $assets->map(function ($asset) {
-                $latestHistory = $asset->hostAssetHistoriesMonthYear->first();
+                $latestHistory = $asset->hostAssetHistoriesMonthYear()->first();
                 return $latestHistory ? $latestHistory->harga_sewa : 0;
             });
 
@@ -34,7 +34,7 @@ class DashboardController extends Controller
                 ->count('asset_id');
             $assetsWithoutHost = $assets->count() - $assetsWithHost;
             $hargaSewaWithHost = $assets->map(function ($asset) {
-                $latestHistory = $asset->hostAssetHistoriesMonthYear->first();
+                $latestHistory = $asset->hostAssetHistoriesMonthYear()->first();
                 return $latestHistory ? $latestHistory->harga_sewa : 0;
             });
 

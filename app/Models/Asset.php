@@ -84,8 +84,12 @@ class Asset extends Model
     }
     public function hostAssetHistoriesMonthYear()
     {
-        return $this->hasMany(HostAssetHistory::class, 'asset_id')->whereMonth('created_at', Carbon::now()->month)->whereYear('created_at', Carbon::now()->year);
+        return $this->hasMany(HostAssetHistory::class, 'asset_id')
+                    ->whereMonth('created_at', Carbon::now()->month)
+                    ->whereYear('created_at', Carbon::now()->year)
+                    ->latest(); // Call latest() here
     }
+
 }
 
 // public function latestPreviousOwner()
