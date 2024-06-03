@@ -22,6 +22,7 @@ Route::middleware('auth')->group(function () {
     //routes penyewa
     Route::get('/hosts', [HostController::class, 'index'])->name('host.index');
     Route::get('/hosts/create', [HostController::class, 'create'])->name('host.create');
+    Route::get('/hosts/create/{id}', [HostController::class, 'createpop'])->name('host.createpop');
     Route::post('/hosts', [HostController::class, 'store'])->name('host.store');
     // Route::get('/hosts/create/{asset}', [HostController::class, 'create'])->name('host.create');
     // Route::post('/hosts/{asset}', [HostController::class, 'store'])->name('host.store');

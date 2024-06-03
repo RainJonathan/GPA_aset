@@ -36,6 +36,11 @@ class HostController extends Controller
         }
         return view('host.create', compact('wilayahs', 'assets'));
     }
+    public function createpop(string $asset)
+    {
+        $asset = Asset::findOrFail($asset);
+        return view('host.createpop', compact('asset'));
+    }
 
     public function store(Request $request)
     {
