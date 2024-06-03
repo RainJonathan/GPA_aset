@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Asset;
 use App\Models\Host;
 use Illuminate\Support\Facades\DB;
+
 class DashboardController extends Controller
 {
     public function index()
@@ -15,12 +17,12 @@ class DashboardController extends Controller
             $dataAset = Asset::pluck('kode_aset');
             $assetsWithHost = Host::whereNotNull('asset_id')->distinct('asset_id')->count('asset_id');
             $assetsWithoutHost = Asset::count() - $assetsWithHost;
-            $hargaSewaWithHost = $assets->map(function($asset) {
-                $latestHistory = $asset->hostAssetHistories->first();
+            $hargaSewaWithHost = $assets->map(function ($asset) {
+                $latestHistory = $asset->hostAssetHistoriesMonthYear->first();
                 return $latestHistory ? $latestHistory->harga_sewa : 0;
             });
 
-            $pengeluaran = $assets->map(function($asset) {
+            $pengeluaran = $assets->map(function ($asset) {
                 return $asset->totalPengeluaran();
             });
         } else {
@@ -31,17 +33,17 @@ class DashboardController extends Controller
                 ->distinct('asset_id')
                 ->count('asset_id');
             $assetsWithoutHost = $assets->count() - $assetsWithHost;
-            $hargaSewaWithHost = $assets->map(function($asset) {
-                $latestHistory = $asset->hostAssetHistories->first();
+            $hargaSewaWithHost = $assets->map(function ($asset) {
+                $latestHistory = $asset->hostAssetHistoriesMonthYear->first();
                 return $latestHistory ? $latestHistory->harga_sewa : 0;
             });
 
-            $pengeluaran = $assets->map(function($asset) {
+            $pengeluaran = $assets->map(function ($asset) {
                 return $asset->totalPengeluaran();
             });
         }
 
-        return view('dashboard', compact('assets','dataAset', 'assetsWithHost', 'assetsWithoutHost', 'hargaSewaWithHost', 'pengeluaran'));
+        return view('dashboard', compact('assets', 'dataAset', 'assetsWithHost', 'assetsWithoutHost', 'hargaSewaWithHost', 'pengeluaran'));
     }
 
 }

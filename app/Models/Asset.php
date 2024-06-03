@@ -34,7 +34,8 @@ class Asset extends Model
         'updated_at'
     ];
 
-    public function tuanRumah(){
+    public function tuanRumah()
+    {
         return $this->belongsTo(Host::class, 'asset_id');
     }
     public function photos()
@@ -81,34 +82,38 @@ class Asset extends Model
     {
         return $this->hasMany(HostAssetHistory::class, 'asset_id');
     }
+    public function hostAssetHistoriesMonthYear()
+    {
+        return $this->hasMany(HostAssetHistory::class, 'asset_id')->whereMonth('created_at', Carbon::now()->month)->whereYear('created_at', Carbon::now()->year);
+    }
 }
 
-    // public function latestPreviousOwner()
-    // {
-    //     return $this->hasOneThrough(
-    //         Host::class,
-    //         AssetOwnershipHistory::class,
-    //         'asset_id',
-    //         'id',
-    //         'id',
-    //         'previous_owner_id'
-    //     )->orderBy('asset_ownership_histories.created_at', 'desc');
-    // }
+// public function latestPreviousOwner()
+// {
+//     return $this->hasOneThrough(
+//         Host::class,
+//         AssetOwnershipHistory::class,
+//         'asset_id',
+//         'id',
+//         'id',
+//         'previous_owner_id'
+//     )->orderBy('asset_ownership_histories.created_at', 'desc');
+// }
 
-    // public function previousOwners()
-    // {
-    //     return $this->hasManyThrough(
-    //         Host::class,
-    //         AssetOwnershipHistory::class,
-    //         'asset_id', // Foreign key on AssetOwnershipHistory table
-    //         'id',       // Foreign key on Host table
-    //         'id',       // Local key on Asset table
-    //         'previous_owner_id' // Local key on AssetOwnershipHistory table
-    //     )->with('assetOwnershipHistories')
-    //     ->orderBy('asset_ownership_histories.created_at', 'desc');
-    // }
+// public function previousOwners()
+// {
+//     return $this->hasManyThrough(
+//         Host::class,
+//         AssetOwnershipHistory::class,
+//         'asset_id', // Foreign key on AssetOwnershipHistory table
+//         'id',       // Foreign key on Host table
+//         'id',       // Local key on Asset table
+//         'previous_owner_id' // Local key on AssetOwnershipHistory table
+//     )->with('assetOwnershipHistories')
+//     ->orderBy('asset_ownership_histories.created_at', 'desc');
+// }
 
-    // public function hostlatest()
-    // {
-    //     return $this->belongsTo(AssetOwnershipHistory::class, 'id', 'asset_id')->latest('id');
-    // }
+// public function hostlatest()
+// {
+//     return $this->belongsTo(AssetOwnershipHistory::class, 'id', 'asset_id')->latest('id');
+// }
