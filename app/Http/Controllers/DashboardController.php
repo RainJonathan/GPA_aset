@@ -34,7 +34,7 @@ class DashboardController extends Controller
                 ->count('asset_id');
             $assetsWithoutHost = $assets->count() - $assetsWithHost;
             $hargaSewaWithHost = $assets->map(function ($asset) {
-                $latestHistory = $asset->hostAssetHistoriesMonthYear->first();
+                $latestHistory = $asset->hostAssetHistoriesMonthYear->latest('id')->first();
                 return $latestHistory ? $latestHistory->harga_sewa : 0;
             });
 
