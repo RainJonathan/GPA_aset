@@ -169,8 +169,10 @@ class AssetController extends Controller
     }
     public function details(Asset $asset)
     {
-        $asset->load(['assetWilayah', 'tickets', 'pengeluaran','tuanRumah']);
-        return view('asset.details', compact('asset'));
+        $asset->load(['assetWilayah', 'tickets', 'pengeluaran']);
+        $host = Host::where('asset_id', $asset->id)->first();
+
+        return view('asset.details', compact('asset', 'host'));
     }
 
     public function edited(Asset $asset)

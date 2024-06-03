@@ -17,21 +17,14 @@ class HostController extends Controller
         if (Auth()->user()->role == 1) {
             $hosts = Host::with('hostAssetHistories')->get();
         } else {
-<<<<<<< HEAD
             $hosts = Host::with('hostAssetHistories')
                         ->where('wilayah_id', Auth()->user()->wilayah_id)
                         ->get();
-=======
-            $hosts = Host::with('previousOwner')
-                ->where('wilayah_id', Auth()->user()->wilayah_id)
-                ->get();
->>>>>>> 2bc0b8249eba037f2fe29b7780835969ad02d084
         }
 
         return view('host.index', compact('hosts'));
     }
 
-<<<<<<< HEAD
     public function create(){
         if(Auth()->user()->role == 1){
             $assets = Asset::all();
@@ -44,18 +37,6 @@ class HostController extends Controller
     }
 
     public function store(Request $request)
-=======
-
-    public function create($asset)
-    {
-        $wilayahs = Wilayah::all();
-        $assets = Asset::find($asset);
-        return view('host.create', compact('asset', 'wilayahs', 'assets'));
-    }
-
-
-    public function store(Request $request, $asset)
->>>>>>> 2bc0b8249eba037f2fe29b7780835969ad02d084
     {
         $validatedData = $request->validate([
             'asset_id' => 'nullable',
@@ -101,13 +82,7 @@ class HostController extends Controller
             'harga_sewa' => $validatedData['harga_sewa'],
             'status_penyewaan' => $validatedData['status_penyewaan'],
         ]);
-<<<<<<< HEAD
         return redirect()->route('host.index')->with('success', 'Host created successfully.');
-=======
-
-        return redirect()->route('asset.details', $asset)
-            ->with('success', 'Host created successfully.');
->>>>>>> 2bc0b8249eba037f2fe29b7780835969ad02d084
     }
 
     public function edit(Host $host)
@@ -153,7 +128,6 @@ class HostController extends Controller
         ]);
         $host->update($validatedData);
 
-<<<<<<< HEAD
         HostAssetHistory::create([
             'host_id' => $host->id,
             'asset_id' => $validatedData['asset_id'],
@@ -164,34 +138,6 @@ class HostController extends Controller
         ]);
 
         return redirect()->route('host.index')->with('success', 'Host updated successfully');
-=======
-        $assetId = $request->input('asset_id');
-        $asset = Asset::find($assetId);
-
-        if ($asset && $asset->host_id !== $host->id) {
-            $existingHistory = $asset->ownershipHistory->first();
-
-            if ($existingHistory) {
-                $existingHistory->update([
-                    'harga_sewa' => $request->input('harga_sewa'),
-                    'status_penyewaan' => $request->input('status_penyewaan'),
-                ]);
-            } else {
-                AssetOwnershipHistory::create([
-                    'asset_id' => $assetId,
-                    'previous_owner_id' => $asset->host_id,
-                    'harga_sewa' => $request->input('harga_sewa'),
-                    'status_penyewaan' => $request->input('status_penyewaan'),
-                ]);
-            }
-
-            $asset->update(['host_id' => $host->id]);
-        }
-
-
-        return redirect()->route('host.index')
-            ->with('success', 'Host updated successfully');
->>>>>>> 2bc0b8249eba037f2fe29b7780835969ad02d084
     }
 
     public function destroy(Host $host)
@@ -202,7 +148,6 @@ class HostController extends Controller
             ->with('success', 'Asset Deleted Succesfully');
     }
 }
-<<<<<<< HEAD
 // Exception
     // public function create($asset)
     // {
@@ -253,5 +198,3 @@ class HostController extends Controller
     //     return redirect()->route('asset.details', $asset)
     //                      ->with('success', 'Host created successfully.');
     // }
-=======
->>>>>>> 2bc0b8249eba037f2fe29b7780835969ad02d084

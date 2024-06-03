@@ -84,43 +84,39 @@
                                     </div>
                                 </div>
                             </div>
-
                             <hr>
-
+                            <!-- Penghuni sekarang -->
                             <div class="col-md-12">
                                 <h3>Penghuni Sekarang</h3>
-                                <table class="table">
-                                    <thead class="sticky-header">
-                                        <tr>
-                                            <th> Nama Penyewa </th>
-                                            <th> No Telepon </th>
-                                            <th> NIK </th>
-                                            <th> Tanggal Masuk </th>
-                                            <th> Tangggal Keluar </th>
-                                            <th> Harga Sewa</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @if ($latestHistory = $asset->hostAssetHistories->last())
-                                            <tr>
-                                                <td>{{ $latestHistory->host->nama_penyewa }}</td>
-                                                <td>{{ $latestHistory->host->no_tlp}}</td>
-                                                <td>{{ $latestHistory->host->no_ktp }}</td>
-                                                <td>{{ $latestHistory->host->tgl_awal }}</td>
-                                                <td>{{ $latestHistory->host->tgl_akhir }}</td>
-                                                <td>Rp {{number_format($latestHistory->harga_sewa,0,',','.') }}</td>
-                                            </tr>
-                                        @else
-                                            <tr>
-                                                <td colspan="3">Tidak ada riwayat penyewa</td>
-                                            </tr>
-                                        @endif
-                                    </tbody>
-                                </table>
+                                    @if($host)
+                                        <table class="table">
+                                            <thead class="sticky-header">
+                                                <tr>
+                                                    <th> Nama Penyewa </th>
+                                                    <th> No Telepon </th>
+                                                    <th> NIK </th>
+                                                    <th> Tanggal Masuk </th>
+                                                    <th> Tangggal Keluar </th>
+                                                    <th> Harga Sewa</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>{{ $host->nama_penyewa }}</td>
+                                                    <td>{{ $host->no_tlp }}</td>
+                                                    <td>{{ $host->no_ktp }}</td>
+                                                    <td>{{ $host->tgl_awal }}</td>
+                                                    <td>{{ $host->tgl_akhir }}</td>
+                                                    <td>Rp {{ $host->latestActiveHostAssetHistory->harga_sewa ? number_format($host->latestActiveHostAssetHistory->harga_sewa, 0, ',', '.') : '' }}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    @else
+                                        <p>Tidak ada penghuni saat ini.</p>
+                                    @endif
                             </div>
-
                             <hr>
-
+                            <!-- Penghuni sebelumnya -->
                             <div class="col-md-12">
                                 <h3>Penghuni Sebelumnya</h3>
                                 <div class="scrollable-box">

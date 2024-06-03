@@ -15,8 +15,8 @@ class DashboardController extends Controller
             $dataAset = Asset::pluck('kode_aset');
             $assetsWithHost = Host::whereNotNull('asset_id')->distinct('asset_id')->count('asset_id');
             $assetsWithoutHost = Asset::count() - $assetsWithHost;
-            $hargaSewaWithHost = $assets->map(function($asset) {
-                $latestHistory = $asset->hostAssetHistories->first();
+            $hargaSewaWithHost = $assets->map(function ($asset) {
+                $latestHistory = $asset->hostAssetHistories()->latest()->first();
                 return $latestHistory ? $latestHistory->harga_sewa : 0;
             });
 
@@ -32,7 +32,7 @@ class DashboardController extends Controller
                 ->count('asset_id');
             $assetsWithoutHost = $assets->count() - $assetsWithHost;
             $hargaSewaWithHost = $assets->map(function($asset) {
-                $latestHistory = $asset->hostAssetHistories->first();
+                $latestHistory = $asset->hostAssetHistories()->latest()->first();
                 return $latestHistory ? $latestHistory->harga_sewa : 0;
             });
 
