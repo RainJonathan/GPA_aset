@@ -87,7 +87,7 @@ class Asset extends Model
         return $this->hasMany(HostAssetHistory::class, 'asset_id')
                     ->whereMonth('created_at', Carbon::now()->month)
                     ->whereYear('created_at', Carbon::now()->year)
-                    ->latest(); // Call latest() here
+                    ->latest();
     }
 
 }

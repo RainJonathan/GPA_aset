@@ -1,26 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="content-header">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-6">
-                <h1 class="m-0 text-dark">Edit Asset</h1>
-            </div>
-        </div>
-    </div>
-</div>
-
 <section class="content">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-lg-12">
-        <div class="card">
+      <div class="col-md-12">
+        <div class="card card-warning">
+          <div class="card-header">
+            <h3 class="card-title"> Rincian Aset</h3>
+          </div>
+
           <div class="card-body">
             <div class="col-mt-12">
               <div class="row">
-              <!--- Bagian Foto --->
-                <div class="col-md-4">
+                <div class="col-md-5">
                   <div class="row">
                     <div class="col-md-12">
                       @if ($asset->photos->isNotEmpty())
@@ -40,13 +33,13 @@
                     @endforelse
                   </div>
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-7">
                   <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h2>Asset Details</h2>
-                    <a href="{{ route('asset.edit', $asset) }}" class="btn btn-primary">Edit Aset</a>
+                    <h2></h2>
+                    <a href="{{ route('asset.edit', $asset) }}" class="btn btn-warning">Edit Aset</a>
                   </div>
                   <table class="table border">
-                    <!--- Bagian Utama --->
+                    <!--- Bagian Rincian Aset --->
                     <tr>
                       <th>Nama Aset</th>
                       <td>{{ $asset->nama_aset }}</td>
@@ -73,21 +66,11 @@
                     </tr>
                     <tr>
                       <th>Status Sewa</th>
-                      <td>
-                          @if ($asset->status_penyewaan == 1)
-                              Mingguan
-                          @elseif ($asset->status_penyewaan == 2)
-                              Bulanan
-                          @elseif ($asset->status_penyewaan == 3)
-                              Tahunan
-                          @else
-                              Tidak diketahui
-                          @endif
-                      </td>
+                      <td>{{ $asset->status_penyewaan ? $asset->status_penyewaan : 'Tidak Diketahui' }}</td>
                     </tr>
                     <tr>
                       <th>Status</th>
-                      <td>{{ $asset->tuanRumah ? $asset->tuanRumah->aktif === 0 ? 'Tidak Aktif' : 'Aktif' : '-' }}</td>
+                      <td>{{ $host ? ($host->status_aktif == 1 ? 'Aktif' : 'Tidak Aktif') : 'Tidak Aktif' }}</td>
                     </tr>
                     <tr>
                       <th>Pengeluaran</th>
@@ -97,38 +80,49 @@
                 </div>
               </div>
             </div>
-            <!-- Detail Penghuni -->
+            <!-- Bagian Penghuni -->
             <div class="mt-4">
-              <h2>Detail Penghuni</h2>
+              @if($host)
+              <h3>Penghuni Aset</h3>
               <table class="table">
-                  <thead>
-                      <tr>
-                          <th>Nama Penyewa</th>
-                          <th>No. KTP</th>
-                          <th>No. Telepon</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                      <tr>
-                          <td>{{ $asset->tuanRumah ? $asset->tuanRumah->nama_penyewa : '-' }}</td>
-                          <td>{{ $asset->tuanRumah ? $asset->tuanRumah->no_ktp : '-' }}</td>
-                          <td>{{ $asset->tuanRumah ? $asset->tuanRumah->no_tlp : '-' }}</td>
-                      </tr>
-                  </tbody>
+                <thead class="sticky-header">
+                  <tr>
+                      <th> Nama Penyewa </th>
+                      <th> No Telepon </th>
+                      <th> NIK </th>
+                      <th> Tanggal Masuk </th>
+                      <th> Tangggal Keluar </th>
+                      <th> Harga Sewa</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{{ $host->nama_penyewa }}</td>
+                    <td>{{ $host->no_tlp }}</td>
+                    <td>{{ $host->no_ktp }}</td>
+                    <td>{{ $host->tgl_awal }}</td>
+                    <td>{{ $host->tgl_akhir }}</td>
+                    <td>Rp {{ $host->latestActiveHostAssetHistory->harga_sewa ? number_format($host->latestActiveHostAssetHistory->harga_sewa, 0, ',', '.') : '' }}</td>
+                  </tr>
+                </tbody>
               </table>
-              @if (!$asset->tuanRumah)
-                <div class="mt-4">
-                  <a href="{{ route('host.create', $asset->id) }}" class="btn btn-primary">Tambah Penyewa</a>
-                </div>
+              @else
+              <p>Tidak ada penghuni</p>
               @endif
+              {{-- @if ($host)
+              @else
+              <a href="{{ route('host.createpop', $asset) }}" class="btn btn-success mb-3">
+                <i class="fas fa-plus"></i>
+                <span>Tambah Penyewa</span>
+              </a>
+              @endif --}}
               {{-- <button class="btn btn-secondary mt-2" id="edit-tenant-btn">Edit Tenant Info</button> --}}
               @if($asset->host_id)
-                  <form action="{{ route('host.edit', $asset->tuanRumah->id) }}" method="GET">
-                      <button type="submit" class="btn btn-secondary">Edit Host</button>
-                  </form>
+              <form action="{{ route('host.edit', $asset->tuanRumah->id) }}" method="GET">
+                <button type="submit" class="btn btn-secondary">Edit Host</button>
+              </form>
               @endif
             </div>
-            <!-- Back Button -->
             <a href="{{ route('asset.index')}}" class="btn btn-primary mt-4">Back</a>
           </div>
         </div>
@@ -136,27 +130,20 @@
     </div>
   </div>
 </section>
+
 @endsection
 
 <script>
-    function redirectToEditPage(assetId) {
-        window.location.href = `/assets/${assetId}/edit`;
-    }
-    function changeMainPhoto(clickedPhoto) {
-    // Get the clicked photo's data-key attribute (index)
-    const selectedIndex = clickedPhoto.dataset.key;
-  
-    // Get references to the main photo and all thumbnails
-    const mainPhoto = document.getElementById('mainPhoto');
-    const thumbnails = document.querySelectorAll('.thumbnails img');
-  
-    // Update the main photo source and remove the "selected" class from all thumbnails
-    mainPhoto.src = clickedPhoto.src;
-    thumbnails.forEach(thumbnail => thumbnail.classList.remove('selected'));
-  
-    // Add the "selected" class to the clicked thumbnail
-    clickedPhoto.classList.add('selected');
+  function redirectToEditPage(assetId) {
+      window.location.href = `/assets/${assetId}/edit`;
   }
+  function changeMainPhoto(clickedPhoto) {
+  const selectedIndex = clickedPhoto.dataset.key;
+  const mainPhoto = document.getElementById('mainPhoto');
+  const thumbnails = document.querySelectorAll('.thumbnails img');
+
+  mainPhoto.src = clickedPhoto.src;
+  thumbnails.forEach(thumbnail => thumbnail.classList.remove('selected'));
+  clickedPhoto.classList.add('selected');
+}
 </script>
-
-

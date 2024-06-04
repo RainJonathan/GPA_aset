@@ -7,6 +7,7 @@ use App\Models\Asset;
 use App\Models\Wilayah;
 use App\Models\HostAssetHistory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -153,6 +154,47 @@ class HostController extends Controller
 
         return redirect()->route('host.index')
             ->with('success', 'Asset Deleted Succesfully');
+    }
+    public function notifikasi()
+    {
+        $hosts = Host::with('latestActiveHostAssetHistory')->get();
+        $notifications = [];
+        foreach ($hosts as $host) {
+            $history = $host->latestActiveHostAssetHistory;
+
+            if ($history) {
+                $notificationDate = null;
+                $tglAkhir = Carbon::parse($host->tgl_akhir);
+
+                switch ($history->status_penyewaan) {
+                    case 'Mingguan':
+                        $notificationDate = $tglAkhir->subDays(3);
+                        break;
+                    case 'Bulanan':
+                        $notificationDate = $tglAkhir->subDays(7);
+                        break;
+                    case 'Tahunan':
+                        $notificationDate = $tglAkhir->subDays(30);
+                        break;
+                }
+
+                if ($notificationDate && Carbon::now()->greaterThanOrEqualTo($notificationDate)) {
+                    $notifications[] = [
+                        'nama_penyewa' => $host->nama_penyewa,
+                        'tgl_akhir' => $host->tgl_akhir,
+                        'status_penyewaan' => $history->status_penyewaan,
+                        'asset' => [
+                            'nama_aset' => $history->asset->nama_aset,
+                            'kode_aset' => $history->asset->kode_aset,
+                            'alamat' => $history->asset->alamat,
+                        ],
+                    ];
+                }
+            }
+        }
+        $notificationCount = count($notifications);
+
+        return view('notifikasi.index', compact('notifications', 'notificationCount'));
     }
 }
 // Exception

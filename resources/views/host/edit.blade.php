@@ -69,35 +69,18 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="harga_sewa">Harga Sewa:</label>
-                                    <input type="text" class="form-control" id="harga_sewa" name="harga_sewa"
-                                        value="{{ $host->previousOwner ? $host->previousOwner->harga_sewa : '0' }}"
-                                        onkeyup="formatInput(this)">
+                                    <input type="text" class="form-control" id="harga_sewa" name="harga_sewa" value="{{ $host->hostAssetHistories->isEmpty() ? '0' : $host->hostAssetHistories->first()->harga_sewa }}" onkeyup="formatInput(this)">
                                 </div>
                                 <div class="form-group">
                                     <label for="status_penyewaan">Status Penyewaan:</label>
                                     <select class="form-control" id="status_penyewaan" name="status_penyewaan">
-                                        <option value="Mingguan"
-                                            {{ (old('status_penyewaan') ?? $host->status_penyewaan) == 'Mingguan' ? 'selected' : '' }}>
-                                            Mingguan</option>
-                                        <option value="Bulanan"
-                                            {{ (old('status_penyewaan') ?? $host->status_penyewaan) == 'Bulanan' ? 'selected' : '' }}>
-                                            Bulanan</option>
-                                        <option value="Tahunan"
-                                            {{ (old('status_penyewaan') ?? $host->status_penyewaan) == 'Tahunan' ? 'selected' : '' }}>
-                                            Tahunan</option>
-                                        <option value="Tidak Menyewa"
-                                            {{ (old('status_penyewaan') ?? $host->status_penyewaan) == 'Tidak Menyewa' ? 'selected' : '' }}>
-                                            Tidak Menyewa</option>
+                                        <option value="Mingguan" {{ (old('status_penyewaan') ?? $host->status_penyewaan) == 'Mingguan' ? 'selected' : '' }}>Mingguan</option>
+                                        <option value="Bulanan" {{ (old('status_penyewaan') ?? $host->status_penyewaan) == 'Bulanan' ? 'selected' : '' }}>Bulanan</option>
+                                        <option value="Tahunan" {{ (old('status_penyewaan') ?? $host->status_penyewaan) == 'Tahunan' ? 'selected' : '' }}>Tahunan</option>
+                                        <option value="Tidak Menyewa" {{ (old('status_penyewaan') ?? $host->status_penyewaan) == 'Tidak Menyewa' ? 'selected' : '' }}>Tidak Menyewa</option>
                                     </select>
                                 </div>
-                                {{-- <div class="form-group">
-                                <label for="status_penyewaan">Status Penyewaan:</label>
-                                <select class="form-control" id="status_penyewaan" name="status_penyewaan">
-                                    <option value="Mingguan" {{ old('status_penyewaan') == 'Mingguan' ? 'selected' : '' }}>Mingguan</option>
-                                    <option value="Bulanan" {{ old('status_penyewaan') == 'Bulanan' ? 'selected' : '' }}>Bulanan</option>
-                                    <option value="Tahunan" {{ old('status_penyewaan') == 'Tahunan' ? 'selected' : '' }}>Tahunan</option>
-                                </select>
-                            </div> --}}
+                                
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">

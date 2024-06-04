@@ -78,6 +78,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/overseer/{user}', [OverseerController::class, 'details'])->name('overseer.details');
     Route::get('/overseer/{user}/edited', [OverseerController::class, 'edited'])->name('overseer.edited');
 
+    //Routes Pengeluaran
     Route::get('/pengeluaran', [PengeluaranController::class, 'index'])->name('pengeluaran.index');
     Route::get('/pengeluaran/create', [PengeluaranController::class, 'create'])->name('pengeluaran.create');
     Route::post('/pengeluaran', [PengeluaranController::class, 'store'])->name('pengeluaran.store');
@@ -87,6 +88,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/pengeluaran/{pengeluaran}', [PengeluaranController::class, 'destroy'])->name('pengeluaran.destroy');
     Route::get('/pengeluaran/{pengeluaran}', [PengeluaranController::class, 'details'])->name('pengeluaran.details');
     Route::get('/pengeluaran/{pengeluaran}/edited', [PengeluaranController::class, 'edited'])->name('pengeluaran.edited');
+
+    //Routes Notifikasi
+    Route::get('/notifikasi', [HostController::class, 'notifikasi'])->name('notifikasi.index');
+
 });
 
 

@@ -24,25 +24,8 @@
                                     <input type="text" class="form-control" id="no_ktp" name="no_ktp"
                                         value="{{ old('no_ktp') }}">
                                 </div>
-                                <div class="form-group">
-                                    <label for="wilayah_id">Wilayah Penyewa:</label>
-                                    <select class="form-control" id="wilayah_id" name="wilayah_id" disabled>
-                                        <option value="{{ $asset->assetWilayah->id }}"
-                                            {{ old('asset_id') == $asset->assetWilayah->id ? 'selected' : '' }}>
-                                            {{ $asset->assetWilayah->nama_wilayah }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="asset_id">Aset Yang Ditempati:</label>
-
-                                    <select class="form-control" id="asset_id" name="asset_id" disabled>
-                                        <option value="{{ $asset->id }}"
-                                            {{ old('asset_id') == $asset->id ? 'selected' : '' }}>
-                                            {{ $asset->kode_aset }} - {{ $asset->no_rumah }} - {{ $asset->alamat }}
-                                        </option>
-                                    </select>
-                                </div>
+                                <input type="hidden" name="wilayah_id" value="{{ $asset->assetWilayah->id }}">
+                                <input type="hidden" name="asset_id" value="{{ $asset->id }}">
                                 <div class="form-group">
                                     <label for="no_tlp">Nomor Telepon:</label>
                                     <input type="text" class="form-control" id="no_tlp" name="no_tlp"

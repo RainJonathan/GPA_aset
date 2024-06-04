@@ -68,6 +68,19 @@
                 <!-- Add more submenu items as needed -->
             </ul>
         </li>
+        <li class="nav-item">
+            <a href="{{ route('notifikasi.index') }}" class="nav-link @if (request()->routeIs('notifikasi')) active @endif">
+                <i class="nav-icon fas fa-bell"></i>
+                <p>
+                    Notifikasi
+                    @isset($notificationCount)
+                        @if($notificationCount > 0)
+                            <span class="badge badge-danger">{{ $notificationCount }}</span>
+                        @endif
+                    @endisset
+                </p>
+            </a>
+        </li>      
     </ul>
 </nav>
 <!-- /.sidebar-menu -->

@@ -3,33 +3,50 @@
 namespace App\Exports;
 
 use App\Models\Asset;
+use App\Models\Host;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithMapping;
 
-class DetailsExport implements FromCollection, WithHeadings, ShouldAutoSize
+class DetailsExport implements FromCollection, WithHeadings, ShouldAutoSize, WithMapping
 {
     public function collection()
     {
-        if(Auth()->user()->role == 1){
-            $assets = Asset::all();
-        }else{
-            $assets = Asset::where('wilayah_id',Auth()->user()->wilayah_id)->get();
+        if (auth()->user()->role == 1) {
+            $assets = Asset::with(['tuanRumah', 'hostAssetHistories' => function ($query) {
+                $query->latest();
+            }, 'assetWilayah'])->get();
+        } else {
+            $assets = Asset::with(['tuanRumah', 'hostAssetHistories' => function ($query) {
+                $query->latest();
+            }, 'assetWilayah'])->where('wilayah_id', auth()->user()->wilayah_id)->get();
         }
-        return $assets->map(function ($asset) {
-            return [
-                'Kode Aset' => $asset->kode_aset,
-                'Nama Aset' => $asset->nama_aset,
-                'Alamat Aset' => $asset->alamat,
-                'Jenis Aset' => $asset->jenis_aset,
-                'Wilayah' => $asset->wilayah,
-                'Penghuni Sekarang' => $asset->tuanRumah ? $asset->tuanRumah->nama_penyewa : '-',
-                'No.KTP' => $asset->tuanRumah ? $asset->tuanRumah->no_ktp: '-',
-                'No.Hp' => $asset->tuanRumah ? $asset->tuanRumah->no_tlp : '-',
-                // 'Bank Pembayaran' => $asset->tuanRumah ? $asset->tuanRumah->bank_pembayaran :'-',
-                'Status Aktif' => $asset->tuanRumah ? ($asset->tuanRumah->aktif === 0 ? 'Tidak Aktif' : 'Aktif') : '-',
-            ];
-        });
+
+        return $assets;
+    }
+
+    public function map($assets): array
+    {
+        $host = $assets->tuanRumah;
+        $latestHostHistory = $assets->hostAssetHistories->first();
+
+        Log::info('Asset:', $assets->toArray());
+        Log::info('Host:', $host ? $host->toArray() : ['No Host']);
+        Log::info('Latest Host History:', $latestHostHistory ? $latestHostHistory->toArray() : ['No History']);
+
+        return [
+            $assets->kode_aset,
+            $assets->nama_aset,
+            $assets->alamat,
+            $assets->jenis_aset,
+            $assets->assetWilayah ? $assets->assetWilayah->nama_wilayah : '-',
+            $latestHostHistory ? $latestHostHistory->host->nama_penyewa : '-',
+            $latestHostHistory ? $latestHostHistory->host->no_ktp : '-',
+            $latestHostHistory ? $latestHostHistory->host->no_tlp : '-',
+            $latestHostHistory ? $latestHostHistory->harga_sewa : '-',
+        ];
     }
 
     public function headings(): array
@@ -43,9 +60,7 @@ class DetailsExport implements FromCollection, WithHeadings, ShouldAutoSize
             'Penghuni Sekarang',
             'No.KTP',
             'No.Hp',
-            // 'Bank Pembayaran',
-            'Status Aktif'
+            'Harga Sewa'
         ];
     }
 }
-

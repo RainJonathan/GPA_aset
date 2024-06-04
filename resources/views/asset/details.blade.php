@@ -64,17 +64,7 @@
                                                 </tr>
                                                 <tr>
                                                     <th>Status Sewa</th>
-                                                    <td>
-                                                        @if ($asset->status_penyewaan == 1)
-                                                            Mingguan
-                                                        @elseif ($asset->status_penyewaan == 2)
-                                                            Bulanan
-                                                        @elseif ($asset->status_penyewaan == 3)
-                                                            Tahunan
-                                                        @else
-                                                            Tidak diketahui
-                                                        @endif
-                                                    </td>
+                                                    <td>{{ $asset->status_penyewaan ? $asset->status_penyewaan : 'Tidak Diketahui' }}</td>
                                                 </tr>
                                                 <tr>
                                                     <th>Pengeluaran</th>
@@ -120,7 +110,7 @@
                                 <hr>
                                 <!-- Penghuni sebelumnya -->
                                 <div class="col-md-12">
-                                    <h3>Penghuni Sebelumnya</h3>
+                                    <h3>Daftar Penghuni</h3>
                                     <div class="scrollable-box">
                                         <table class="table table-bordered">
                                             <thead class="sticky-header">
@@ -149,9 +139,6 @@
                                 </div>
                                 <div class="col-md-12">
                                     @if ($host)
-                                        {
-
-                                        }
                                     @else
                                         <a href="{{ route('host.createpop', $asset) }}" class="btn btn-success mb-3">
                                             <i class="fas fa-plus"></i>
