@@ -91,6 +91,7 @@ Route::middleware('auth')->group(function () {
 
     //Routes Notifikasi
     Route::get('/notifikasi', [HostController::class, 'notifikasi'])->name('notifikasi.index');
+    Route::get('/api/notifikasi', [HostController::class, 'notifikasiapi'])->name('notifikasi.indexapi');
 
 });
 

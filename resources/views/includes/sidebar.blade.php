@@ -59,8 +59,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('pengeluaran.index') }}" 
-                    class="nav-link @if (request()->routeIs('pengeluaran.*')) active @endif">
+                    <a href="{{ route('pengeluaran.index') }}"
+                        class="nav-link @if (request()->routeIs('pengeluaran.*')) active @endif">
                         <i class="fas fa-money-bill-wave nav-icon"></i>
                         <p>Pengeluaran</p>
                     </a>
@@ -73,17 +73,51 @@
                 <i class="nav-icon fas fa-bell"></i>
                 <p>
                     Notifikasi
-                    @isset($notificationCount)
-                        @if($notificationCount > 0)
+                    <span id="notification-count" class="badge badge-danger"></span>
+                    {{-- @isset($notificationCount)
+                        @if ($notificationCount > 0)
                             <span class="badge badge-danger">{{ $notificationCount }}</span>
                         @endif
-                    @endisset
+                    @endisset --}}
                 </p>
             </a>
-        </li>      
+        </li>
     </ul>
 </nav>
 <!-- /.sidebar-menu -->
 </div>
 <!-- /.sidebar -->
 </aside>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        fetchNotifikasi();
+    });
+
+    function fetchNotifikasi() {
+        // Replace the URL with the actual endpoint to fetch history data
+        var url = '{{ route('notifikasi.indexapi') }}';
+
+        fetch(url)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok: ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Call a function to update the notifications in your sidebar with the fetched data
+                updateNotificationsCount(data);
+            })
+            .catch(error => {
+                console.error('Error fetching notification data:', error);
+                // Optionally, log or display the error message
+            });
+    }
+
+    function updateNotificationsCount(count) {
+        var badgeElement = document.getElementById('notification-count');
+        if (badgeElement) {
+            badgeElement.textContent = count['notifcount'];
+        }
+    }
+</script>
