@@ -74,29 +74,22 @@
                                 <div class="form-group">
                                     <label for="status_penyewaan">Status Penyewaan:</label>
                                     <select class="form-control" id="status_penyewaan" name="status_penyewaan">
-                                        <option value="Mingguan" {{ (old('status_penyewaan') ?? $host->status_penyewaan) == 'Mingguan' ? 'selected' : '' }}>Mingguan</option>
-                                        <option value="Bulanan" {{ (old('status_penyewaan') ?? $host->status_penyewaan) == 'Bulanan' ? 'selected' : '' }}>Bulanan</option>
-                                        <option value="Tahunan" {{ (old('status_penyewaan') ?? $host->status_penyewaan) == 'Tahunan' ? 'selected' : '' }}>Tahunan</option>
-                                        <option value="Tidak Menyewa" {{ (old('status_penyewaan') ?? $host->status_penyewaan) == 'Tidak Menyewa' ? 'selected' : '' }}>Tidak Menyewa</option>
+                                        <option value="Mingguan" {{ (old('status_penyewaan') ?? ($host->hostAssetHistories->isEmpty() ? '' : $host->hostAssetHistories->first()->status_penyewaan)) == 'Mingguan' ? 'selected' : '' }}>Mingguan</option>
+                                        <option value="Bulanan" {{ (old('status_penyewaan') ?? ($host->hostAssetHistories->isEmpty() ? '' : $host->hostAssetHistories->first()->status_penyewaan)) == 'Bulanan' ? 'selected' : '' }}>Bulanan</option>
+                                        <option value="Tahunan" {{ (old('status_penyewaan') ?? ($host->hostAssetHistories->isEmpty() ? '' : $host->hostAssetHistories->first()->status_penyewaan)) == 'Tahunan' ? 'selected' : '' }}>Tahunan</option>
+                                        <option value="Tidak Menyewa" {{ (old('status_penyewaan') ?? ($host->hostAssetHistories->isEmpty() ? '' : $host->hostAssetHistories->first()->status_penyewaan)) == 'Tidak Menyewa' ? 'selected' : '' }}>Tidak Menyewa</option>
                                     </select>
                                 </div>
-                                
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="bank_pembayaran">Bank Pembayaran:</label>
                                     <select class="form-control" id="bank_pembayaran" name="bank_pembayaran">
                                         <option value="" disabled selected>Please choose</option>
-                                        <option value="0" {{ $host->bank_pembayaran == '0' ? 'selected' : '' }}>BCA
-                                            (SGLS)
-                                        </option>
-                                        <option value="1" {{ $host->bank_pembayaran == '1' ? 'selected' : '' }}>BCA
-                                            (LEO)
-                                        </option>
-                                        <option value="2" {{ $host->bank_pembayaran == '2' ? 'selected' : '' }}>
-                                            Mandiri</option>
-                                        <option value="3" {{ $host->bank_pembayaran == '3' ? 'selected' : '' }}>Tunai
-                                        </option>
+                                        <option value="0" {{ $host->bank_pembayaran == '0' ? 'selected' : '' }}>BCA (SGLS) </option>
+                                        <option value="1" {{ $host->bank_pembayaran == '1' ? 'selected' : '' }}>BCA (LEO) </option>
+                                        <option value="2" {{ $host->bank_pembayaran == '2' ? 'selected' : '' }}> Mandiri</option>
+                                        <option value="3" {{ $host->bank_pembayaran == '3' ? 'selected' : '' }}>Tunai </option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -162,10 +155,8 @@
                                 <div class="form-group">
                                     <label for="saldo_piutang">Status Saldo Piutang:</label>
                                     <select class="form-control" id="saldo_piutang" name="saldo_piutang">
-                                        <option value="0" {{ $host->saldo_piutang == '0' ? 'selected' : '' }}>Tidak
-                                            Lunas</option>
-                                        <option value="1" {{ $host->saldo_piutang == '1' ? 'selected' : '' }}>Lunas
-                                        </option>
+                                        <option value="0" {{ $host->saldo_piutang == '0' ? 'selected' : '' }}>Tidak Lunas</option>
+                                        <option value="1" {{ $host->saldo_piutang == '1' ? 'selected' : '' }}>Lunas </option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -176,19 +167,15 @@
                                 <div class="form-group">
                                     <label for="status_pengontrak">Status Pengontrak:</label>
                                     <select class="form-control" id="status_pengontrak" name="status_pengontrak">
-                                        <option value="0" {{ $host->status_pengontrak == '0' ? 'selected' : '' }}>
-                                            Perorangan</option>
-                                        <option value="1" {{ $host->status_pengontrak == '1' ? 'selected' : '' }}>
-                                            Complimet</option>
+                                        <option value="0" {{ $host->status_pengontrak == '0' ? 'selected' : '' }}> Perorangan</option>
+                                        <option value="1" {{ $host->status_pengontrak == '1' ? 'selected' : '' }}> Complimet</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="status_aktif">Status Aktif:</label>
                                     <select class="form-control" id="status_aktif" name="status_aktif">
-                                        <option value="0" {{ $host->status_aktif == '0' ? 'selected' : '' }}>Tidak
-                                            Aktif</option>
-                                        <option value="1" {{ $host->status_aktif == '1' ? 'selected' : '' }}>Aktif
-                                        </option>
+                                        <option value="0" {{ $host->status_aktif == '0' ? 'selected' : '' }}>Tidak Aktif</option>
+                                        <option value="1" {{ $host->status_aktif == '1' ? 'selected' : '' }}>Aktif </option>
                                     </select>
                                 </div>
                             </div>

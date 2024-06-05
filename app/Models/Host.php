@@ -41,7 +41,7 @@ class Host extends Model
     }
     public function hostAssetHistories()
     {
-        return $this->hasMany(HostAssetHistory::class, 'host_id');
+        return $this->hasMany(HostAssetHistory::class, 'host_id')->orderBy('created_at', 'desc');
     }
     public function latestActiveHostAssetHistory()
     {

@@ -14,7 +14,10 @@ class CreateHostAssetHistoriesTable extends Migration
             $table->date('start_date');
             $table->date('end_date')->nullable();
             $table->decimal('harga_sewa', 10, 0);
-            $table->decimal('denda_sewa');
+            $table->decimal('denda_bca', 10, 0);
+            $table->decimal('denda_bri', 10, 0);
+            $table->decimal('denda_mandiri', 10, 0);
+            $table->decimal('denda_tunai', 10, 0);
             $table->string('status_penyewaan');
             $table->timestamps();
             $table->foreign('host_id')->references('id')->on('tuan_rumah')->onDelete('cascade');

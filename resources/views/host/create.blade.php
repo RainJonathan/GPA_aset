@@ -82,24 +82,6 @@
                                             {{ old('status_penyewaan') == 'Bulanan' ? 'selected' : '' }}>Bulanan</option>
                                         <option value="Tahunan"
                                             {{ old('status_penyewaan') == 'Tahunan' ? 'selected' : '' }}>Tahunan</option>
-                                        {{-- @php $hasOptions = false; @endphp
-                                    @foreach ($assets as $asset)
-                                        @if ($asset->status_penyewaan == 1)
-                                            <option value="Mingguan" {{ old('status_penyewaan') == $asset->id ? 'selected' : '' }}>Mingguan</option>
-                                            @php $hasOptions = true; @endphp
-                                        @elseif ($asset->status_penyewaan == 2)
-                                            <option value="Bulanan" {{ old('status_penyewaan') == $asset->id ? 'selected' : '' }}>Bulanan</option>
-                                            @php $hasOptions = true; @endphp
-                                        @elseif ($asset->status_penyewaan == 3)
-                                            <option value="Tahunan" {{ old('status_penyewaan') == $asset->id ? 'selected' : '' }}>Tahunan</option>
-                                            @php $hasOptions = true; @endphp
-                                        @endif
-                                    @endforeach
-                                    @if (!$hasOptions)
-                                        <option value="Mingguan" {{ old('status_penyewaan') == 'Mingguan' ? 'selected' : '' }}>Mingguan</option>
-                                        <option value="Bulanan" {{ old('status_penyewaan') == 'Bulanan' ? 'selected' : '' }}>Bulanan</option>
-                                        <option value="Tahunan" {{ old('status_penyewaan') == 'Tahunan' ? 'selected' : '' }}>Tahunan</option>
-                                    @endif --}}
                                     </select>
                                 </div>
                             </div>
@@ -108,14 +90,10 @@
                                     <label for="bank_pembayaran">Bank Pembayaran:</label>
                                     <select class="form-control" id="bank_pembayaran" name="bank_pembayaran">
                                         <option value="" disabled selected>Please choose</option>
-                                        <option value="0" {{ old('status_pengontrak') == '0' ? 'selected' : '' }}>BCA
-                                        </option>
-                                        <option value="1" {{ old('status_pengontrak') == '1' ? 'selected' : '' }}>BRI
-                                        </option>
-                                        <option value="2" {{ old('status_pengontrak') == '2' ? 'selected' : '' }}>
-                                            Mandiri</option>
-                                        <option value="4" {{ old('status_pengontrak') == '4' ? 'selected' : '' }}>
-                                            Tunai</option>
+                                        <option value="0" {{ old('status_pengontrak') == '0' ? 'selected' : '' }}> BCA Sabar Ganda </option>
+                                        <option value="1" {{ old('status_pengontrak') == '1' ? 'selected' : '' }}> BCA Leo </option>
+                                        <option value="2" {{ old('status_pengontrak') == '2' ? 'selected' : '' }}> Mandiri</option>
+                                        <option value="4" {{ old('status_pengontrak') == '4' ? 'selected' : '' }}> Tunai</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -162,8 +140,7 @@
                                 <div class="form-group">
                                     <label for="saldo_piutang">Status Saldo Piutang:</label>
                                     <select class="form-control" id="saldo_piutang" name="saldo_piutang">
-                                        <option value="0" {{ old('saldo_piutang') == '0' ? 'selected' : '' }}>Tidak
-                                            Lunas</option>
+                                        <option value="0" {{ old('saldo_piutang') == '0' ? 'selected' : '' }}>Tidak Lunas</option>
                                         <option value="1" {{ old('saldo_piutang') == '1' ? 'selected' : '' }}>Lunas
                                         </option>
                                     </select>
@@ -171,17 +148,14 @@
                                 <div class="form-group">
                                     <label for="status_pengontrak">Status Pengontrak:</label>
                                     <select class="form-control" id="status_pengontrak" name="status_pengontrak">
-                                        <option value="0" {{ old('status_pengontrak') == '0' ? 'selected' : '' }}>
-                                            Perorangan</option>
-                                        <option value="1" {{ old('status_pengontrak') == '1' ? 'selected' : '' }}>
-                                            Complimet</option>
+                                        <option value="0" {{ old('status_pengontrak') == '0' ? 'selected' : '' }}> Perorangan</option>
+                                        <option value="1" {{ old('status_pengontrak') == '1' ? 'selected' : '' }}> Complimet</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="status_aktif">Status Aktif:</label>
                                     <select class="form-control" id="status_aktif" name="status_aktif">
-                                        <option value="0" {{ old('status_aktif') == '0' ? 'selected' : '' }}>Tidak
-                                            Aktif</option>
+                                        <option value="0" {{ old('status_aktif') == '0' ? 'selected' : '' }}>Tidak Aktif</option>
                                         <option value="1" {{ old('status_aktif') == '1' ? 'selected' : '' }}>Aktif
                                         </option>
                                     </select>
