@@ -105,13 +105,13 @@
 
 
                                 <div class="form-group">
-                                    <label for="harga_bri" id="label_harga_bri">Harga Sewa BCA (LEO):</label>
-                                    <input type="text" class="form-control" id="harga_bri" name="harga_bca_leo"
+                                    <label for="harga_bca_leo" id="label_harga_bca_leo">Harga Sewa BCA (LEO):</label>
+                                    <input type="text" class="form-control" id="harga_bca_leo" name="harga_bca_leo"
                                         value="{{ $host->harga_bca_leo }}" onkeyup="formatInput(this)">
                                 </div>
                                 <div class="form-group">
-                                    <label for="tanggal_bri" id="label_tanggal_bri">Tanggal Pembayaran BCA (LEO):</label>
-                                    <input type="date" class="form-control" id="tanggal_bri" name="tanggal_bca_leo"
+                                    <label for="tanggal_bca_leo" id="label_tanggal_bca_leo">Tanggal Pembayaran BCA (LEO):</label>
+                                    <input type="date" class="form-control" id="tanggal_bca_leo" name="tanggal_bca_leo"
                                         value="{{ $host->tanggal_bca_leo }}">
                                 </div>
 
@@ -148,8 +148,8 @@
                                     <input type="text" class="form-control" id="denda_bca" name="denda_bca">
                                 </div>
                                 <div class="form-group">
-                                    <label for="denda_bri" id="label_denda_bri">Denda Pembayaran BCA (LEO):</label>
-                                    <input type="text" class="form-control" id="denda_bri" name="denda_bri">
+                                    <label for="denda_bca_leo" id="label_denda_bca_leo">Denda Pembayaran BCA (LEO):</label>
+                                    <input type="text" class="form-control" id="denda_bca_leo" name="denda_bca_leo">
                                 </div>
                                 <div class="form-group">
                                     <label for="denda_mandiri" id="label_denda_mandiri">Denda Pembayaran Mandiri:</label>
@@ -163,11 +163,6 @@
                                         <option value="1" {{ $host->saldo_piutang == '1' ? 'selected' : '' }}>Lunas </option>
                                     </select>
                                 </div>
-                                <div class="form-group">
-                                    <label for="denda_bri" id="label_denda_bri">Denda Pembayaran BCA (LEO):</label>
-                                    <input type="text" class="form-control" id="denda_bri" name="denda_bri">
-                                </div>
-
                                 <div class="form-group">
                                     <label for="status_pengontrak">Status Pengontrak:</label>
                                     <select class="form-control" id="status_pengontrak" name="status_pengontrak">
@@ -207,12 +202,12 @@
             var labelDendaBca = document.getElementById("label_denda_bca");
             var dendaBca = document.getElementById("denda_bca");
 
-            var labelBri = document.getElementById("label_harga_bri");
-            var hargaBri = document.getElementById("harga_bri");
-            var labelTanggalBri = document.getElementById("label_tanggal_bri");
-            var tanggalBri = document.getElementById("tanggal_bri");
-            var labelDendaBri = document.getElementById("label_denda_bri");
-            var dendaBri = document.getElementById("denda_bri");
+            var labelbca_leo = document.getElementById("label_harga_bca_leo");
+            var hargabca_leo = document.getElementById("harga_bca_leo");
+            var labelTanggalbca_leo = document.getElementById("label_tanggal_bca_leo");
+            var tanggalbca_leo = document.getElementById("tanggal_bca_leo");
+            var labelDendabca_leo = document.getElementById("label_denda_bca_leo");
+            var dendabca_leo = document.getElementById("denda_bca_leo");
 
             var labelMandiri = document.getElementById("label_harga_mandiri");
             var hargaMandiri = document.getElementById("harga_mandiri");
@@ -237,10 +232,10 @@
                 labelTanggalBca.style.display = selectedBank === "0" ? "block" : "none";
                 tanggalBca.style.display = selectedBank === "0" ? "block" : "none";
 
-                labelBri.style.display = selectedBank === "1" ? "block" : "none";
-                hargaBri.style.display = selectedBank === "1" ? "block" : "none";
-                labelTanggalBri.style.display = selectedBank === "1" ? "block" : "none";
-                tanggalBri.style.display = selectedBank === "1" ? "block" : "none";
+                labelbca_leo.style.display = selectedBank === "1" ? "block" : "none";
+                hargabca_leo.style.display = selectedBank === "1" ? "block" : "none";
+                labelTanggalbca_leo.style.display = selectedBank === "1" ? "block" : "none";
+                tanggalbca_leo.style.display = selectedBank === "1" ? "block" : "none";
 
                 labelMandiri.style.display = selectedBank === "2" ? "block" : "none";
                 hargaMandiri.style.display = selectedBank === "2" ? "block" : "none";
@@ -256,7 +251,7 @@
                 if (selectedBank === "0") {
                     daysDifference = calculateDaysDifference(tanggalBca.value);
                 } else if (selectedBank === "1") {
-                    daysDifference = calculateDaysDifference(tanggalBri.value);
+                    daysDifference = calculateDaysDifference(tanggalbca_leo.value);
                 } else if (selectedBank === "2") {
                     daysDifference = calculateDaysDifference(tanggalMandiri.value);
                 } else if (selectedBank === "3") {
@@ -279,8 +274,8 @@
 
                 labelDendaBca.style.display = "none";
                 dendaBca.style.display = "none";
-                labelDendaBri.style.display = "none";
-                dendaBri.style.display = "none";
+                labelDendabca_leo.style.display = "none";
+                dendabca_leo.style.display = "none";
                 labelDendaMandiri.style.display = "none";
                 dendaMandiri.style.display = "none";
                 labelDendaTunai.style.display = "none";
@@ -291,8 +286,8 @@
                         labelDendaBca.style.display = "block";
                         dendaBca.style.display = "block";
                     } else if (selectedBank === "1") {
-                        labelDendaBri.style.display = "block";
-                        dendaBri.style.display = "block";
+                        labelDendabca_leo.style.display = "block";
+                        dendabca_leo.style.display = "block";
                     } else if (selectedBank === "2") {
                         labelDendaMandiri.style.display = "block";
                         dendaMandiri.style.display = "block";
@@ -305,8 +300,8 @@
                         labelDendaBca.style.display = "block";
                         dendaBca.style.display = "block";
                     } else if (selectedBank === "1") {
-                        labelDendaBri.style.display = "block";
-                        dendaBri.style.display = "block";
+                        labelDendabca_leo.style.display = "block";
+                        dendabca_leo.style.display = "block";
                     } else if (selectedBank === "2") {
                         labelDendaMandiri.style.display = "block";
                         dendaMandiri.style.display = "block";
@@ -319,8 +314,8 @@
                         labelDendaBca.style.display = "block";
                         dendaBca.style.display = "block";
                     } else if (selectedBank === "1") {
-                        labelDendaBri.style.display = "block";
-                        dendaBri.style.display = "block";
+                        labelDendabca_leo.style.display = "block";
+                        dendabca_leo.style.display = "block";
                     } else if (selectedBank === "2") {
                         labelDendaMandiri.style.display = "block";
                         dendaMandiri.style.display = "block";
@@ -337,7 +332,7 @@
 
             // Calculate initial differences on load and check denda
             checkDenda(statusPenyewaan.value, calculateDaysDifference(tanggalBca.value));
-            checkDenda(statusPenyewaan.value, calculateDaysDifference(tanggalBri.value));
+            checkDenda(statusPenyewaan.value, calculateDaysDifference(tanggalbca_leo.value));
             checkDenda(statusPenyewaan.value, calculateDaysDifference(tanggalMandiri.value));
             checkDenda(statusPenyewaan.value, calculateDaysDifference(tanggalTunai.value));
         });
