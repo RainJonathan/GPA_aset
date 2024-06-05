@@ -87,14 +87,10 @@
                                     <label for="bank_pembayaran">Bank Pembayaran:</label>
                                     <select class="form-control" id="bank_pembayaran" name="bank_pembayaran">
                                         <option value="" disabled selected>Please choose</option>
-                                        <option value="0" {{ old('status_pengontrak') == '0' ? 'selected' : '' }}>BCA
-                                        </option>
-                                        <option value="1" {{ old('status_pengontrak') == '1' ? 'selected' : '' }}>BRI
-                                        </option>
-                                        <option value="2" {{ old('status_pengontrak') == '2' ? 'selected' : '' }}>
-                                            Mandiri</option>
-                                        <option value="4" {{ old('status_pengontrak') == '4' ? 'selected' : '' }}>
-                                            Tunai</option>
+                                        <option value="0" {{ old('bank_pembayaran') == '0' ? 'selected' : '' }}> BCA Sabar Ganda </option>
+                                        <option value="1" {{ old('bank_pembayaran') == '1' ? 'selected' : '' }}> BCA Leo </option>
+                                        <option value="2" {{ old('bank_pembayaran') == '2' ? 'selected' : '' }}> Mandiri</option>
+                                        <option value="4" {{ old('bank_pembayaran') == '4' ? 'selected' : '' }}> Tunai</option>
                                     </select>
                                 </div>
                                 <div class="form-group">

@@ -148,6 +148,10 @@
                                     <input type="text" class="form-control" id="denda_bca" name="denda_bca">
                                 </div>
                                 <div class="form-group">
+                                    <label for="denda_bri" id="label_denda_bri">Denda Pembayaran BCA (LEO):</label>
+                                    <input type="text" class="form-control" id="denda_bri" name="denda_bri">
+                                </div>
+                                <div class="form-group">
                                     <label for="denda_mandiri" id="label_denda_mandiri">Denda Pembayaran Mandiri:</label>
                                     <input type="text" class="form-control" id="denda_mandiri" name="denda_mandiri">
                                 </div>

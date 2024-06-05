@@ -23,12 +23,16 @@ return new class extends Migration
             $table->decimal('upah_jasa',10,0)->nullable();
             $table->string('tanggal_bca_sgls')->nullable();
             $table->decimal('harga_bca_sgls',10,0)->nullable();
+            $table->decimal('denda_bca_sgls',10,0)->nullable();
             $table->string('tanggal_bca_leo')->nullable();
             $table->decimal('harga_bca_leo',10,0)->nullable();
+            $table->decimal('denda_bca_leo',10,0)->nullable();
             $table->string('tanggal_mandiri')->nullable();
             $table->decimal('harga_mandiri',10,0)->nullable();
+            $table->decimal('denda_mandiri',10,0)->nullable();
             $table->string('tanggal_tunai')->nullable();
             $table->decimal('harga_tunai',10,0)->nullable();
+            $table->decimal('denda_tunai',10,0)->nullable();
             $table->smallInteger('saldo_piutang');
             $table->smallInteger('status_pengontrak');
             $table->smallInteger('status_aktif')->default('1');
