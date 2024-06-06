@@ -36,6 +36,8 @@ class PengeluaranController extends Controller
 
     public function store(Request $request)
     {
+        $request['pengeluaran'] = $this->convertToNumeric($request['pengeluaran']);
+
         $request->validate([
             'id_aset' => 'exists:rekap_aset,id',
             'pengeluaran' => 'required',
@@ -46,6 +48,11 @@ class PengeluaranController extends Controller
         Pengeluaran::create($request->all());
 
         return redirect()->route('pengeluaran.index')->with('success', 'Pengajuan created successfully.');
+    }
+    private function convertToNumeric($value)
+    {
+        // Check if the value is empty and return null, otherwise remove commas and return as a float
+        return empty($value) ? null : floatval(str_replace(',', '', $value));
     }
 
     public function show(Pengeluaran $pengeluaran)

@@ -32,7 +32,7 @@
                             <div class="form-group">
                                 <label for="wilayah_id">Wilayah Asset:</label>
                                 <select class="form-control" id="wilayah_id" name="wilayah_id">
-                                    <option value="">Select Wilayah</option>
+                                    <option value="">Pilih Wilayah</option>
                                     @foreach($wilayahs as $wilayah)
                                         <option value="{{ $wilayah->id }}" {{ old('wilayah_id') == $wilayah->id ? 'selected' : '' }}>{{ $wilayah->nama_wilayah }}</option>
                                     @endforeach
@@ -40,7 +40,14 @@
                             </div>
                             <div class="form-group">
                                 <label for="jenis_aset">Jenis Aset:</label>
-                                <input type="text" class="form-control" id="jenis_aset" name="jenis_aset" value="{{ old('jenis_aset')}}">
+                                <select class="form-control" id="jenis_aset" name="jenis_aset">
+                                    <option value="" disabled selected>Pilih Jenis Aset</option>
+                                    <option value="Kost" {{ old('jenis_aset') == 'Kost' ? 'selected' : '' }}>Kost</option>
+                                    <option value="Gudang" {{ old('jenis_aset') == 'Gudang' ? 'selected' : '' }}>Gudang</option>
+                                    <option value="Rumah Petak" {{ old('jenis_aset') == 'Rumah Petak' ? 'selected' : '' }}>Rumah Petak</option>
+                                    <option value="Rumah" {{ old('jenis_aset') == 'Rumah' ? 'selected' : '' }}>Rumah</option>
+                                    <option value="Kios" {{ old('jenis_aset') == 'Kios' ? 'selected' : '' }}>Kios</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label for="photos">Foto Asset (Maksimal 4 foto):</label>

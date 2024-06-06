@@ -10,11 +10,13 @@ class CreateHostAssetHistoriesTable extends Migration
         Schema::create('host_asset_histories', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('host_id');
-            $table->unsignedBigInteger('asset_id');
+            $table->unsignedBigInteger('asset_id')->nullable();
             $table->date('start_date');
             $table->date('end_date')->nullable();
             $table->decimal('harga_sewa', 10, 0);
             $table->string('status_penyewaan');
+            $table->string('bank_pembayaran')->nullable();
+            $table->decimal('harga_pembayaran', 10, 0)->nullable();
             $table->timestamps();
             $table->foreign('host_id')->references('id')->on('tuan_rumah')->onDelete('cascade');
             $table->foreign('asset_id')->references('id')->on('rekap_aset')->onDelete('cascade');

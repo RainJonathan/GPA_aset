@@ -22,7 +22,7 @@
                                 <div class="form-group">
                                     <label for="no_ktp">No KTP:</label>
                                     <input type="text" class="form-control" id="no_ktp" name="no_ktp"
-                                        value="{{ old('no_ktp') }}">
+                                        value="{{ old('no_ktp') }}" pattern="\d{16}" maxlength="16" minlength="16" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="wilayah_id">Wilayah Penyewa:</label>
@@ -34,7 +34,7 @@
                                                 {{ $wilayah->nama_wilayah }}</option>
                                         @endforeach
                                     </select>
-                                </div>
+                                </div>                                
                                 <div class="form-group">
                                     <label for="asset_id">Aset Yang Ditempati:</label>
                                     <select class="form-control" id="asset_id" name="asset_id">
@@ -46,11 +46,15 @@
                                             </option>
                                         @endforeach
                                     </select>
-                                </div>
+                                </div>                                
                                 <div class="form-group">
                                     <label for="no_tlp">Nomor Telepon:</label>
-                                    <input type="text" class="form-control" id="no_tlp" name="no_tlp"
-                                        value="{{ old('no_tlp') }}">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" id="no_tlp" name="no_tlp" data-inputmask="'mask': '+62 999-9999-9999'" data-mask value="{{ old('no_tlp') }}">
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="tgl_awal">Tanggal Awal Masuk:</label>
@@ -64,14 +68,14 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="upah_jasa">Upah Jasa:</label>
-                                    <input type="text" class="form-control" id="upah_jasa" name="upah_jasa"
+                                    <input type="text" class="form-control currency" id="upah_jasa" name="upah_jasa"
                                         value="{{ old('upah_jasa') }}" onkeyup="formatInput(this)">
                                 </div>
                                 <!-- Add harga_sewa field -->
                                 <div class="form-group">
                                     <label for="harga_sewa">Harga Sewa:</label>
-                                    <input type="text" class="form-control" id="harga_sewa" name="harga_sewa"
-                                        value="{{ old('harga_sewa') }}" required onkeyup="formatInput(this)">
+                                    <input type="text" class="form-control currency" id="harga_sewa" name="harga_sewa"
+                                           value="{{ old('harga_sewa') }}" required onkeyup="formatInput(this)">
                                 </div>
                                 <div class="form-group">
                                     <label for="status_penyewaan">Status Penyewaan:</label>
@@ -98,7 +102,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="harga_bca" id="label_harga_bca">Harga Sewa BCA (SGLS):</label>
-                                    <input type="text" class="form-control" id="harga_bca" name="harga_bca_sgls"
+                                    <input type="text" class="form-control currency" id="harga_bca" name="harga_bca_sgls"
                                         value="{{ old('harga_bca') }}" onkeyup="formatInput(this)">
                                 </div>
                                 <div class="form-group">
@@ -108,7 +112,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="harga_bri" id="label_harga_bri">Harga Sewa BCA (LEO):</label>
-                                    <input type="text" class="form-control" id="harga_bri" name="harga_bca_leo"
+                                    <input type="text" class="form-control currency" id="harga_bri" name="harga_bca_leo"
                                         value="{{ old('harga_bri') }}" onkeyup="formatInput(this)">
                                 </div>
                                 <div class="form-group">
@@ -118,7 +122,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="harga_mandiri" id="label_harga_mandiri">Harga Sewa Mandiri:</label>
-                                    <input type="text" class="form-control" id="harga_mandiri" name="harga_mandiri"
+                                    <input type="text" class="form-control currency" id="harga_mandiri" name="harga_mandiri"
                                         value="{{ old('harga_mandiri') }}" onkeyup="formatInput(this)">
                                 </div>
                                 <div class="form-group">
@@ -129,7 +133,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="harga_tunai" id="label_harga_tunai">Harga Sewa Tunai:</label>
-                                    <input type="text" class="form-control" id="harga_tunai" name="harga_tunai"
+                                    <input type="text" class="form-control currency" id="harga_tunai" name="harga_tunai"
                                         value="{{ old('harga_tunai') }}" onkeyup="formatInput(this)">
                                 </div>
                                 <div class="form-group">
@@ -163,15 +167,41 @@
                             </div>
                             <div class="btn-group">
                                 <button type="submit" class="btn btn-primary">Simpan</button>
-                                <button type="button" class="btn btn-secondary ml-2"
-                                    onclick="window.history.back()">Batal</button>
+                                <button type="button" class="btn btn-secondary ml-2" onclick="window.history.back()">Batal</button>
                             </div>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
     </section>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.7/jquery.inputmask.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('[data-mask]').inputmask();
+        });
+    </script>
+    <script>
+        function formatInput(input) {
+            let value = input.value.replace(/[^0-9]/g, '');
+            if (value) {
+                value = parseInt(value, 10).toLocaleString();
+            }
+            input.value = value;
+        }
 
+        function unformatInput(input) {
+            return input.value.replace(/[^0-9]/g, '');
+        }
+
+        document.getElementById('currencyForm').addEventListener('submit', function(event) {
+            let currencyFields = document.querySelectorAll('.currency');
+            currencyFields.forEach(function(field) {
+                field.value = unformatInput(field);
+            });
+        });
+    </script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             var bankSelect = document.getElementById("bank_pembayaran");

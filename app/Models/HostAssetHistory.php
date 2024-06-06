@@ -14,12 +14,10 @@ class HostAssetHistory extends Model
         'asset_id',
         'start_date',
         'end_date',
-        'denda_bca',
-        'denda_bri',
-        'denda_mandiri',
-        'denda_tunai',
         'harga_sewa',
         'status_penyewaan',
+        'bank_pembayaran',
+        'harga_pembayaran',
     ];
 
     public function host()

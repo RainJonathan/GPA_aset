@@ -31,8 +31,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="pengeluaran">Jumlah Pengeluaran:</label>
-                                    <input type="text" class="form-control" id="pengeluaran" name="pengeluaran"
-                                        value="{{ old('pengeluaran') }}" placeholder="Berapa Jumlah Pengeluaran">
+                                    <input type="text" class="form-control currency" id="pengeluaran" name="pengeluaran"
+                                        value="{{ old('pengeluaran') }}" placeholder="Berapa Jumlah Pengeluaran" onkeyup="formatInput(this)">
                                 </div>
 
                                 <div class="form-group">
@@ -58,5 +58,25 @@
             </div>
         </div>
     </section>
+    <script>
+        function formatInput(input) {
+            let value = input.value.replace(/[^0-9]/g, '');
+            if (value) {
+                value = parseInt(value, 10).toLocaleString();
+            }
+            input.value = value;
+        }
+
+        function unformatInput(input) {
+            return input.value.replace(/[^0-9]/g, '');
+        }
+
+        document.getElementById('currencyForm').addEventListener('submit', function(event) {
+            let currencyFields = document.querySelectorAll('.currency');
+            currencyFields.forEach(function(field) {
+                field.value = unformatInput(field);
+            });
+        });
+    </script>
 @endsection
 

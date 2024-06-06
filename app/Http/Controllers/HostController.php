@@ -28,12 +28,19 @@ class HostController extends Controller
 
     public function create()
     {
-        if (Auth()->user()->role == 1) {
-            $assets = Asset::all();
+        $user = Auth()->user();
+        $userWilayahId = $user->wilayah_id;
+        $isAdmin = $user->role == 1;
+
+        $occupiedAssetIds = Host::whereNotNull('asset_id')->pluck('asset_id');
+        if ($isAdmin) {
+            $assets = Asset::whereNotIn('id', $occupiedAssetIds)->get();
             $wilayahs = Wilayah::all();
         } else {
-            $assets = Asset::where('wilayah_id', Auth()->user()->wilayah_id)->get();
-            $wilayahs = Wilayah::where('id', Auth()->user()->wilayah_id)->get();
+            $assets = Asset::where('wilayah_id', $userWilayahId)
+                            ->whereNotIn('id', $occupiedAssetIds)
+                            ->get();
+            $wilayahs = Wilayah::where('id', $userWilayahId)->get();
         }
         return view('host.create', compact('wilayahs', 'assets'));
     }
@@ -45,42 +52,47 @@ class HostController extends Controller
 
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'asset_id' => 'nullable',
-            'nama_penyewa' => 'required',
-            'no_ktp' => 'required',
-            'no_tlp' => 'required',
-            'wilayah_id' => 'exists:wilayahs,id',
-            'harga_sewa' => 'required',
-            'status_penyewaan' => 'required',
-            'tgl_awal' => 'required',
-            'tgl_akhir' => 'required',
-            'upah_jasa' => 'required',
-            'pendapatan_sewa' => 'nullable',
-            'tanggal_tunai' => 'nullable',
-            'harga_tunai' => 'nullable',
-            'tanggal_mandiri' => 'nullable',
-            'harga_mandiri' => 'nullable',
-            'tanggal_bca_leo' => 'nullable',
-            'harga_bca_leo' => 'nullable',
-            'tanggal_bca_sgls' => 'nullable',
-            'harga_bca_sgls' => 'nullable',
-            'saldo_piutang' => 'nullable',
-            'status_pengontrak' => '',
-            'keterangan' => '',
-            'bulan' => '',
-            'status_aktif' => '',
+        // Convert currency fields to numeric values or null
+        $request['harga_sewa'] = $this->convertToNumeric($request['harga_sewa']);
+        $request['upah_jasa'] = $this->convertToNumeric($request['upah_jasa']);
+        $request['harga_tunai'] = $this->convertToNumeric($request['harga_tunai']);
+        $request['harga_mandiri'] = $this->convertToNumeric($request['harga_mandiri']);
+        $request['harga_bca_leo'] = $this->convertToNumeric($request['harga_bca_leo']);
+        $request['harga_bca_sgls'] = $this->convertToNumeric($request['harga_bca_sgls']);
+        $request['pendapatan_sewa'] = $this->convertToNumeric($request['pendapatan_sewa']);
+        $request['saldo_piutang'] = $this->convertToNumeric($request['saldo_piutang']);
 
+        // Validate the request data
+        $validatedData = $request->validate([
+            'asset_id' => 'nullable|integer',
+            'nama_penyewa' => 'required|string|max:255',
+            'no_ktp' => 'required|string|size:16',
+            'no_tlp' => 'required|string|max:20',
+            'wilayah_id' => 'required|exists:wilayahs,id',
+            'harga_sewa' => 'required|numeric',
+            'status_penyewaan' => 'required|string|max:255',
+            'tgl_awal' => 'required|date',
+            'tgl_akhir' => 'required|date',
+            'upah_jasa' => 'required|numeric',
+            'tanggal_tunai' => 'nullable|date',
+            'harga_tunai' => 'nullable|numeric',
+            'tanggal_mandiri' => 'nullable|date',
+            'harga_mandiri' => 'nullable|numeric',
+            'tanggal_bca_leo' => 'nullable|date',
+            'harga_bca_leo' => 'nullable|numeric',
+            'tanggal_bca_sgls' => 'nullable|date',
+            'harga_bca_sgls' => 'nullable|numeric',
+            'saldo_piutang' => 'nullable|numeric',
+            'status_pengontrak' => 'nullable|string|max:255',
+            'keterangan' => 'nullable|string|max:255',
+            'bulan' => 'nullable|string|max:255',
+            'status_aktif' => 'nullable|boolean',
         ]);
+
+        // Create the host
         $host = Host::create($validatedData);
 
-        Log::info('Host ID:', ['host_id' => $host->id]);
-        Log::info('Asset ID:', ['asset_id' => $host->asset_id]);
-        Log::info('Start Date:', ['start_date' => $host->tgl_awal]);
-        Log::info('End Date:', ['end_date' => $host->tgl_akhir]);
-        Log::info('Harga Sewa:', ['harga_sewa' => $host->harga_sewa]);
-        Log::info('Status Penyewaan:', ['status_penyewaan' => $host->status_penyewaan]);
-
+        // Create the host asset history
         HostAssetHistory::create([
             'host_id' => $host->id,
             'asset_id' => $validatedData['asset_id'],
@@ -89,9 +101,16 @@ class HostController extends Controller
             'harga_sewa' => $validatedData['harga_sewa'],
             'status_penyewaan' => $validatedData['status_penyewaan'],
         ]);
+
+        // Redirect with success message
         return redirect()->route('host.index')->with('success', 'Host created successfully.');
     }
 
+    private function convertToNumeric($value)
+    {
+        // Check if the value is empty and return null, otherwise remove commas and return as a float
+        return empty($value) ? null : floatval(str_replace(',', '', $value));
+    }
     public function edit(Host $host)
     {
         if (Auth()->user()->role == 1) {
