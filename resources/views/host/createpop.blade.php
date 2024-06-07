@@ -22,14 +22,18 @@
                                 <div class="form-group">
                                     <label for="no_ktp">No KTP:</label>
                                     <input type="text" class="form-control" id="no_ktp" name="no_ktp"
-                                        value="{{ old('no_ktp') }}">
+                                    value="{{ old('no_ktp') }}" pattern="\d{16}" maxlength="16" minlength="16" required>
                                 </div>
                                 <input type="hidden" name="wilayah_id" value="{{ $asset->assetWilayah->id }}">
                                 <input type="hidden" name="asset_id" value="{{ $asset->id }}">
                                 <div class="form-group">
                                     <label for="no_tlp">Nomor Telepon:</label>
-                                    <input type="text" class="form-control" id="no_tlp" name="no_tlp"
-                                        value="{{ old('no_tlp') }}">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" id="no_tlp" name="no_tlp" data-inputmask="'mask': '+62 999-9999-9999'" data-mask value="{{ old('no_tlp') }}">
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="tgl_awal">Tanggal Awal Masuk:</label>
@@ -61,24 +65,6 @@
                                             {{ old('status_penyewaan') == 'Bulanan' ? 'selected' : '' }}>Bulanan</option>
                                         <option value="Tahunan"
                                             {{ old('status_penyewaan') == 'Tahunan' ? 'selected' : '' }}>Tahunan</option>
-                                        {{-- @php $hasOptions = false; @endphp
-                                    @foreach ($assets as $asset)
-                                        @if ($asset->status_penyewaan == 1)
-                                            <option value="Mingguan" {{ old('status_penyewaan') == $asset->id ? 'selected' : '' }}>Mingguan</option>
-                                            @php $hasOptions = true; @endphp
-                                        @elseif ($asset->status_penyewaan == 2)
-                                            <option value="Bulanan" {{ old('status_penyewaan') == $asset->id ? 'selected' : '' }}>Bulanan</option>
-                                            @php $hasOptions = true; @endphp
-                                        @elseif ($asset->status_penyewaan == 3)
-                                            <option value="Tahunan" {{ old('status_penyewaan') == $asset->id ? 'selected' : '' }}>Tahunan</option>
-                                            @php $hasOptions = true; @endphp
-                                        @endif
-                                    @endforeach
-                                    @if (!$hasOptions)
-                                        <option value="Mingguan" {{ old('status_penyewaan') == 'Mingguan' ? 'selected' : '' }}>Mingguan</option>
-                                        <option value="Bulanan" {{ old('status_penyewaan') == 'Bulanan' ? 'selected' : '' }}>Bulanan</option>
-                                        <option value="Tahunan" {{ old('status_penyewaan') == 'Tahunan' ? 'selected' : '' }}>Tahunan</option>
-                                    @endif --}}
                                     </select>
                                 </div>
                             </div>
@@ -172,6 +158,33 @@
             </div>
         </div>
     </section>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.7/jquery.inputmask.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('[data-mask]').inputmask();
+        });
+    </script>
+    <script>
+        function formatInput(input) {
+            let value = input.value.replace(/[^0-9]/g, '');
+            if (value) {
+                value = parseInt(value, 10).toLocaleString();
+            }
+            input.value = value;
+        }
+
+        function unformatInput(input) {
+            return input.value.replace(/[^0-9]/g, '');
+        }
+
+        document.getElementById('currencyForm').addEventListener('submit', function(event) {
+            let currencyFields = document.querySelectorAll('.currency');
+            currencyFields.forEach(function(field) {
+                field.value = unformatInput(field);
+            });
+        });
+    </script>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {

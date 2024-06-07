@@ -46,7 +46,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="biaya_perbaikan">Biaya Perbaikan:</label>
-                                <input type="number" class="form-control" id="biaya_perbaikan" name="biaya_perbaikan" value="{{ $tiket->biaya_perbaikan }}" placeholder="Berapa biaya perbaikannya?">
+                                <input type="text" class="form-control currency" id="biaya_perbaikan" name="biaya_perbaikan" value="{{ $tiket->biaya_perbaikan }}" placeholder="Berapa biaya perbaikannya?" onkeyup="formatInput(this)">
                             </div>
                             <div class="form-group">
                                 <label for="user_id">Pelapor:</label>
@@ -95,4 +95,24 @@
     </div>
 </section>
 
+<script>
+    function formatInput(input) {
+        let value = input.value.replace(/[^0-9]/g, '');
+        if (value) {
+            value = parseInt(value, 10).toLocaleString();
+        }
+        input.value = value;
+    }
+
+    function unformatInput(input) {
+        return input.value.replace(/[^0-9]/g, '');
+    }
+
+    document.getElementById('currencyForm').addEventListener('submit', function(event) {
+        let currencyFields = document.querySelectorAll('.currency');
+        currencyFields.forEach(function(field) {
+            field.value = unformatInput(field);
+        });
+    });
+</script>
 @endsection

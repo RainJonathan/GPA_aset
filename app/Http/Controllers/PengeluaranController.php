@@ -51,7 +51,6 @@ class PengeluaranController extends Controller
     }
     private function convertToNumeric($value)
     {
-        // Check if the value is empty and return null, otherwise remove commas and return as a float
         return empty($value) ? null : floatval(str_replace(',', '', $value));
     }
 

@@ -72,6 +72,10 @@ class TiketController extends Controller
         }
         return redirect()->route('tiket.index')->with('success', 'Pengajuan created successfully.');
     }
+    private function convertToNumeric($value)
+    {
+        return empty($value) ? null : floatval(str_replace(',', '', $value));
+    }
 
     public function show(Tiket $tiket)
     {
@@ -92,6 +96,8 @@ class TiketController extends Controller
 
     public function update(Request $request, Tiket $tiket)
     {
+        $request['biaya_perbaikan'] = $this->convertToNumeric($request['biaya_perbaikan']);
+
         $validatedData = $request->validate([
             'id_aset' => 'exists:rekap_aset,id',
             'keterangan' => 'required',
