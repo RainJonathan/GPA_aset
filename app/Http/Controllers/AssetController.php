@@ -31,12 +31,13 @@ class AssetController extends Controller
         if(Auth()->user()->role == 1){
             $assets = Asset::all();
             $hosts = Host::all();
+            $wilayahs = Wilayah::all();
         }else{
             $assets = Asset::where('wilayah_id',Auth()->user()->wilayah_id)->get();
             $hosts = Host::where('wilayah_id',Auth()->user()->wilayah_id)->get();
+            $wilayahs = Wilayah::where('id',Auth()->user()->id)->get();
         }
         $hostId = $request->input('hostId');
-        $wilayahs = Wilayah::all();
         return view('asset.create', compact('hosts', 'hostId', 'wilayahs'));
     }
 

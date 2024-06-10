@@ -186,15 +186,15 @@
         function formatInput(input) {
             let value = input.value.replace(/[^0-9]/g, '');
             if (value) {
-                value = parseInt(value, 10).toLocaleString();
+                value = parseInt(value, 10).toLocaleString('en-US').replace(/,/g, '.');
             }
             input.value = value;
         }
-
+    
         function unformatInput(input) {
-            return input.value.replace(/[^0-9]/g, '');
+            return input.value.replace(/[^0-9.]/g, '').replace(/\./g, '');
         }
-
+    
         document.getElementById('currencyForm').addEventListener('submit', function(event) {
             let currencyFields = document.querySelectorAll('.currency');
             currencyFields.forEach(function(field) {

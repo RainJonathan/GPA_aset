@@ -43,6 +43,10 @@ class Host extends Model
     {
         return $this->hasMany(Asset::class, 'id');
     }
+    public function asset()
+    {
+        return $this->belongsTo(Asset::class, 'asset_id');
+    }
     public function hostAssetHistories()
     {
         return $this->hasMany(HostAssetHistory::class, 'host_id')->orderBy('created_at', 'desc');

@@ -49,8 +49,12 @@
 
                                 <div class="form-group">
                                     <label for="no_tlp">Nomor Telepon:</label>
-                                    <input type="text" class="form-control" id="no_tlp" name="no_tlp"
-                                        value="{{ $host->no_tlp }}">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" id="no_tlp" name="no_tlp" data-inputmask="'mask': '+62 999-9999-9999'" data-mask value="{{ $host->no_tlp }}">
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="tgl_awal">Tanggal Awal Masuk:</label>
@@ -69,7 +73,9 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="harga_sewa">Harga Sewa:</label>
-                                    <input type="text" class="form-control" id="harga_sewa" name="harga_sewa" value="{{ $host->hostAssetHistories->isEmpty() ? '0' : $host->hostAssetHistories->first()->harga_sewa }}" onkeyup="formatInput(this)">
+                                    <input type="text" class="form-control currency" id="harga_sewa" name="harga_sewa" 
+                                    value="{{ $host->hostAssetHistories->isEmpty() ? '0' : $host->hostAssetHistories->first()->harga_sewa }}" 
+                                    onkeyup="formatInput(this)">
                                 </div>
                                 <div class="form-group">
                                     <label for="status_penyewaan">Status Penyewaan:</label>
@@ -189,6 +195,33 @@
             </div>
         </div>
     </section>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.7/jquery.inputmask.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('[data-mask]').inputmask();
+        });
+    </script>
+    <script>
+        function formatInput(input) {
+            let value = input.value.replace(/[^0-9]/g, '');
+            if (value) {
+                value = parseInt(value, 10).toLocaleString('en-US').replace(/,/g, '.');
+            }
+            input.value = value;
+        }
+    
+        function unformatInput(input) {
+            return input.value.replace(/[^0-9.]/g, '').replace(/\./g, '');
+        }
+    
+        document.getElementById('currencyForm').addEventListener('submit', function(event) {
+            let currencyFields = document.querySelectorAll('.currency');
+            currencyFields.forEach(function(field) {
+                field.value = unformatInput(field);
+            });
+        });
+    </script>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {

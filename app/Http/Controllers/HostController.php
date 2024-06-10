@@ -89,6 +89,30 @@ class HostController extends Controller
             'status_aktif' => 'nullable|boolean',
         ]);
 
+        $bankPembayaran = null;
+        $hargaPembayaran = null;
+        switch ($request->input('bank_pembayaran')) {
+            case '0':
+                $bankPembayaran = 'BCA Sabar Ganda';
+                $hargaPembayaran = $validatedData['harga_bca_sgls'];
+                break;
+            case '1':
+                $bankPembayaran = 'BCA Leo';
+                $hargaPembayaran = $validatedData['harga_bca_leo'];
+                break;
+            case '2':
+                $bankPembayaran = 'Mandiri';
+                $hargaPembayaran = $validatedData['harga_mandiri'];
+                break;
+            case '4':
+                $bankPembayaran = 'Tunai';
+                $hargaPembayaran = $validatedData['harga_tunai'];
+                break;
+            default:
+                // Handle any default or additional cases if necessary
+                break;
+        }
+
         // Create the host
         $host = Host::create($validatedData);
 
@@ -100,6 +124,8 @@ class HostController extends Controller
             'end_date' => $validatedData['tgl_akhir'],
             'harga_sewa' => $validatedData['harga_sewa'],
             'status_penyewaan' => $validatedData['status_penyewaan'],
+            'bank_pembayaran' => $bankPembayaran,
+            'harga_pembayaran' => $hargaPembayaran,
         ]);
 
         // Redirect with success message
@@ -109,7 +135,7 @@ class HostController extends Controller
     private function convertToNumeric($value)
     {
         // Check if the value is empty and return null, otherwise remove commas and return as a float
-        return empty($value) ? null : floatval(str_replace(',', '', $value));
+        return empty($value) ? null : floatval(str_replace('.', '', $value));
     }
     public function edit(Host $host)
     {
@@ -127,6 +153,15 @@ class HostController extends Controller
 
     public function update(Request $request, Host $host)
     {
+        $request['harga_sewa'] = $this->convertToNumeric($request['harga_sewa']);
+        $request['upah_jasa'] = $this->convertToNumeric($request['upah_jasa']);
+        $request['harga_tunai'] = $this->convertToNumeric($request['harga_tunai']);
+        $request['harga_mandiri'] = $this->convertToNumeric($request['harga_mandiri']);
+        $request['harga_bca_leo'] = $this->convertToNumeric($request['harga_bca_leo']);
+        $request['harga_bca_sgls'] = $this->convertToNumeric($request['harga_bca_sgls']);
+        $request['pendapatan_sewa'] = $this->convertToNumeric($request['pendapatan_sewa']);
+        $request['saldo_piutang'] = $this->convertToNumeric($request['saldo_piutang']);
+
         $validatedData = $request->validate([
             'asset_id' => 'nullable',
             'nama_penyewa' => 'required',
@@ -138,7 +173,6 @@ class HostController extends Controller
             'upah_jasa' => 'required',
             'harga_sewa' => 'required',
             'status_penyewaan' => 'required',
-            'pendapatan_sewa' => 'nullable',
             'tanggal_tunai' => 'nullable',
             'harga_tunai' => 'nullable',
             'denda_tunai' => 'nullable',
@@ -157,6 +191,30 @@ class HostController extends Controller
             'bulan' => '',
             'status_aktif' => '',
         ]);
+        $bankPembayaran = null;
+        $hargaPembayaran = null;
+        switch ($request->input('bank_pembayaran')) {
+            case '0':
+                $bankPembayaran = 'BCA Sabar Ganda';
+                $hargaPembayaran = $validatedData['harga_bca_sgls'];
+                break;
+            case '1':
+                $bankPembayaran = 'BCA Leo';
+                $hargaPembayaran = $validatedData['harga_bca_leo'];
+                break;
+            case '2':
+                $bankPembayaran = 'Mandiri';
+                $hargaPembayaran = $validatedData['harga_mandiri'];
+                break;
+            case '4':
+                $bankPembayaran = 'Tunai';
+                $hargaPembayaran = $validatedData['harga_tunai'];
+                break;
+            default:
+                // Handle any default or additional cases if necessary
+                break;
+        }
+
         $host->update($validatedData);
 
         HostAssetHistory::create([
@@ -166,6 +224,8 @@ class HostController extends Controller
             'end_date' => $validatedData['tgl_akhir'],
             'harga_sewa' => $validatedData['harga_sewa'],
             'status_penyewaan' => $validatedData['status_penyewaan'],
+            'bank_pembayaran' => $bankPembayaran,
+            'harga_pembayaran' => $hargaPembayaran,
         ]);
 
         return redirect()->route('host.index')->with('success', 'Host updated successfully');
@@ -199,6 +259,9 @@ class HostController extends Controller
                     case 'Tahunan':
                         $notificationDate = $tglAkhir->subDays(30);
                         break;
+                }
+                if ($notificationDate && Carbon::now()->greaterThanOrEqualTo($notificationDate)) {
+                    continue;
                 }
 
                 if ($notificationDate && Carbon::now()->greaterThanOrEqualTo($notificationDate)) {
@@ -240,6 +303,9 @@ class HostController extends Controller
                     case 'Tahunan':
                         $notificationDate = $tglAkhir->subDays(30);
                         break;
+                }
+                if ($notificationDate && Carbon::now()->greaterThanOrEqualTo($notificationDate)) {
+                    continue;
                 }
 
                 if ($notificationDate && Carbon::now()->greaterThanOrEqualTo($notificationDate)) {

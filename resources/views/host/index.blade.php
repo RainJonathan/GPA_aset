@@ -30,6 +30,7 @@
                                 <thead class="thead-fixed">
                                     <tr>
                                         <th>Nama Penyewa</th>
+                                        <th>Asset Hunian</th>
                                         <th>No. KTP</th>
                                         <th>No. Telepon</th>
                                         <th>Wilayah Penyewa</th>
@@ -44,6 +45,7 @@
                                     @foreach ($hosts as $host)
                                     <tr>
                                         <td>{{ $host->nama_penyewa }}</td>
+                                        <td>{{ optional($host->asset)->nama_aset . ' - ' . optional($host->asset)->kode_aset ?? 'Tidak Ada Aset' }}</td>
                                         <td>{{ $host->no_ktp }}</td>
                                         <td>{{ $host->no_tlp }}</td>
                                         <td>{{ $host->wilayahPenyewa->nama_wilayah}}</td>

@@ -123,8 +123,7 @@
                                 <div class="form-group">
                                     <label for="saldo_piutang">Status Saldo Piutang:</label>
                                     <select class="form-control" id="saldo_piutang" name="saldo_piutang">
-                                        <option value="0" {{ old('saldo_piutang') == '0' ? 'selected' : '' }}>Tidak
-                                            Lunas</option>
+                                        <option value="0" {{ old('saldo_piutang') == '0' ? 'selected' : '' }}>Tidak Lunas</option>
                                         <option value="1" {{ old('saldo_piutang') == '1' ? 'selected' : '' }}>Lunas
                                         </option>
                                     </select>
@@ -169,13 +168,13 @@
         function formatInput(input) {
             let value = input.value.replace(/[^0-9]/g, '');
             if (value) {
-                value = parseInt(value, 10).toLocaleString();
+                value = parseInt(value, 10).toLocaleString('en-US').replace(/,/g, '.');
             }
             input.value = value;
         }
 
         function unformatInput(input) {
-            return input.value.replace(/[^0-9]/g, '');
+            return input.value.replace(/[^0-9.]/g, '').replace(/\./g, '');
         }
 
         document.getElementById('currencyForm').addEventListener('submit', function(event) {
