@@ -16,10 +16,11 @@ class HostController extends Controller
     public function index()
     {
         if (Auth()->user()->role == 1) {
-            $hosts = Host::with('hostAssetHistories')->get();
+            $hosts = Host::with('hostAssetHistories')->where('is_hidden', false)->get();
         } else {
             $hosts = Host::with('hostAssetHistories')
                 ->where('wilayah_id', Auth()->user()->wilayah_id)
+                ->where('is_hidden', false)
                 ->get();
         }
 
@@ -52,7 +53,6 @@ class HostController extends Controller
 
     public function store(Request $request)
     {
-        // Convert currency fields to numeric values or null
         $request['harga_sewa'] = $this->convertToNumeric($request['harga_sewa']);
         $request['upah_jasa'] = $this->convertToNumeric($request['upah_jasa']);
         $request['harga_tunai'] = $this->convertToNumeric($request['harga_tunai']);
@@ -62,7 +62,6 @@ class HostController extends Controller
         $request['pendapatan_sewa'] = $this->convertToNumeric($request['pendapatan_sewa']);
         $request['saldo_piutang'] = $this->convertToNumeric($request['saldo_piutang']);
 
-        // Validate the request data
         $validatedData = $request->validate([
             'asset_id' => 'nullable|integer',
             'nama_penyewa' => 'required|string|max:255',
@@ -109,14 +108,11 @@ class HostController extends Controller
                 $hargaPembayaran = $validatedData['harga_tunai'];
                 break;
             default:
-                // Handle any default or additional cases if necessary
                 break;
         }
 
-        // Create the host
         $host = Host::create($validatedData);
 
-        // Create the host asset history
         HostAssetHistory::create([
             'host_id' => $host->id,
             'asset_id' => $validatedData['asset_id'],
@@ -128,13 +124,11 @@ class HostController extends Controller
             'harga_pembayaran' => $hargaPembayaran,
         ]);
 
-        // Redirect with success message
         return redirect()->route('host.index')->with('success', 'Host created successfully.');
     }
 
     private function convertToNumeric($value)
     {
-        // Check if the value is empty and return null, otherwise remove commas and return as a float
         return empty($value) ? null : floatval(str_replace('.', '', $value));
     }
     public function edit(Host $host)
@@ -211,7 +205,6 @@ class HostController extends Controller
                 $hargaPembayaran = $validatedData['harga_tunai'];
                 break;
             default:
-                // Handle any default or additional cases if necessary
                 break;
         }
 
@@ -237,6 +230,14 @@ class HostController extends Controller
 
         return redirect()->route('host.index')
             ->with('success', 'Asset Deleted Succesfully');
+    }
+    public function hide($id)
+    {
+        $host = Host::findOrFail($id);
+        $host->is_hidden = true;
+        $host->save();
+
+        return response()->json(['success' => true]);
     }
     public function notifikasi()
     {

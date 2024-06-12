@@ -3,7 +3,7 @@
 @section('content')
 <section class="content">
     <div class="container-fluid">
-        <div class="card card-secondary">
+        <div class="card card-success">
             <div class="card-header">
                 <h3 class="card-title"> Update Perbaikan?</h3>
             </div>
@@ -99,13 +99,13 @@
     function formatInput(input) {
         let value = input.value.replace(/[^0-9]/g, '');
         if (value) {
-            value = parseInt(value, 10).toLocaleString();
+            value = parseInt(value, 10).toLocaleString('en-US').replace(/,/g, '.');
         }
         input.value = value;
     }
 
     function unformatInput(input) {
-        return input.value.replace(/[^0-9]/g, '');
+        return input.value.replace(/[^0-9.]/g, '').replace(/\./g, '');
     }
 
     document.getElementById('currencyForm').addEventListener('submit', function(event) {

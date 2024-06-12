@@ -9,7 +9,7 @@
                 <div class="card card-info">
                     <div class="card-header">
                         <div class="card-title">
-                            <h3>Master Host</h3>
+                            <h3>Master Penyewa / Tuan Rumah</h3>
                         </div>
                     </div>
 
@@ -43,7 +43,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($hosts as $host)
-                                    <tr>
+                                    <tr id="host-row-{{ $host->id }}">
                                         <td>{{ $host->nama_penyewa }}</td>
                                         <td>{{ optional($host->asset)->nama_aset . ' - ' . optional($host->asset)->kode_aset ?? 'Tidak Ada Aset' }}</td>
                                         <td>{{ $host->no_ktp }}</td>
@@ -59,11 +59,7 @@
                                         <td>{{ $host->saldo_piutang == 0 ? 'Tidak Lunas' : 'Lunas' }}</td>
                                         <td>
                                             <a href="{{ route('host.edit', $host->id) }}" class="btn btn-secondary btn-sm">Edit</a>
-                                            <form action="{{ route('host.destroy', $host->id) }}" method="POST" style="display: inline-block;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete?')">Delete</button>
-                                            </form>
+                                            <button type="button" class="btn btn-danger btn-sm hide-button" data-id="{{ $host->id }}">Hapus</button>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -78,5 +74,37 @@
     </div>
 </section>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const hideButtons = document.querySelectorAll('.hide-button');
 
+        hideButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const hostId = this.getAttribute('data-id');
+
+                if (confirm('Apakah anda yakin ingin menghapus penyewa?')) {
+                    fetch(`/hosts/${hostId}/hide`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({ _method: 'PUT' })
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            document.getElementById(`host-row-${hostId}`).remove();
+                        } else {
+                            alert('Failed to hide the host.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('An error occurred while hiding the host.');
+                    });
+                }
+            });
+        });
+    });
+</script>
 @endsection

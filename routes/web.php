@@ -30,6 +30,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/hosts/{host}/edit', [HostController::class, 'edit'])->name('host.edit');
     Route::put('/hosts/{host}', [HostController::class, 'update'])->name('host.update');
     Route::delete('/hosts/{host}', [HostController::class, 'destroy'])->name('host.destroy');
+    Route::put('/hosts/{id}/hide', [HostController::class, 'hide'])->name('host.hide');
+
 
     //routes aset
     Route::get('/assets', [AssetController::class, 'index'])->name('asset.index');

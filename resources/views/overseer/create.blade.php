@@ -19,7 +19,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="nik">NIK:</label>
-                                <input type="text" class="form-control" id="nik" name="nik" value="{{old('nik')}}">
+                                <input type="text" class="form-control" id="nik" name="nik" value="{{old('nik')}}" pattern="\d{16}" maxlength="16" minlength="16">
                             </div>
                             <div class="form-group">
                                 <label for="name">Nama Penanggung Jawab:</label>

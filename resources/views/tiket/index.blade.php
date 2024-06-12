@@ -46,7 +46,7 @@
                                         <td>{{ $ticket->status }}</td>
                                         <td>{{ $ticket->issue_by }}</td>
                                         <td>
-                                            <a href="{{ route('tiket.edit', $ticket->id) }}" class="btn btn-secondary btn-sm">Update
+                                            <a href="{{ route('tiket.edit', $ticket->id) }}" class="btn btn-success btn-sm">Update
                                             </a>
                                             <a href="{{route('tiket.details', $ticket->id)}}" class="btn btn-primary btn-sm">Details
                                             </a>
