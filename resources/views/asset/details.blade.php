@@ -97,8 +97,7 @@
                                                     <td>{{ $host->no_ktp }}</td>
                                                     <td>{{ $host->tgl_awal }}</td>
                                                     <td>{{ $host->tgl_akhir }}</td>
-                                                    <td>Rp
-                                                        {{ $host->latestActiveHostAssetHistory->harga_sewa ? number_format($host->latestActiveHostAssetHistory->harga_sewa, 0, ',', '.') : '' }}
+                                                    <td>Rp{{ $host->latestActiveHostAssetHistory->harga_sewa ? number_format($host->latestActiveHostAssetHistory->harga_sewa, 0, ',', '.') : '' }}
                                                     </td>
                                                 </tr>
                                             </tbody>

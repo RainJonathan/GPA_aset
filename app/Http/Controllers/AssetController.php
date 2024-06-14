@@ -12,6 +12,7 @@ use App\Exports\AssetsExport;
 use App\Exports\DetailsExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
 
 class AssetController extends Controller
@@ -195,6 +196,12 @@ class AssetController extends Controller
                     $query->latest();
                 }])
                 ->get();
+        }
+        foreach ($assets as $asset) {
+            $asset->totalPendapatan = $asset->hostAssetHistories()
+                ->whereMonth('created_at', Carbon::now()->month)
+                ->whereYear('created_at', Carbon::now()->year)
+                ->sum('harga_sewa');
         }
         return view('asset.earning', compact('assets'));
     }

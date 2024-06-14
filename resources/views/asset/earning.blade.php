@@ -35,7 +35,7 @@
                         $latestHistory = $asset->hostAssetHistories->first();
                         $hargaSewa = $latestHistory ? $latestHistory->harga_sewa : 0;
                       @endphp
-                      <td>Rp {{number_format($hargaSewa,0,',','.')}}</td>
+                      <td>Rp {{ number_format($asset->totalPendapatan, 0, ',', '.') }}</td>
                       <td>Rp {{ number_format($asset->totalPengeluaran(), 0, ',', '.') }}</td>
                     </tr>
                   @endforeach
