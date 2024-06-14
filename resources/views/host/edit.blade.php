@@ -200,6 +200,14 @@
     <script>
         $(document).ready(function(){
             $('[data-mask]').inputmask();
+            
+            // Remove symbols before form submission
+            $('form').on('submit', function() {
+                let no_tlp = $('#no_tlp').val();
+                // Remove all non-numeric characters
+                no_tlp = no_tlp.replace(/\D/g, '');
+                $('#no_tlp').val(no_tlp);
+            });
         });
     </script>
     <script>

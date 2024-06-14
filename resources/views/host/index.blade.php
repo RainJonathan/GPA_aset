@@ -47,7 +47,7 @@
                                         <td>{{ $host->nama_penyewa }}</td>
                                         <td>{{ optional($host->asset)->nama_aset . ' - ' . optional($host->asset)->kode_aset ?? 'Tidak Ada Aset' }}</td>
                                         <td>{{ $host->no_ktp }}</td>
-                                        <td>{{ $host->no_tlp }}</td>
+                                        <td id="phone_{{ $host->id }}">{{ $host->no_tlp }}</td>
                                         <td>{{ $host->wilayahPenyewa->nama_wilayah}}</td>
                                         <td>{{ $host->tgl_awal }}</td>
                                         <td>{{ $host->tgl_akhir }}</td>
@@ -73,6 +73,18 @@
         </div>
     </div>
 </section>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Format phone numbers
+        $('td[id^="phone_"]').each(function() {
+            var phoneNumber = $(this).text().trim();
+            var formattedNumber = '+62 ' + phoneNumber.slice(2, 5) + '-' + phoneNumber.slice(5, 9) + '-' + phoneNumber.slice(9);
+            $(this).text(formattedNumber);
+        });
+    });
+</script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

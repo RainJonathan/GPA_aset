@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('outbox', function (Blueprint $table) {
             $table->id();
+            $table->string('wa_no')->nullable();
+            $table->string('wa_text')->nullable();
+            $table->string('send_status')->default('N');
+            $table->string('subcribe_message')->nullable();
+            $table->string('created_by')->nullable();
             $table->timestamps();
         });
     }
