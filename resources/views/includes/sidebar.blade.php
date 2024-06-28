@@ -26,17 +26,17 @@
                     </li>
                 @endif
                 <li class="nav-item">
-                    <a href="{{ route('host.index') }}"
-                        class="nav-link @if (request()->routeIs('host.*')) active @endif">
-                        <i class="nav-icon fas fa-users"></i>
-                        <p>Tuan Rumah</p>
-                    </a>
-                </li>
-                <li class="nav-item">
                     <a href="{{ route('asset.index') }}"
                         class="nav-link @if (request()->routeIs('asset.*')) active @endif">
                         <i class="nav-icon fas fa-box"></i>
                         <p>Rekap Aset</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('host.index') }}"
+                        class="nav-link @if (request()->routeIs('host.*')) active @endif">
+                        <i class="nav-icon fas fa-users"></i>
+                        <p>Tuan Rumah</p>
                     </a>
                 </li>
             </ul>
