@@ -36,7 +36,7 @@ class AssetController extends Controller
         }else{
             $assets = Asset::where('wilayah_id',Auth()->user()->wilayah_id)->get();
             $hosts = Host::where('wilayah_id',Auth()->user()->wilayah_id)->get();
-            $wilayahs = Wilayah::where('id',Auth()->user()->id)->get();
+            $wilayahs = Wilayah::where('id',Auth()->user()->wilayah_id)->get();
         }
         $hostId = $request->input('hostId');
         return view('asset.create', compact('hosts', 'hostId', 'wilayahs'));

@@ -42,7 +42,7 @@
                                         <td>{{ $ticket->asset->kode_aset}}</td>
                                         <td>{{ $ticket->keterangan }}</td>
                                         <td>{{ $ticket->penyelesaian }}</td>
-                                        <td>{{ $ticket->biaya_perbaikan }}</td>
+                                        <td>{{ 'Rp ' . number_format($ticket->biaya_perbaikan, 0, ',', '.') }}</td>
                                         <td>{{ $ticket->status }}</td>
                                         <td>{{ $ticket->issue_by }}</td>
                                         <td>

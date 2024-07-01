@@ -29,7 +29,7 @@
                                     <td class="col-md-2">
                                         @if ($tiket->photo->isNotEmpty())
                                             @foreach ($tiket->photo as $photo)
-                                                <img src="{{ asset('before_photos/' . $photo->before_photo) }}" alt="Before Photo" class="img-fluid main-photo" style="max-width: 100px; height: auto; margin: 0 5px 5px 0;">
+                                                <img src="{{ asset('before_photos/' . $photo->before_photo) }}" class="img-fluid main-photo" style="max-width: 100px; height: auto; margin: 0 5px 5px 0;">
                                             @endforeach
                                         @else
                                             <span>No photos available</span>
@@ -55,7 +55,7 @@
                                 </tr>
                                 <tr>
                                     <th>Biaya Perbaikan</th>
-                                    <td>{{ $tiket->biaya_perbaikan }}</td>
+                                    <td>{{ 'Rp ' . number_format($tiket->biaya_perbaikan, 0, ',', '.') }}</td>
                                 </tr>
                                 <tr>
                                     <th>Status</th>

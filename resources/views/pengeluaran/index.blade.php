@@ -40,8 +40,8 @@
                                         <tr>
                                             <td>{{ $pengeluaran->id }}</td>
                                             <td>{{ $pengeluaran->asset->nama_aset }}</td>
-                                            <td>{{$pengeluaran->asset->kode_aset}}</td>
-                                            <td>{{ $pengeluaran->pengeluaran }}</td>
+                                            <td>{{ $pengeluaran->asset->kode_aset}}</td>
+                                            <td>{{ 'Rp ' . number_format($pengeluaran->pengeluaran, 0, ',', '.') }}</td>
                                             <td>{{ $pengeluaran->keterangan }}</td>
                                             <td>{{ $pengeluaran->penanggungJawab->name }}</td>
                                             <td>
